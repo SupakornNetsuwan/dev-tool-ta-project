@@ -1,8 +1,13 @@
+import { Metadata } from "next";
 import React from "react";
 import LoginForm from "./components/LoginForm";
 
-const LoginPage = () => {
+export const metadata: Metadata = {
+  title: "เข้าสู่ระบบ | ITKMITL",
+  description: "เข้าสู่ระบบรับสมัครผู้ช่วยสอน",
+};
 
+const LoginPage = () => {
   return (
     <div className="p-12">
       <LoginForm>
@@ -20,7 +25,7 @@ const LoginPage = () => {
           <label htmlFor="password" className="font-medium text-gray-900">
             รหัสผ่าน
           </label>
-          <input type="text" name="password" id="password" className="text-input w-full" />
+          <input type="password" name="password" id="password" className="text-input w-full" />
         </div>
         <button className="btn click-animation w-full bg-gradient-blue-purple text-white transition-shadow duration-100 hover:shadow-lg active:scale-95 ">
           เข้าสู่ระบบ

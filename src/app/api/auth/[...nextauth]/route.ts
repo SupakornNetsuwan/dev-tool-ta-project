@@ -1,6 +1,6 @@
 import NextAuth, { User } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import getUser from "@/core/libs/ldap"
+import findUser from "@/core/libs/ldap"
 
 export const authOptions = {
     providers: [CredentialsProvider({
@@ -19,11 +19,44 @@ export const authOptions = {
         async authorize(credentials, req) {
             const { username, password } = credentials || { username: "", password: "" };
 
-            getUser(username, password)
+            const { LDAPuser, LDAPerror } = await findUser(username, password)
+
+            if (LDAPerror) {
+                switch (LDAPerror.message) {
+                    case "User not found":
+                        // do smth...   
+                        console.log("ไม่เจอ user ที่มี username ดังกล่าว")
+                        break
+                    case "Invalid Credentials":
+                        // do smth...
+                        console.log("รหัสผ่านผิด")
+                        break
+                    case "Unwilling To Perform":
+                        // do smth...
+                        console.log("ไม่สามารถค้นหาในระบบได้โปรดตรวจสอบข้อมูล ผู้ใช้งาน และ รหัสผ่าน")
+                        break
+                    case "must either provide a buffer via `raw` or some `value`":
+                        // do smth...
+                        console.log("โปรดกรอกข้อมูล ผู้ใช้งาน และ รหัสผ่าน")
+                        break
+                    default:
+                        console.error("🔴 Unhandled error :", LDAPerror.message)
+                }
+
+                return null;
+            }
+
+
+            // ข้อมูลผู้ใช้จาก LDAP
+            console.warn(LDAPuser.attributes[5].values, LDAPuser.attributes[6].values, LDAPuser.attributes[7].values);
+
+            // 1. ทำการเช็คว่า มีผู้ใช้ในฐานข้อมูลของเราหรือยัง
+            // 2. ถ้าหากไม่มีให้สร้างใหม่ และ ดึงข้อมูลผู้ใช้มา
+            // 3. ถ้ามีแล้วให้ดึงข้อมูลผู้ใช้มา
 
             const user = { id: "1", name: 'J Smith', email: 'jsmith@example.com' };
             if (user) return new Promise((resolve) => resolve(user))
-            return null
+            return null;
         }
     })],
     // callbacks: {

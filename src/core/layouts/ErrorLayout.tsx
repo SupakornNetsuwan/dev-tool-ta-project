@@ -1,5 +1,11 @@
 import React from "react";
 
+/**
+ * 
+ * @param children สำหรับระบุข้อความที่จะแสดงในหน้า error
+ * @description เป็น layout สำหรับแสดงหน้า error ในกรณีที่เกิด error ขึ้น
+ */
+
 const ErrorLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">

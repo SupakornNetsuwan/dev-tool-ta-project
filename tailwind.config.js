@@ -7,18 +7,43 @@ module.exports = {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        "realistic-1": "hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px"
+
+      },
       backgroundImage: {
         "gradient-blue-purple": "linear-gradient(83deg, rgba(59,130,246,1) 0%, rgba(79,70,235,1) 100%)"
       },
       keyframes: {
+        hide: {
+          from: { opacity: 1 },
+          to: { opacity: 0 },
+        },
+        slideIn: {
+          from: { transform: 'translateX(calc(100% + var(--viewport-padding)))' },
+          to: { transform: 'translateX(0)' },
+        },
+        slideOut: {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(calc(100% + var(--viewport-padding)))' },
+        },
         slideUpAndFade: {
           'from': { opacity: 0, transform: 'translateY(2px)' },
           'to': { opacity: 1, transform: 'translateY(0)', boxShadow: "0 10px 38px -10px hsla(206,22%,7%,.35), 0 10px 20px -15px hsla(206,22%,7%,.2)" },
         },
+        toggleDialog: {
+          "from": { opacity: 0, transform: 'scale(1.1) translate(-50%,-50%)' },
+          "to": { opacity: 1, transform: 'scale(1) translate(-50%,-50%)' },
+        }
       },
       animation: {
         // slideUpAndFade: 'slideUpAndFade 400ms reverse ease-out',
+        hide: 'hide 100ms ease-in',
+        slideIn: 'slideIn 150ms cubic-bezier(0.16, 1, 0.3, 1)',
+        slideOut: 'slideOut 150ms  cubic-bezier(0.16, 1, 0.3, 1) ',
         slideUpAndFade: 'slideUpAndFade 200ms ease-out both',
+        openDialog: "toggleDialog 0.25s ease-out both",
+        closeDialog: "toggleDialog 0.25s ease-out reverse"
       },
       fontFamily: {
         "noto": ["Noto Sans Thai", "sans-serif"]

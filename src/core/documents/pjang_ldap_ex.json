@@ -1,0 +1,67 @@
+{
+    "messageId": 1,
+    "protocolOp": 100,
+    "type": "SearchResultEntry",
+    "objectName": "uid=tanamat.on,ou=per,ou=staf,ou=it_gea,ou=it,ou=bkk,dc=kmitl,dc=ac,dc=th",
+    "attributes": [
+        {
+            "type": "o",
+            "values": [
+                "it"
+            ]
+        },
+        {
+            "type": "givenName",
+            "values": [
+                "Tanamat"
+            ]
+        },
+        {
+            "type": "sn",
+            "values": [
+                "Onsanit"
+            ]
+        },
+        {
+            "type": "ou",
+            "values": [
+                "it_gea"
+            ]
+        },
+        {
+            "type": "objectClass",
+            "values": [
+                "inetOrgPerson",
+                "mailOption",
+                "organizationalPerson",
+                "person",
+                "top"
+            ]
+        },
+        {
+            "type": "mail",
+            "values": [
+                "TANAMAT.ON@KMITL.AC.TH"
+            ]
+        },
+        {
+            "type": "uid",
+            "values": [
+                "tanamat.on"
+            ]
+        },
+        {
+            "type": "cn",
+            "values": [
+                "Tanamat Onsanit"
+            ]
+        },
+        {
+            "type": "userPassword",
+            "values": [
+                "{SHA}RTLpzTqkYX/D0jQAu2K4BLAn5WQ="
+            ]
+        }
+    ],
+    "controls": []
+}

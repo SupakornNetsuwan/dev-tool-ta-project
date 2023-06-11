@@ -3,14 +3,14 @@ import Navbar from "@/core/components/Navbar";
 import AuthProvider from "@/core/providers/AuthProvider";
 
 export const metadata = {
-  title: "TA Registration Website | ITKMITL",
-  description: "TA Registration Website for IT KMITL",
+  title: "ระบบรับสมัครผู้ช่วยสอน | ITKMITL",
+  description: "ระบบรับสมัครผู้ช่วยสอนสำหรับคณะเทคโนโลยีสารสนเทศ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง",
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
-      <body className="w-full min-h-screen">
+      <body className="min-h-screen w-full">
         <AuthProvider>
           <Navbar />
           {children}
