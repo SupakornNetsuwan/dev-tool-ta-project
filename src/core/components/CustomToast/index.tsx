@@ -1,17 +1,8 @@
 import React from "react";
 import * as Toast from "@radix-ui/react-toast";
-
-type CustomToastProps = {
-  showToast: boolean;
-  setShowToast: (isShowToast: boolean) => void;
-  children?: React.ReactNode;
-  title: React.ReactNode;
-  description: React.ReactNode;
-  actionButton?: React.ReactNode;
-};
+import type { CustomToastProps } from "./customToastTypes";
 
 /**
- * 
  * @param showToast เป็น boolean ที่แสดงว่าจะแสดง toast หรือไม่
  * @param setShowToast เป็น function ที่ใช้เปลี่ยนค่า showToast
  * @param children เป็น Button / Element ที่แสดงเพื่อ trigger toast
@@ -19,16 +10,9 @@ type CustomToastProps = {
  * @param description เป็น description ของ toast
  * @param actionButton เป็น Button ที่แสดงใน toast ปกติให้กดปิด
  * @remarks ใช้คู่กับ useCustomToast
- * ```
- * {
-  showToast: boolean;
-  setShowToast: (isShowToast: boolean) => void;
-  children?: React.ReactNode;
-  title: React.ReactNode;
-  description: React.ReactNode;
-  actionButton?: React.ReactNode;
-  };
- * ```
+ * 
+ *  @see https://www.radix-ui.com/docs/primitives/components/toast#toast
+ * 
  */
 
 const CustomToast: React.FC<CustomToastProps> = ({

@@ -1,0 +1,73 @@
+{
+    "messageId": 3,
+    "protocolOp": 100,
+    "type": "SearchResultEntry",
+    "objectName": "uid=64070108,ou=bac,ou=stud,ou=it_inf,ou=it,ou=bkk,dc=kmitl,dc=ac,dc=th",
+    "attributes": [
+      {
+        "type": "o",
+        "values": [
+          "it"
+        ]
+      },
+      {
+        "type": "givenName",
+        "values": [
+          "SUPAKORN"
+        ]
+      },
+      {
+        "type": "sn",
+        "values": [
+          "NETSUWAN"
+        ]
+      },
+      {
+        "type": "ou",
+        "values": [
+          "it_inf"
+        ]
+      },
+      {
+        "type": "objectClass",
+        "values": [
+          "inetOrgPerson",
+          "mailOption",
+          "organizationalPerson",
+          "person",
+          "top"
+        ]
+      },
+      {
+        "type": "mail",
+        "values": [
+          "64070108@KMITL.AC.TH"
+        ]
+      },
+      {
+        "type": "uid",
+        "values": [
+          "64070108"
+        ]
+      },
+      {
+        "type": "cn",
+        "values": [
+          "SUPAKORN NETSUWAN"
+        ]
+      },
+      {
+        "type": "mailAlias",
+        "values": [
+          "64070108@kmitl.ac.th"
+        ]
+      },
+      {
+        "type": "userPassword",
+        "values": [
+          "{SHA}e5QeJZw3RQV1aT7UNHGnp6KsNT8="
+        ]
+      }
+    ],
+    "controls": []
+  }

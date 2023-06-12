@@ -1,6 +1,7 @@
 import type { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from "next-auth/providers/credentials"
 import findUser from "../ldap/ldapFindUser"
+import getUser from "./getUser"
 
 /**
  * @description ทำการ export ตัว authOptions ออกไปให้ next-auth ใช้งาน (Next.js 13.0.0 ขึ้นไป)
@@ -21,62 +22,79 @@ const authOptions: NextAuthOptions = {
             password: { label: "password", type: "password", name: "password" }
         },
         async authorize(credentials, req) {
-            const { username, password } = credentials || { username: "", password: "" };
+            let { username, password } = credentials || { username: "", password: "" };
+            if (username.toLowerCase().includes("@kmitl.ac.th")) username = username.toLowerCase().replace("@kmitl.ac.th", "")
 
             const { LDAPuser, LDAPerror } = await findUser(username, password)
 
             if (LDAPerror) {
                 switch (LDAPerror.message) {
                     case "User not found":
-                        // do smth...   
-                        console.log("ไม่เจอ user ที่มี username ดังกล่าว")
-                        break
+                        console.log("ไม่พบผู้ใช้งานที่มีชื่อผู้ใช้ดังกล่าว")
+                        throw new Error("ไม่พบผู้ใช้งานที่มีชื่อผู้ใช้ดังกล่าว")
                     case "Invalid Credentials":
-                        // do smth...
                         console.log("รหัสผ่านผิด")
-                        break
+                        throw new Error("รหัสผ่านผิด")
                     case "Unwilling To Perform":
-                        // do smth...
-                        console.log("ไม่สามารถค้นหาในระบบได้โปรดตรวจสอบข้อมูล ผู้ใช้งาน และ รหัสผ่าน")
-                        break
+                        console.log("โปรดตรวจสอบรหัสผ่าน")
+                        throw new Error("โปรดตรวจสอบรหัสผ่าน")
                     case "must either provide a buffer via `raw` or some `value`":
-                        // do smth...
-                        console.log("โปรดกรอกข้อมูล ผู้ใช้งาน และ รหัสผ่าน")
-                        break
+                        console.log("โปรดกรอกข้อมูลให้ครบถ้วน")
+                        throw new Error("โปรดกรอกข้อมูลให้ครบถ้วน")
                     default:
-                        console.error("🔴 Unhandled error :", LDAPerror.message)
+                        console.error("🔴 เกิดปัญหาที่ไม่สามารถระบุได้ :", LDAPerror.message)
+                        throw new Error("เกิดปัญหาที่ไม่สามารถระบุได้ : " + LDAPerror.message)
                 }
-
-                return null;
             }
 
+            // ข้อมูลผู้ใช้จาก LDAP เช่น
+            // 
+            // LDAPdepartment = 'it',
+            // LDAPemail = '64070108@KMITL.AC.TH',
+            // LDAPid = '64070108',
+            // LDAPfullname = 'SUPAKORN NETSUWAN'
+            // 
+            const LDAPdepartment = LDAPuser.attributes[0].values[0]
+            const LDAPemail = LDAPuser.attributes[5].values[0]
+            const LDAPid = LDAPuser.attributes[6].values[0]
+            const LDAPfullname = LDAPuser.attributes[7].values[0]
 
-            // ข้อมูลผู้ใช้จาก LDAP
-            // console.warn(LDAPuser.attributes[5].values, LDAPuser.attributes[6].values, LDAPuser.attributes[7].values);
+            // ทำการเช็คว่า มีผู้ใช้ในฐานข้อมูลของเราหรือยัง + ถ้าหากไม่มีให้สร้างใหม่ และ ดึงข้อมูลผู้ใช้มา
+            const user = await getUser({ LDAPid, LDAPemail, LDAPfullname, LDAPdepartment })
 
-            // 1. ทำการเช็คว่า มีผู้ใช้ในฐานข้อมูลของเราหรือยัง
-            // 2. ถ้าหากไม่มีให้สร้างใหม่ และ ดึงข้อมูลผู้ใช้มา
-            // 3. ถ้ามีแล้วให้ดึงข้อมูลผู้ใช้มา
-
-            const user = { id: "1", name: 'J Smith', email: 'jsmith@example.com' };
-            if (user) return new Promise((resolve) => resolve(user))
-            return null;
+            // ส้งค่ากลับไป 🎉
+            return user || null
         }
     })],
-    // callbacks: {
-    //     async signIn({ user, account, profile, email, credentials }) {
-    //         return true
-    //     },
-    //     async redirect({ url, baseUrl }) {
-    //         return baseUrl
-    //     },
-    //     async session({ session, token, user }) {
-    //         return session
-    //     },
-    //     async jwt({ token, user, account, profile, isNewUser }) {
-    //         return token
-    //     }
-    // }
+    callbacks: {
+        async signIn({ user, account, profile, email, credentials }) {
+            console.log();
+
+            return true
+        },
+        async redirect({ url, baseUrl }) {
+            return baseUrl
+        },
+        async jwt({ token, user, account, profile }) {
+            if (account) {
+                token.createdAt = user.createdAt
+                token.email = user.email
+                token.id = user.id
+                token.fullname = user.fullname
+                token.role = user.role
+                token.department = user.department
+            }
+
+            return token
+        },
+        async session({ session, token, user }) {
+            session.user.role = token.role
+            session.user.department = token.department
+            session.user.fullname = token.fullname
+            session.user.id = token.id
+            return session
+        }
+    }
 }
 
 export default authOptions;

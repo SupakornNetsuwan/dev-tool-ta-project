@@ -11,6 +11,7 @@ const LoginPage = () => {
   return (
     <div className="p-12">
       <LoginForm>
+        {process.env.TEMP_VAR}
         <div>
           <h1 className="text-xl font-semibold text-blue-500">เข้าสู่ระบบ</h1>
           <p className="mt-1 text-gray-500">เข้าสู่ระบบเพื่อลงสมัครผู้ช่วยสอน/จัดการ การลงทะเบียน</p>

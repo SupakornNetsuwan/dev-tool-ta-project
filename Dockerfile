@@ -16,8 +16,8 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /usr/src/app
 
-ENV NODE_ENV production
 # More environment variables can be added here!
+ENV NODE_ENV production
 # ...
 
 # Uncomment the following line in case you want to disable telemetry during runtime.
