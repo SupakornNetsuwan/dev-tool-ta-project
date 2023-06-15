@@ -82,7 +82,11 @@ const List: NavbarContentListItemType = ({ path, name }) => {
   const currentPathName = usePathname();
   const isActive = path === currentPathName;
   return (
-    <li className={`${isActive ? "text-gray-800" : "text-gray-500"} `}>
+    <li
+      className={`${
+        isActive ? "text-gray-800 underline decoration-blue-500 underline-offset-4" : "text-gray-500"
+      } `}
+    >
       <Link href={path}>{name}</Link>
     </li>
   );

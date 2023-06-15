@@ -73,6 +73,11 @@ const authOptions: NextAuthOptions = {
             return user
         }
     })],
+    session: {
+        strategy: "jwt",
+        maxAge: 60 * 60 * 6, // 6 hours
+        updateAge: 0 // 1 minute
+    },
     callbacks: {
         async signIn({ user, account, profile, email, credentials }) {
 
@@ -82,6 +87,7 @@ const authOptions: NextAuthOptions = {
             return baseUrl
         },
         async jwt({ token, user, account, profile }) {
+            
             if (account) {
                 token.createdAt = user.createdAt
                 token.email = user.email

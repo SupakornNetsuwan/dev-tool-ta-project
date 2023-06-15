@@ -19,7 +19,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body className="min-h-screen w-full">
         <Providers providers={[<AuthProvider />, <CustomToastContextProvider />, <LoadingScreenContextProvider />]}>
           <Navbar />
-          {children}
+          <div className="pt-8">{children}</div>
         </Providers>
       </body>
     </html>

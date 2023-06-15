@@ -8,10 +8,14 @@ import useScrollAmount from "@/core/hooks/useScrollAmount";
 const Navbar = () => {
   const scrollHeight = useScrollAmount();
 
-  const atcrollThreshold = scrollHeight > 100;
+  const atcrollThreshold = scrollHeight > 50;
 
   return (
-    <div className={`${atcrollThreshold ? "p-0" : "p-4"} sticky top-0 transition-all duration-200`}>
+    <div
+      className={`${
+        atcrollThreshold ? "translate-y-0 px-0" : "translate-y-4 px-4"
+      } sticky top-0 transition-all duration-200`}
+    >
       <div
         className={`${
           atcrollThreshold ? "rounded-none border-l-0 border-r-0" : "rounded-lg "
