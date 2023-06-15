@@ -83,7 +83,7 @@ const findUser: FindUserType = async (username, password) => {
         }
 
         // error เป็น string ธรรมดา
-        if (error instanceof String) {
+        if (typeof error === "string") {
             return { LDAPuser: null, LDAPerror: new Error(error.toString()) }
         }
 

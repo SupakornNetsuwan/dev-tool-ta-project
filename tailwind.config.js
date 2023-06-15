@@ -8,11 +8,12 @@ module.exports = {
   theme: {
     extend: {
       boxShadow: {
-        "realistic-1": "hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px"
-
+        "realistic-1": "hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px",
+        "realistic-2": "rgba(0,0,0,0.08) 0px 4px 12px"
       },
       backgroundImage: {
-        "gradient-blue-purple": "linear-gradient(83deg, rgba(59,130,246,1) 0%, rgba(79,70,235,1) 100%)"
+        "gradient-blue-purple": "linear-gradient(83deg, rgba(59,130,246,1) 0%, rgba(79,70,235,1) 100%)",
+        "gradient-metal": " linear-gradient(138deg, rgba(255,255,255,0.7903536414565826) 0%, rgba(240,240,240,0.8855917366946778) 38%, rgba(255,255,255,0.5746673669467788) 67%, rgba(255,255,255,0.9248074229691877) 88%, rgba(244,244,244,0.9360119047619048) 100%)"
       },
       keyframes: {
         hide: {

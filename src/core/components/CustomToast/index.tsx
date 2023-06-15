@@ -1,6 +1,6 @@
 import React from "react";
 import * as Toast from "@radix-ui/react-toast";
-import type { CustomToastProps } from "./customToastTypes";
+import type { CustomToastProps } from "./CustomToastTypes";
 
 /**
  * @param showToast เป็น boolean ที่แสดงว่าจะแสดง toast หรือไม่
@@ -10,9 +10,9 @@ import type { CustomToastProps } from "./customToastTypes";
  * @param description เป็น description ของ toast
  * @param actionButton เป็น Button ที่แสดงใน toast ปกติให้กดปิด
  * @remarks ใช้คู่กับ useCustomToast
- * 
- *  @see https://www.radix-ui.com/docs/primitives/components/toast#toast
- * 
+ *
+ * @see https://www.radix-ui.com/docs/primitives/components/toast#toast
+ *
  */
 
 const CustomToast: React.FC<CustomToastProps> = ({

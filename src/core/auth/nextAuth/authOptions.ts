@@ -1,7 +1,8 @@
 import type { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from "next-auth/providers/credentials"
 import findUser from "../ldap/ldapFindUser"
-import getUser from "./getUser"
+import storeUser from "./storeUser"
+import checkExistUser from "./checkExistUser"
 
 /**
  * @description ทำการ export ตัว authOptions ออกไปให้ next-auth ใช้งาน (Next.js 13.0.0 ขึ้นไป)
@@ -24,6 +25,10 @@ const authOptions: NextAuthOptions = {
         async authorize(credentials, req) {
             let { username, password } = credentials || { username: "", password: "" };
             if (username.toLowerCase().includes("@kmitl.ac.th")) username = username.toLowerCase().replace("@kmitl.ac.th", "")
+
+            // ตรวจสอบผู้ใช้งานจาก DB ก่อนว่ามีมั้ยผู้ใช้มั้ยโดยการเทียบ username กับ hashed password
+            const existedUser = await checkExistUser(username, password)
+            if (existedUser) return existedUser
 
             const { LDAPuser, LDAPerror } = await findUser(username, password)
 
@@ -54,21 +59,22 @@ const authOptions: NextAuthOptions = {
             // LDAPid = '64070108',
             // LDAPfullname = 'SUPAKORN NETSUWAN'
             // 
+
             const LDAPdepartment = LDAPuser.attributes[0].values[0]
             const LDAPemail = LDAPuser.attributes[5].values[0]
             const LDAPid = LDAPuser.attributes[6].values[0]
             const LDAPfullname = LDAPuser.attributes[7].values[0]
 
-            // ทำการเช็คว่า มีผู้ใช้ในฐานข้อมูลของเราหรือยัง + ถ้าหากไม่มีให้สร้างใหม่ และ ดึงข้อมูลผู้ใช้มา
-            const user = await getUser({ LDAPid, LDAPemail, LDAPfullname, LDAPdepartment })
+            // ทำการเช็คว่า มีผู้ใช้ในฐานข้อมูลของเราหรือไม่ถ้ามีแสดงว่ารหัสผ่านมีการเปลี่ยนแปลงก็ทำการอัพเดท ถ้าไม่มีก็ทำการสร้างผู้ใช้ใหม่
+            const user = await storeUser({ LDAPid, LDAPemail, LDAPfullname, LDAPdepartment, password })
 
-            // ส้งค่ากลับไป 🎉
-            return user || null
+            // ส่งค่ากลับไป 🎉
+            // return user || null
+            return user
         }
     })],
     callbacks: {
         async signIn({ user, account, profile, email, credentials }) {
-            console.log();
 
             return true
         },
