@@ -1,6 +1,8 @@
 import dynamic from "next/dynamic";
 import "./globals.css";
-const Navbar = dynamic(() => import("@/core/components/Navbar"));
+const Navbar = dynamic(() => import("@/core/components/Navbar"), {
+  loading: () => <div className="h-22 m-4 w-full animate-pulse bg-gradient-metal"></div>,
+});
 // Providers manager
 import Providers from "@/core/providers/Providers";
 // Providers for client-side
@@ -14,10 +16,17 @@ export const metadata = {
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
+  console.log(process.env.SOME_FLAG || "ไม่สามารถโหลด SOME_FLAG environment variable ได้");
   return (
     <html lang="en">
       <body className="min-h-screen w-full">
-        <Providers providers={[<AuthProvider />, <CustomToastContextProvider />, <LoadingScreenContextProvider />]}>
+        <Providers
+          providers={[
+            <AuthProvider key="auth-provider" />,
+            <CustomToastContextProvider key="customtoast-provider" />,
+            <LoadingScreenContextProvider key="loadingscreen-provider" />,
+          ]}
+        >
           <Navbar />
           <div className="pt-8">{children}</div>
         </Providers>

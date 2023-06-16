@@ -87,7 +87,7 @@ const authOptions: NextAuthOptions = {
             return baseUrl
         },
         async jwt({ token, user, account, profile }) {
-            
+
             if (account) {
                 token.createdAt = user.createdAt
                 token.email = user.email

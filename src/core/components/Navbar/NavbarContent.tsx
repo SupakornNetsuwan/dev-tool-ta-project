@@ -1,12 +1,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import { HiOutlineArrowRightOnRectangle } from "react-icons/hi2";
-import type {
-  NavbarContentListItemType,
-  NavbarContentLoadingType,
-  NavbarContentType,
-  NavbarContentWrapperType,
-} from "./NavbarTypes";
+import type { NavbarContentListItemType, NavbarContentLoadingType, NavbarContentWrapperType } from "./NavbarTypes";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 
@@ -78,21 +73,17 @@ const Loading: NavbarContentLoadingType = () => {
  * @description แสดงรายการ Navbar item แต่ละรายการ
  */
 
-const List: NavbarContentListItemType = ({ path, name }) => {
+const List: NavbarContentListItemType = ({ path, children }) => {
   const currentPathName = usePathname();
   const isActive = path === currentPathName;
   return (
-    <li
-      className={`${
-        isActive ? "text-gray-800 underline decoration-blue-500 underline-offset-4" : "text-gray-500"
-      } `}
-    >
-      <Link href={path}>{name}</Link>
+    <li className={`${isActive ? "text-gray-800 underline decoration-blue-500 underline-offset-4" : "text-gray-500"} `}>
+      <Link href={path}>{children}</Link>
     </li>
   );
 };
 
-const NavbarContent: NavbarContentType = {
+const NavbarContent = {
   Wrapper,
   Loading,
   List,

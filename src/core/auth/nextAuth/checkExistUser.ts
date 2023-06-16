@@ -20,7 +20,7 @@ const checkExistUser: checkExistUserType = async (username, password) => {
 
     try {
         const isPasswordValid = await bcrypt.compare(password, user?.password)
-        if (!isPasswordValid) throw new Error("รหัสผ่านไม่ตรงกันกับที่บันทึกในฐานข้อมูล...")
+        if (!isPasswordValid) throw new Error("รหัสผ่านไม่ตรงกันกับที่บันทึกในฐานข้อมูล. ลองเช็คที่ LDAP นะ (┬┬﹏┬┬)...")
         console.log("รหัสผ่านตรงกันกับที่บันทึกในฐานข้อมูล... ✨")
         return user;
     } catch (error) {

@@ -6,9 +6,12 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     env_file:
       - .env
+    networks:
+      - application
   mysql:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
@@ -18,10 +21,14 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: tawebsite
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 5s
+      retries: 3
     volumes:
       - "mysql_data:/var/lib/mysql"
     networks:
-      - database
+      - application
   phpmyadmin:
     image: phpmyadmin
     restart: always
@@ -32,9 +39,9 @@ services:
     depends_on:
       - mysql
     networks:
-      - database
+      - application
 networks:
-  database:
+  application:
     driver: bridge
 volumes:
   mysql_data:

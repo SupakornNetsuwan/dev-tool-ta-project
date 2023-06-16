@@ -27,9 +27,13 @@ const Navbar = () => {
           </div>
         </Link>
         <NavbarContent.Wrapper onLoading={() => <NavbarContent.Loading />}>
-          {(navbarItems) => {
-            return navbarItems.map(({ name, path }) => <NavbarContent.List key={name} path={path} name={name} />);
-          }}
+          {(items) =>
+            items.map(({ name, path }) => (
+              <NavbarContent.List key={name} path={path}>
+                {name}
+              </NavbarContent.List>
+            ))
+          }
         </NavbarContent.Wrapper>
       </div>
     </div>
