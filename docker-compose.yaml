@@ -9,7 +9,7 @@ services:
       mysql:
         condition: service_healthy
     env_file:
-      - .env
+      - .env.production
     networks:
       - application
   mysql:
