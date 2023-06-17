@@ -1,9 +1,12 @@
-import React from 'react'
+import StatusConfigure from "./components/StatusConfigure";
 
 const page = () => {
   return (
-    <div>page</div>
-  )
-}
+    <div>
+      <p className="text-gray-500">ปรับเปลี่ยนสถานะการรับสมัครโดยการกำหนด เวลาเปิด และ เวลาปิด ของการรับสมัคร</p>
+      <StatusConfigure />
+    </div>
+  );
+};
 
-export default page
+export default page;

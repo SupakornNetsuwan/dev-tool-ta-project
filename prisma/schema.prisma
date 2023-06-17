@@ -20,6 +20,12 @@ model User {
   createdAt  DateTime @default(now())
 }
 
+model SystemStatus {
+  id        Int      @id() @default(autoincrement())
+  openDate  DateTime
+  closeDate DateTime
+}
+
 enum Role {
   SUPERADMIN
   ADMIN

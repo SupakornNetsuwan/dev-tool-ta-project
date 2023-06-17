@@ -24,7 +24,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => 
           เปิด/ปิด การสมัคร
         </SubNavbar.Item>
       </SubNavbar.Wrapper>
-      <div className="bg-gray-50 p-4">{children}</div>
+      <div className="bg-gray-50 min-h-[60vh] p-4">{children}</div>
     </>
   );
 };
