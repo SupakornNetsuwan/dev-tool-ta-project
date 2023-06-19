@@ -43,7 +43,7 @@ const Wrapper: NavbarContentWrapperType = ({ children, onLoading }) => {
       {session?.user.role && (
         <li>
           <button
-            onClick={() => signOut({ redirect: false })}
+            onClick={() => signOut({ callbackUrl: "/login" })}
             className="flex items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-500 shadow-realistic-2 transition-colors duration-100 hover:border-red-500 hover:bg-red-50 hover:text-red-500 hover:shadow-none"
           >
             ออกจากระบบ

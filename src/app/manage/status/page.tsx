@@ -1,10 +1,15 @@
-import StatusConfigure from "./components/StatusConfigure";
+import DisplaySystemStatus from "./components/DisplaySystemStatus";
+import CreateStatusForm from "./components/CreateStatusForm";
+// Using API
+import getSystemStatus from "@/app/api/manage/systemStatus/func/getSystemStatus";
 
-const page = () => {
+const page = async () => {
+  const systemStatus = await getSystemStatus();
+
   return (
     <div>
-      <p className="text-gray-500">ปรับเปลี่ยนสถานะการรับสมัครโดยการกำหนด เวลาเปิด และ เวลาปิด ของการรับสมัคร</p>
-      <StatusConfigure />
+      <p className="mb-4 text-gray-500">ปรับเปลี่ยนสถานะการรับสมัครโดยการกำหนด เวลาเปิด และ เวลาปิด ของการรับสมัคร</p>
+      {!systemStatus ? <CreateStatusForm /> : <DisplaySystemStatus />}
     </div>
   );
 };

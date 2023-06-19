@@ -11,14 +11,14 @@
 
 @layer components {
   .text-input {
-    @apply border border-gray-300 rounded-md px-3 py-2 outline-none text-gray-900 focus:shadow-sm;
+    @apply rounded-md border border-gray-300 px-3 py-2 text-gray-900 outline-none focus:shadow-sm;
   }
 
   .btn {
-    @apply px-3 py-2 rounded-md;
+    @apply rounded-md px-3 py-2  transition-shadow duration-100 hover:shadow-lg active:scale-95;
   }
 
   .btn.click-animation {
-    @apply active:scale-[0.98] transition-all duration-100;
+    @apply transition-all duration-100 active:scale-[0.98];
   }
 }

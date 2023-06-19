@@ -27,7 +27,7 @@ const LoginPage = () => {
           </label>
           <input type="password" name="password" id="password" className="text-input w-full" />
         </div>
-        <button className="btn click-animation w-full bg-gradient-blue-purple text-white transition-shadow duration-100 hover:shadow-lg active:scale-95 ">
+        <button className="btn click-animation w-full bg-gradient-blue-purple text-white">
           เข้าสู่ระบบ
         </button>
       </LoginForm>

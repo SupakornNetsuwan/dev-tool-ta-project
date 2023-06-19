@@ -9,7 +9,8 @@ import Providers from "@/core/providers/Providers";
 import AuthProvider from "@/core/providers/AuthProvider";
 import CustomToastContextProvider from "@/core/components/CustomToast/provider/CustomToastContextProvider";
 import LoadingScreenContextProvider from "@/core/components/LoadingScreen/provider/LoadingScreenContextProvider";
-
+import ClientLocalizationProvider from "@/core/providers/ClientLocalizationProvider";
+import ClientQueryClientProvider from "@/core/providers/ClientQueryClientProvider";
 export const metadata = {
   title: "ระบบรับสมัครผู้ช่วยสอน | ITKMITL",
   description: "ระบบรับสมัครผู้ช่วยสอนสำหรับคณะเทคโนโลยีสารสนเทศ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง",
@@ -25,6 +26,8 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             <AuthProvider key="auth-provider" />,
             <CustomToastContextProvider key="customtoast-provider" />,
             <LoadingScreenContextProvider key="loadingscreen-provider" />,
+            <ClientLocalizationProvider key="localization-provider" />,
+            <ClientQueryClientProvider key="queryclient-provider" />,
           ]}
         >
           <Navbar />

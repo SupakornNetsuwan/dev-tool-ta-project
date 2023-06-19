@@ -12,5 +12,7 @@ const checkAuth = async (roles: Role[]) => {
 
   return { session, hasPermission: true };
 };
-
+/**
+ * @description ทำการตรวจสอบว่าผู้ใช้มีสิทธิ์เข้าถึงหน้านี้หรือไม่ (Server side)
+ */
 export default checkAuth;

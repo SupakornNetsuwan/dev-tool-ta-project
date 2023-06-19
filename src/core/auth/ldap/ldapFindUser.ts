@@ -1,8 +1,7 @@
 import util from "util"
-import _ from "lodash"
 import client, { base, filter_fmt } from "./ldapConnector";
 import ldapAuth from './ldapAuth';
-import type { FindUserType, LDAPuser } from "./LdapTypes"
+import type { FindUserType, LDAPuser } from "./ldapTypes"
 
 const findUser: FindUserType = async (username, password) => {
 
@@ -56,7 +55,8 @@ const findUser: FindUserType = async (username, password) => {
                 // @ts-ignore
                 res.on('end', async (result) => {
                     console.log(result.status === 0 ? "ปิดการค้นหาด้วยสถนะปกติ (status = 0) " : "มีปัญหาเกิดขึ้นระหว่าง client.search");
-                    if (_.isEmpty(user)) return reject(new Error("User not found"))
+
+                    if (!Object.keys(user).length) return reject(new Error("User not found"))
 
                     // ตรวจสอบว่า Password ถูกต้อง หรือ ไม่
                     // @ts-ignore
