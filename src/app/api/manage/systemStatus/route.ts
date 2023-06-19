@@ -33,3 +33,11 @@ export const POST = async (request: NextRequest) => {
     }
 
 }
+
+export const DELETE = async (request: NextRequest) => {
+    // ตรวจสอบสิทธิ์
+    const { hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN"]);
+    if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
+
+    return NextResponse.json({ message: "Hello" }, { status: 200 })
+}

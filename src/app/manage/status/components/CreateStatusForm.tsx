@@ -1,7 +1,7 @@
 "use client";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { HiOutlineXMark } from "react-icons/hi2";
+import { HiOutlineXMark, HiOutlineArrowSmallRight, HiOutlineClock } from "react-icons/hi2";
 import DisplayDate from "./DisplayDate";
 // MUI-X (Date picker)
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
@@ -16,8 +16,9 @@ import { SystemStatusPayloadType } from "@/app/api/manage/systemStatus/SystemSta
 
 dayjs.locale("th");
 
-const CreateStatusForm = () => {
+const CreateStatusForm: React.FC = () => {
   const router = useRouter();
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
   const { openToast } = useCustomToast();
   const createSystemStatus = useCreateSystemStatus();
   const [dates, setDates] = useState<SystemStatusPayloadType>({
@@ -41,19 +42,23 @@ const CreateStatusForm = () => {
 
   const createStatusHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    // ทำการ disable submit button ไปก่อน
+    const submitButtonElement = submitButtonRef.current as HTMLButtonElement;
+    submitButtonElement.disabled = true;
+
     createSystemStatus.mutate(
       { openDate: dates.openDate, closeDate: dates.closeDate },
       {
         onSuccess: (data) => {
-          console.log(data.data);
           openToast({
             title: <p className="text-blue-500">สำเร็จ 🎉</p>,
-            description: <p>กำหนดเวลารับสมัครแล้ว</p>,
+            description: <p>{data.data.message}</p>,
             actionButton: <HiOutlineXMark className="text-2xl text-gray-900" />,
           });
           setTimeout(() => router.refresh(), 1000);
         },
         onError: (error) => {
+          submitButtonElement.disabled = false;
           openToast({
             title: <p className="text-red-500">ไม่สามารถกำหนดเวลาได้</p>,
             description: <p>{error?.response?.data.message || "ไม่ทราบสาเหตุ"}</p>,
@@ -66,28 +71,35 @@ const CreateStatusForm = () => {
 
   return (
     <div className=" rounded-md bg-white p-4 ">
-      <div className="flex space-x-2 [&>div]:w-full">
+      <div className="flex space-x-2">
         <DateTimePicker
           value={dates.openDate}
           maxDateTime={dayjs(dates.closeDate)}
           minDateTime={dayjs()}
           onChange={setOpenDate}
           label={<p className="font-noto">วัน และ เวลาที่เปิดรับสมัคร</p>}
-          className="[&>div>input]:font-noto"
+          className="flex-1 [&>div>input]:font-noto"
         />
+        <HiOutlineArrowSmallRight className="self-center text-2xl text-gray-500" />
         <DateTimePicker
           value={dates.closeDate}
           onChange={setCloseDate}
           minDateTime={dayjs(dates.openDate)}
           label={<p className="font-noto">วัน และ เวลาที่ปิดรับสมัคร</p>}
-          className="[&>div>input]:font-noto"
+          className="flex-1 [&>div>input]:font-noto"
         />
       </div>
-      <div className="my-6 [&>div]:flex [&>div]:space-x-2">
-        <DisplayDate preText={<p className="text-gray-500">วันที่เปิดรับสมัคร</p>} date={dates.openDate} />
-        <DisplayDate preText={<p className="text-gray-500">วันที่ปิดรับสมัคร</p>} date={dates.closeDate} />
+      <div className="my-6 flex space-x-2">
+        <DisplayDate preText={<p className="text-gray-800">เริ่มรับสมัคร</p>} date={dates.openDate} />
+        <HiOutlineArrowSmallRight className="self-center text-2xl text-gray-500" />
+        <DisplayDate preText={<p className="text-gray-500">สิ้นสุดรับสมัคร</p>} date={dates.closeDate} />
       </div>
-      <button onClick={createStatusHandler} className="click-animation btn bg-blue-500 text-white">
+      <button
+        ref={submitButtonRef}
+        onClick={createStatusHandler}
+        disabled={!dates.openDate || !dates.closeDate}
+        className="click-animation btn bg-blue-500 text-white disabled:opacity-50"
+      >
         กำหนดเวลารับสมัคร
       </button>
     </div>

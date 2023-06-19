@@ -9,7 +9,7 @@ const page = async () => {
   return (
     <div>
       <p className="mb-4 text-gray-500">ปรับเปลี่ยนสถานะการรับสมัครโดยการกำหนด เวลาเปิด และ เวลาปิด ของการรับสมัคร</p>
-      {!systemStatus ? <CreateStatusForm /> : <DisplaySystemStatus />}
+      {!systemStatus ? <CreateStatusForm /> : <DisplaySystemStatus systemStatus={systemStatus} />}
     </div>
   );
 };
