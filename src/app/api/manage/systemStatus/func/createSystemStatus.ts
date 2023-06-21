@@ -17,7 +17,9 @@ const createSystemStatus = async (openDate: Dayjs | null, closeDate: Dayjs | nul
 
         const gettedSystemStatus = await getSystemStatus() // เช็คว่ามีแล้วหรือยัง
         if (gettedSystemStatus) throw new Error("ระบบได้กำหนดช่วงวันลงทะเบียนไปแล้ว") // ถ้ามีสร้างไว้อยู่แล้ว จะไม่สามารถสร้างได้
+
         const createdSystemStatys = await prisma.systemStatus.create({ data: { openDate: openDate.toISOString(), closeDate: closeDate.toISOString() } })
+        
         return createdSystemStatys
     })
 

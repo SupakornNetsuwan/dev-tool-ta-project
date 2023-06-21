@@ -15,9 +15,8 @@ const CancelSystemStatus = () => {
   const { openDialog, dialogState, setShowDialog } = useCustomDialog();
   const deleteSystemStatus = useDeleteSystemStatus();
 
-  const cancelHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const deleteHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
     openDialog({
       title: <p className="text-red-500">คำเตือน ⚠️</p>,
       description: <p className="text-gray-500">ยืนยันที่จะลบช่วงเวลาดังกล่าวหรือไม่ การกระทำจะไม่สามารถย้านกลับได้</p>,
@@ -52,7 +51,7 @@ const CancelSystemStatus = () => {
   return (
     <div>
       <CustomDialog {...dialogState} setShowDialog={setShowDialog} />
-      <button onClick={cancelHandler} className="click-animation btn border border-red-500 bg-red-50 text-red-500">
+      <button onClick={deleteHandler} className="click-animation btn border border-red-500 bg-red-50 text-red-500">
         ยกเลิกช่วงเวลา
       </button>
     </div>
