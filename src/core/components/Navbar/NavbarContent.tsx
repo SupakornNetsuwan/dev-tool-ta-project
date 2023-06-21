@@ -10,11 +10,6 @@ import type {
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 
-// // Each role's interface
-// import SuperAdminNavbar from "./interfaces/SuperAdminNavbar";
-// import AdminNavbar from "./interfaces/AdminNavbar";
-// import ProfessorNavbar from "./interfaces/ProfessorNavbar";
-// import StudentNabvar from "./interfaces/StudentNavbar";
 const rolesItem = {
   SUPERADMIN: [{ name: "หน้าหลัก", path: "/" }],
   ADMIN: [
@@ -77,8 +72,8 @@ const MobileDrawer: NavbarContentMobileDrawer = ({ children, closeDrawer, isDraw
         {session?.user.role && (
           <li
             onClick={() => {
-              closeDrawer()
-              signOut({ callbackUrl: "/login" })
+              closeDrawer();
+              signOut({ callbackUrl: "/login" });
             }}
             className="flex w-full items-center space-x-1 p-4 text-red-500 "
           >

@@ -4,6 +4,7 @@ import type { SystemStatusPayloadType } from "./SystemStatusType"
 import createSystemStatus from "./func/createSystemStatus";
 // Auth check
 import checkAuth from "@/core/func/checkAuth";
+import deleteSystemStatus from "./func/deleteSystemStatus";
 
 /**
  * @description เป็น API Route สำหรับการสร้างข้อมูลระบบสถานะการเปิด-ปิดระบบ
@@ -39,5 +40,14 @@ export const DELETE = async (request: NextRequest) => {
     const { hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN"]);
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
 
-    return NextResponse.json({ message: "Hello" }, { status: 200 })
+    try {
+        const deletedSystemStatus = await deleteSystemStatus()
+        return NextResponse.json({ message: "ลบข้อมูลสำเร็จ", data: deletedSystemStatus }, { status: 200 })
+    } catch (error) {
+        let message = ""
+        if (error instanceof Object && !(error instanceof Error)) message = JSON.stringify(error);
+        if (error instanceof Error) message = error.message
+        if (typeof error == "string") message = error
+        return NextResponse.json({ message }, { status: 400 })
+    }
 }

@@ -2,7 +2,7 @@
 import React, { useState, useCallback } from "react";
 import CustomToast from "../index";
 import CustomToastContext from "../context/CustomToastContext";
-import type { ToastStateProps, ToastElements } from "../CustomToastTypes";
+import type { ToastStateProps, ToastOpenFuncProps } from "../CustomToastTypes";
 
 const CustomToastContextProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
   const [toastState, setToastState] = useState<ToastStateProps>({
@@ -15,7 +15,7 @@ const CustomToastContextProvider: React.FC<{ children?: React.ReactNode }> = ({ 
   /**
    * @description ทำการเปิด toast
    */
-  const openToast = useCallback(({ title, description, actionButton }: ToastElements) => {
+  const openToast = useCallback(({ title, description, actionButton }: ToastOpenFuncProps) => {
     setToastState({ showToast: false, title, description, actionButton });
 
     // เพื่อทำให้ clear toast อันที่ผ่านๆ มา

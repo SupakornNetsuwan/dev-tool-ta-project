@@ -2,7 +2,7 @@
  * @description Elements ทีอยู่ใน Toast ที่ต้องส่งไปใน CustomToast Component
  */
 
-export type ToastElements = Omit<CustomToastProps, "children" | "setShowToast" | "showToast">
+export type ToastOpenFuncProps = Omit<CustomToastProps, "children" | "setShowToast" | "showToast">
 
 /**
  * @description state ใช้สำหรับ toast state ใน useCustom Toast

@@ -1,9 +1,9 @@
 import React from "react";
-import type { ToastStateProps, ToastElements } from "../CustomToastTypes";
+import type { ToastStateProps, ToastOpenFuncProps } from "../CustomToastTypes";
 
 type CustomToastContextType = {
   toastState: ToastStateProps;
-  openToast: ({ title, description, actionButton }: ToastElements) => void;
+  openToast: ({ title, description, actionButton }: ToastOpenFuncProps) => void;
   closeToast: () => void;
 };
 
