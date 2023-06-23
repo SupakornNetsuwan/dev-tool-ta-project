@@ -8,11 +8,13 @@ import CustomDialog from "@/core/components/CustomDialog";
 import useDeleteSystemStatus from "../hooks/useDeleteSystemStatus";
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
 import useCustomDialog from "@/core/components/CustomDialog/hooks/useCustomDialog";
+import useLoadingScreen from "@/core/components/LoadingScreen/hook/useLoadingScreen";
 
 const CancelSystemStatus = () => {
   const router = useRouter();
   const { openToast } = useCustomToast();
   const { openDialog, dialogState, setShowDialog } = useCustomDialog();
+  const { showLoading, hideLoading } = useLoadingScreen();
   const deleteSystemStatus = useDeleteSystemStatus();
 
   const deleteHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -30,6 +32,7 @@ const CancelSystemStatus = () => {
   };
 
   const confirmDeleteHandler = async () => {
+    showLoading();
     deleteSystemStatus.mutate(null, {
       onSuccess(data, variables, context) {
         openToast({
@@ -43,7 +46,7 @@ const CancelSystemStatus = () => {
         console.log(error.response?.data.message, variables);
       },
       onSettled: () => {
-        console.log("Settled");
+        hideLoading();
       },
     });
   };

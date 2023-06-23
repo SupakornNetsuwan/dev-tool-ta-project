@@ -3,6 +3,11 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import findUser from "../ldap/ldapFindUser"
 import storeUser from "./storeUser"
 import checkExistUser from "./checkExistUser"
+// Helper for development
+import checkExistFakeUser from './helper/checkExistFakeUser'
+import storeFakeUser from './helper/storeFakeUser'
+
+export const isUsingFakeUser = false;
 
 /**
  * @description ทำการ export ตัว authOptions ออกไปให้ next-auth ใช้งาน (Next.js 13.0.0 ขึ้นไป)
@@ -25,6 +30,14 @@ const authOptions: NextAuthOptions = {
         async authorize(credentials, req) {
             let { username, password } = credentials || { username: "", password: "" };
             if (username.toLowerCase().includes("@kmitl.ac.th")) username = username.toLowerCase().replace("@kmitl.ac.th", "")
+
+            if (isUsingFakeUser) {
+                if (!username || !password) throw new Error("โปรดระบุชื่อผู้ใช้ และ รหัสผ่านของบัญชีทดสอบ")
+                const existedFakeUser = await checkExistFakeUser(username, password)
+                if (existedFakeUser) return existedFakeUser
+                const fakeUser = await storeFakeUser(username, password)
+                return fakeUser
+            }
 
             // ตรวจสอบผู้ใช้งานจาก DB ก่อนว่ามีมั้ยผู้ใช้มั้ยโดยการเทียบ username กับ hashed password
             const existedUser = await checkExistUser(username, password)

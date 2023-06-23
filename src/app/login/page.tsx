@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import React from "react";
 import LoginForm from "./components/LoginForm";
+import { isUsingFakeUser } from "@/core/auth/nextAuth/authOptions";
 
 export const metadata: Metadata = {
   title: "เข้าสู่ระบบ | ITKMITL",
@@ -12,7 +13,12 @@ const LoginPage = () => {
     <div className="p-12">
       <LoginForm>
         <div>
-          <h1 className="text-xl font-semibold text-blue-500">เข้าสู่ระบบ</h1>
+          <h1 className="text-xl font-semibold text-blue-500">
+            เข้าสู่ระบบ
+            {isUsingFakeUser && (
+              <p className="inline-block rounded-full bg-red-50 px-3 py-0.5 text-sm text-red-500 ml-2">กำลังใช้ระบบทดสอบ</p>
+            )}
+          </h1>
           <p className="mt-1 text-gray-500">เข้าสู่ระบบเพื่อลงสมัครผู้ช่วยสอน/จัดการ การลงทะเบียน</p>
         </div>
         <div>
@@ -27,9 +33,7 @@ const LoginPage = () => {
           </label>
           <input type="password" name="password" id="password" className="text-input w-full" />
         </div>
-        <button className="btn click-animation w-full bg-gradient-blue-purple text-white">
-          เข้าสู่ระบบ
-        </button>
+        <button className="btn click-animation w-full bg-gradient-blue-purple text-white">เข้าสู่ระบบ</button>
       </LoginForm>
     </div>
   );

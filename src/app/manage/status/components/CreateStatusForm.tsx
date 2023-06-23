@@ -11,6 +11,7 @@ import "dayjs/locale/th";
 // Hooks
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
 import useCreateSystemStatus from "../hooks/useCreateSystemStatus";
+import useLoadingScreen from "@/core/components/LoadingScreen/hook/useLoadingScreen";
 // types
 import { SystemStatusPayloadType } from "@/app/api/manage/systemStatus/SystemStatusType";
 
@@ -18,8 +19,9 @@ dayjs.locale("th");
 
 const CreateStatusForm: React.FC = () => {
   const router = useRouter();
-  const submitButtonRef = useRef<HTMLButtonElement>(null);
   const { openToast } = useCustomToast();
+  const { hideLoading, showLoading } = useLoadingScreen();
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
   const createSystemStatus = useCreateSystemStatus();
   const [dates, setDates] = useState<SystemStatusPayloadType>({
     openDate: dayjs().set("minute", dayjs().minute() + 5),
@@ -45,6 +47,7 @@ const CreateStatusForm: React.FC = () => {
     // ทำการ disable submit button ไปก่อน
     const submitButtonElement = submitButtonRef.current as HTMLButtonElement;
     submitButtonElement.disabled = true;
+    showLoading();
 
     createSystemStatus.mutate(
       { openDate: dates.openDate, closeDate: dates.closeDate },
@@ -64,6 +67,9 @@ const CreateStatusForm: React.FC = () => {
             description: <p>{error?.response?.data.message || "ไม่ทราบสาเหตุ"}</p>,
             actionButton: <HiOutlineXMark className="text-2xl text-gray-900" />,
           });
+        },
+        onSettled: () => {
+          hideLoading();
         },
       }
     );
