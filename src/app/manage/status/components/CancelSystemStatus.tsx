@@ -43,7 +43,11 @@ const CancelSystemStatus = () => {
         setTimeout(() => router.refresh(), 1000);
       },
       onError(error, variables, context) {
-        console.log(error.response?.data.message, variables);
+        openToast({
+          title: <p className="text-red-500">ไม่สามารถลบช่วงเวลาได้</p>,
+          description: <p>{error?.response?.data.message || "ไม่ทราบสาเหตุ"}</p>,
+          actionButton: <HiOutlineXMark className="text-2xl text-gray-900" />,
+        });
       },
       onSettled: () => {
         hideLoading();

@@ -44,7 +44,7 @@ export const DELETE = async (request: NextRequest) => {
         const deletedSystemStatus = await deleteSystemStatus()
         return NextResponse.json({ message: "ลบข้อมูลสำเร็จ", data: deletedSystemStatus }, { status: 200 })
     } catch (error) {
-        let message = ""
+        let message = "ไม่สามารถลบได้ เกิดปัญหาที่ไม่ทราบสาเหตุ"
         if (error instanceof Object && !(error instanceof Error)) message = JSON.stringify(error);
         if (error instanceof Error) message = error.message
         if (typeof error == "string") message = error

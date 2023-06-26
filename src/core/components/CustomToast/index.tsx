@@ -49,7 +49,9 @@ const CustomToast: React.FC<CustomToastProps> = ({
           </Toast.Description>
         </div>
         <Toast.Action asChild altText="Goto schedule to undo">
-          {actionButton || null}
+          {actionButton
+            ? React.cloneElement(actionButton as React.ReactElement, { style: { cursor: "pointer" } })
+            : null}
         </Toast.Action>
       </Toast.Root>
       <Toast.Viewport className="fixed bottom-0 right-0 z-[2147483647] m-0 flex w-[390px] max-w-[100vw] list-none flex-col gap-[10px] p-[var(--viewport-padding)] outline-none [--viewport-padding:_25px]" />

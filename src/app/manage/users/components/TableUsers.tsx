@@ -1,7 +1,7 @@
 import React from "react";
-import type { GetUsersType } from "@/app/api/manage/users/func/getUsers";
+import type { ResponseGetUsersType } from "@/app/api/manage/users/func/getUsers";
 
-const Table: React.FC<{ users: GetUsersType; children: (users: GetUsersType) => React.ReactNode }> = ({
+const Table: React.FC<{ users: ResponseGetUsersType; children: (users: ResponseGetUsersType) => React.ReactNode }> = ({
   users,
   children,
 }) => {

@@ -1,14 +1,7 @@
 import { prisma } from "@/core/libs/prisma/connector"
-import { Role } from "@prisma/client";
+import type { ResponseGetUsersType } from "../UsersType";
 
-export type GetUsersType = {
-    id: string;
-    email: string;
-    fullname: string;
-    role: Role;
-}[]
-
-const getUsers = async (): Promise<GetUsersType> => {
+const getUsers = async (): Promise<ResponseGetUsersType> => {
     const users = await prisma.user.findMany({
         select: {
             id: true,
@@ -17,7 +10,7 @@ const getUsers = async (): Promise<GetUsersType> => {
             role: true
         }
     })
-    
+
     return users
 }
 
