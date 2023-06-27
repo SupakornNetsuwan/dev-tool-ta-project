@@ -9,7 +9,7 @@ import TableCourse from "../TableCourse";
 import FileUploadComponet from "./FileUploadComponet";
 // Custom hooks
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
-import useCreateCourse from "../../hook/useCreateCourse";
+import useCreateCourse from "../../../hook/useCreateCourse";
 
 const FileInput = () => {
   const router = useRouter();
