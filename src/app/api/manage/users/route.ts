@@ -14,7 +14,7 @@ export const PATCH = async (request: NextRequest) => {
         const updateResult = await updateUser(body)
         return NextResponse.json({ message: "ทำการแก้ไขข้อมูลผู้ใช้สำเร็จ", data: updateResult })
     } catch (error) {
-        let message = ""
+        let message = "เกิดปัญหาที่ไม่ทราบสาเหตุ"
         if (error instanceof Object && !(error instanceof Error)) message = JSON.stringify(error);
         if (error instanceof Error) message = error.message
         if (typeof error == "string") message = error
@@ -30,7 +30,7 @@ export const GET = async (request: NextRequest) => {
         const users = await getUsers()
         return NextResponse.json({ message: "รายชื่อผู้ใช้งานทั้งหมด", data: users })
     } catch (error) {
-        let message = ""
+        let message = "เกิดปัญหาที่ไม่ทราบสาเหตุ"
         if (error instanceof Object && !(error instanceof Error)) message = JSON.stringify(error);
         if (error instanceof Error) message = error.message
         if (typeof error == "string") message = error
