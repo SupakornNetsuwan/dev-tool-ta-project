@@ -18,6 +18,9 @@ model User {
   role       Role     @default(STUDENT)
   department String
   createdAt  DateTime @default(now())
+
+  Courses Courses[]
+
   Profile    Profile?
 }
 
@@ -70,6 +73,7 @@ model UserDocument {
   transcriptPath String
   classTablePath String
   bookBankPath   String
+
 }
 
 model SystemStatus {
@@ -83,4 +87,14 @@ enum Role {
   ADMIN
   PROFESSOR
   STUDENT
+}
+
+model Courses{
+  courseId String @id
+  courseNameEng  String 
+  courseNameThai String
+  credit String 
+  courseDes String?
+  professor User? @relation(fields: [professorId], references: [id])
+  professorId  String?
 }
