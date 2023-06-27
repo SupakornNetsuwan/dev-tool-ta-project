@@ -9,7 +9,7 @@ services:
       mysql:
         condition: service_healthy
     env_file:
-      - .env.production
+      - .env.production #important กำหนดให้ใช้ .env.production
     networks:
       - application
   mysql:

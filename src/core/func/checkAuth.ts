@@ -7,7 +7,7 @@ const checkAuth = async (roles: Role[]) => {
 
   let userRole = session?.user.role;
 
-  // กรณที่ไม่ได้เข้าสู่ระบบเลย
+  // กรณีที่ไม่ได้เข้าสู่ระบบเลย
   if (!userRole || !roles.includes(userRole)) return { session, hasPermission: false };
 
   return { session, hasPermission: true };
