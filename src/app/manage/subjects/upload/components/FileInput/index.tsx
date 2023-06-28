@@ -9,7 +9,7 @@ import TableCourse from "../TableCourse";
 import FileUploadComponet from "./FileUploadComponet";
 // Custom hooks
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
-import useCreateCourse from "../../../hook/useCreateCourse";
+import useCreateCourse from "../../hook/useCreateCourse";
 
 const FileInput = () => {
   const router = useRouter();
@@ -38,7 +38,7 @@ const FileInput = () => {
         description: data["คำอธิบายรายวิชา"],
         professorId: null,
       }));
-
+      console.log(courses)
       createCourse.mutate(courses, {
         onSuccess: (data) => {
           openToast({
@@ -90,7 +90,6 @@ const FileInput = () => {
         {/* Table */}
         <h3 className="title mt-10 border-b pb-3 text-lg font-semibold text-stone-600">ตัวอย่างไฟล์</h3>
         <TableCourse fileFromUpload={fileFromUpload} setParsedData={setParsedData} />
-        {/*<TableCourse dataToDisplay={...}/> */}
       </form>
     </>
   );

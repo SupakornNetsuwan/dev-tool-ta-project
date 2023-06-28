@@ -1,9 +1,11 @@
 "use client";
+//componets
 import CardCourse from "./CardCourse";
-import Grid from "@mui/material/Unstable_Grid2";
 import CardUpload from "./CardUpload";
 import Link from "next/link";
+//hook
 import useGetCourses from "../hook/useGetCourses";
+//type
 import type { Course } from "@prisma/client";
 
 const DisplayCourse = () => {
@@ -14,18 +16,18 @@ const DisplayCourse = () => {
 
   return (
     <>
-      <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 5, sm: 6, md: 20 }}>
+      <div  className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
         {courses.map((course: Course, index) => (
-          <Grid xs={4} sm={2} md={4} key={course.id}>
-            <CardCourse course={course} />
-          </Grid>
+          <div key={index} className="col-span-1">
+            <CardCourse course={course}></CardCourse>
+          </div>
         ))}
-        <Grid xs={4} sm={2} md={4}>
+        <div  className="col-span-1">
           <Link href="/manage/subjects/upload">
             <CardUpload />
           </Link>
-        </Grid>
-      </Grid>
+        </div>
+      </div>
     </>
   );
 };
