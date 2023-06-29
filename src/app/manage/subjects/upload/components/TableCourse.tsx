@@ -1,48 +1,34 @@
 import React from "react";
 import Papa from "papaparse";
-import { ParsedDataType } from "./FileInput/ParsedDataTypes";
 
 type TableCourseProps = {
   fileFromUpload: File | undefined;
-  setParsedData: (parsedData: ParsedDataType[]) => void;
+  fileObject: Papa.ParseResult<Record<string, unknown>> | undefined
 };
 
-interface PreviewFile extends File {
-  preview: string;
-}
 
 import { useState, useEffect } from "react";
-const TableCourse: React.FC<TableCourseProps> = ({ fileFromUpload, setParsedData }) => {
+
+const TableCourse: React.FC<TableCourseProps> = ({ fileFromUpload, fileObject}) => {
   //State to store table Column name
   const [tableRows, setTableRows] = useState<string[]>([]);
   //State to store the values
   const [dataEachCell, setDataEachCell] = useState<any[]>([]);
-
-  const changeCSV = (results: Papa.ParseResult<any>) => {
-    const rowsArray: string[][] = [];
-    const valuesArray: any[][] = [];
-    // Iterating data to get column name and their values
-    results.data.map((d: any) => {
-      rowsArray.push(Object.keys(d));
-      valuesArray.push(Object.values(d));
-    });
-    // Parsed Data and send to ParentsComponent
-    setParsedData(results.data);
-    // Filtered Column Names
-    setTableRows(rowsArray[0]);
-    // Filtered Values
-    setDataEachCell(valuesArray);  
-  };
-
   useEffect(() => {
-    if (fileFromUpload != undefined) {
-      Papa.parse(fileFromUpload, {
-        header: true,
-        skipEmptyLines: true,
-        complete: (result) => changeCSV(result),
-      });
+    if(fileObject?.data){
+      const rowsArray: string[][] = [];
+      const valuesArray: any[][] = [];
+      console.log(fileObject?.data)
+      fileObject?.data.map((d: any) => {
+          rowsArray.push(Object.keys(d));
+          valuesArray.push(Object.values(d));
+        });
+      // Filtered Column Names
+      setTableRows(rowsArray[0]);
+      // Filtered Values
+      setDataEachCell(valuesArray); 
     }
-  }, [fileFromUpload]);
+  }, [fileFromUpload, fileObject]);
 
   return (
     <>

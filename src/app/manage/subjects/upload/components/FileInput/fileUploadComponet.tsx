@@ -1,23 +1,52 @@
 import { useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import React from "react";
-
+//  change csv files
+import Papa from "papaparse";
 interface PreviewFile extends File {
   preview: string;
 }
 interface FileUploaderProps {
-  onFileUpload: (file: File) => void;
+  onFileUpload: (file: File,   resultData:Papa.ParseResult<Record<string, unknown>>) => void,
 }
-const FileUploadComponet: React.FC<FileUploaderProps> = ({ onFileUpload }) => {
+const FileUploadComponet: React.FC<FileUploaderProps> = ({ onFileUpload}) => {
+  
   const [files, setFiles] = useState<PreviewFile[]>([]);
+  //State to store table Column name
+  const [tableRows, setTableRows] = useState<string[]>([]);
+  //State to store the values
+  const [dataEachCell, setDataEachCell] = useState<any[]>([]);
+  // function to manage files
   const onDrop = useCallback((acceptFiles: File[]) => {
     if (acceptFiles?.length) {
       setFiles((previousFiles) => [
         ...acceptFiles.map((file) => Object.assign(file, { preview: URL.createObjectURL(file) })),
       ]);
+      // change file to object 
+      Papa.parse(acceptFiles[0], {
+        header: true,
+        skipEmptyLines: true,
+        complete: (result:Papa.ParseResult<Record<string, unknown>>) => changeCSV(result),
+      });
+
     }
-    // ส่งไฟล์ ที่จะนำไปสร้างตัวอย่่างไปหา parent component
-    onFileUpload(acceptFiles[0]);
+    // function to change csv 
+    const changeCSV = (results: Papa.ParseResult<Record<string, unknown>>) => {
+      const rowsArray: string[][] = [];
+      const valuesArray: unknown[][] = [];
+      // Iterating data to get column name and their values
+      results.data.map((d) => {
+          rowsArray.push(Object.keys(d));
+          valuesArray.push(Object.values(d));
+      });
+      // Filtered Column Names
+      setTableRows(rowsArray[0]);
+      // Filtered Values
+      setDataEachCell(valuesArray);  
+      
+      // send file and result Data to parent components
+      onFileUpload(acceptFiles[0], results)
+    };
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

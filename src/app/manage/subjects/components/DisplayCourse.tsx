@@ -16,7 +16,7 @@ const DisplayCourse = () => {
 
   return (
     <>
-      <div  className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
+      <div  className="pl-16 pr-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
         {courses.map((course: Course, index) => (
           <div key={index} className="col-span-1">
             <CardCourse course={course}></CardCourse>
