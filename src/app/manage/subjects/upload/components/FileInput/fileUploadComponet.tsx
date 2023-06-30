@@ -12,10 +12,6 @@ interface FileUploaderProps {
 const FileUploadComponet: React.FC<FileUploaderProps> = ({ onFileUpload}) => {
   
   const [files, setFiles] = useState<PreviewFile[]>([]);
-  //State to store table Column name
-  const [tableRows, setTableRows] = useState<string[]>([]);
-  //State to store the values
-  const [dataEachCell, setDataEachCell] = useState<any[]>([]);
   // function to manage files
   const onDrop = useCallback((acceptFiles: File[]) => {
     if (acceptFiles?.length) {
@@ -35,15 +31,10 @@ const FileUploadComponet: React.FC<FileUploaderProps> = ({ onFileUpload}) => {
       const rowsArray: string[][] = [];
       const valuesArray: unknown[][] = [];
       // Iterating data to get column name and their values
-      results.data.map((d) => {
+      results.data.map((d:Record<string, unknown>) => {
           rowsArray.push(Object.keys(d));
           valuesArray.push(Object.values(d));
-      });
-      // Filtered Column Names
-      setTableRows(rowsArray[0]);
-      // Filtered Values
-      setDataEachCell(valuesArray);  
-      
+      });      
       // send file and result Data to parent components
       onFileUpload(acceptFiles[0], results)
     };

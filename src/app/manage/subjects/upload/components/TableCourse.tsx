@@ -13,13 +13,13 @@ const TableCourse: React.FC<TableCourseProps> = ({ fileFromUpload, fileObject}) 
   //State to store table Column name
   const [tableRows, setTableRows] = useState<string[]>([]);
   //State to store the values
-  const [dataEachCell, setDataEachCell] = useState<any[]>([]);
+  const [dataEachCell, setDataEachCell] = useState<string[][]>([]);
   useEffect(() => {
     if(fileObject?.data){
       const rowsArray: string[][] = [];
-      const valuesArray: any[][] = [];
+      const valuesArray: string[][] = [];
       console.log(fileObject?.data)
-      fileObject?.data.map((d: any) => {
+      fileObject?.data.map((d:any) => {
           rowsArray.push(Object.keys(d));
           valuesArray.push(Object.values(d));
         });
