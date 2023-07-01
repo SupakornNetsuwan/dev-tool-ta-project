@@ -2,7 +2,7 @@ import createCourses from "./func/createCourses";
 import getAllCourses from "./func/getAllCourses";
 import checkAuth from "@/core/func/checkAuth";
 import { NextRequest, NextResponse } from "next/server";
-import { Course } from "@prisma/client";
+import { Course, Prisma } from "@prisma/client";
 
 /**
  * @description เป็น API Route สำหรับการสร้างข้อมูลรายวิชา และ ส่งข้อมูลรายวิชา
@@ -19,9 +19,17 @@ export const GET = async (request: NextRequest) => {
         return NextResponse.json({ message: "ร้องขอข้อมูลทุกวิชาสำเร็จ", data: courses })
     } catch (error) {
         let message = "เกิดปัญหาที่ไม่ทราบสาเหตุ"
-        if (error instanceof Object && !(error instanceof Error)) message = JSON.stringify(error)
-        if (error instanceof Error) message = error.message
-        if (typeof error == "string") message = error
+
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            // Error handling for prisma CRUD error
+            if (error.code === 'P2002') message = "มีรายวิชาที่ถูกสร้างซ้ำกัน"
+        } else {
+            // Error handling for other errors
+            if (error instanceof Object && !(error instanceof Error)) message = JSON.stringify(error)
+            if (error instanceof Error) message = error.message
+            if (typeof error == "string") message = error
+        }
+
         return NextResponse.json({ message }, { status: 400 })
     }
 }
@@ -33,16 +41,22 @@ export const POST = async (request: NextRequest) => {
 
     try {
         const body = await request.json();
-        // update course
+        // Create course
         const update = await createCourses(body)
         return NextResponse.json({ message: "ทำการเพิ่มข้อมูลสำเร็จ", data: update })
-    } catch (err) {
-        console.log(err)
-        if (err instanceof Error) {
-            // business error = error เวลาที่ผู้ใช้อัพโหลดรายวิชา
-            return NextResponse.json({ message: "ไฟล์ที่อัพโหลดไม่ถูกต้อง หรือ มีวิชานี้อยู่ในฐานข้อมูล" }, { status: 400 })
+    } catch (error) {
+        let message = "เกิดปัญหาที่ไม่ทราบสาเหตุ"
+
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            // Error handling for prisma CRUD error
+            if (error.code === 'P2002') message = "มีรายวิชาที่ถูกสร้างซ้ำกัน"
         } else {
-            return NextResponse.json({ message: "เกิดปัญหาที่ไม่สามารถแก้ไขได้" }, { status: 500 })
+            // Error handling for other errors
+            if (error instanceof Object && !(error instanceof Error)) message = JSON.stringify(error)
+            if (error instanceof Error) message = error.message
+            if (typeof error == "string") message = error
         }
+
+        return NextResponse.json({ message }, { status: 400 })
     }
 }

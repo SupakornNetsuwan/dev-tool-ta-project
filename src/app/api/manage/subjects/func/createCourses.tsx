@@ -3,11 +3,10 @@ import type { Course } from "@prisma/client";
 
 const createCourses = async (courses: Course[]) => {
   console.log("กำลังบันทึกวิชาที่เปิดรับสมัคร...");
-  // ไปแก้มา
   const createdCourses = await prisma.course.createMany({
-    data: courses
-  })
-  
+    data: courses,
+  });
+
   return createdCourses;
 };
 export default createCourses;

@@ -3,43 +3,44 @@ import Papa from "papaparse";
 
 type TableCourseProps = {
   fileFromUpload: File | undefined;
-  fileObject: Papa.ParseResult<Record<string, unknown>> | undefined
+  fileObject: Papa.ParseResult<Record<string, unknown>> | undefined;
 };
-
 
 import { useState, useEffect } from "react";
 
-const TableCourse: React.FC<TableCourseProps> = ({ fileFromUpload, fileObject}) => {
+const TableCourse: React.FC<TableCourseProps> = ({ fileFromUpload, fileObject }) => {
   //State to store table Column name
   const [tableRows, setTableRows] = useState<string[]>([]);
   //State to store the values
   const [dataEachCell, setDataEachCell] = useState<string[][]>([]);
+
   useEffect(() => {
-    if(fileObject?.data){
+    if (fileObject?.data) {
       const rowsArray: string[][] = [];
       const valuesArray: string[][] = [];
-      console.log(fileObject?.data)
-      fileObject?.data.map((d:any) => {
-          rowsArray.push(Object.keys(d));
-          valuesArray.push(Object.values(d));
-        });
+    
+      fileObject?.data.map((d: any) => {
+        rowsArray.push(Object.keys(d));
+        valuesArray.push(Object.values(d));
+      });
       // Filtered Column Names
       setTableRows(rowsArray[0]);
       // Filtered Values
-      setDataEachCell(valuesArray); 
+      setDataEachCell(valuesArray);
     }
   }, [fileFromUpload, fileObject]);
 
   return (
     <>
       {fileFromUpload && (
-        <div key={fileFromUpload.name}>
-          <table className="w-full">
+        <div key={fileFromUpload.name} className="overflow-y-auto">
+          <h3 className="my-4 font-medium text-gray-500">ตัวอย่างไฟล์ : {fileFromUpload.name}</h3>
+          <table className="w-full min-w-[50em] bg-white">
             <thead>
               <tr>
                 {tableRows.map((rows, index) => {
                   return (
-                    <th className="w-52 border border-gray-300 text-center" key={index}>
+                    <th className="border border-gray-300 py-2 text-center font-medium text-gray-800" key={index}>
                       {rows}
                     </th>
                   );
@@ -52,7 +53,7 @@ const TableCourse: React.FC<TableCourseProps> = ({ fileFromUpload, fileObject}) 
                   <tr key={index}>
                     {value.map((val: any, i: any) => {
                       return (
-                        <td className="w-52 border border-gray-300 text-center" key={i}>
+                        <td className="border border-gray-300 text-center text-gray-500" key={i}>
                           {val}
                         </td>
                       );
@@ -62,11 +63,10 @@ const TableCourse: React.FC<TableCourseProps> = ({ fileFromUpload, fileObject}) 
               })}
             </tbody>
           </table>
-          <p className="mt-2 text-[12px] font-medium text-stone-500">ชื่อไฟล์ : {fileFromUpload.name}</p>
         </div>
       )}
     </>
   );
 };
 
-export default TableCourse;
+export default React.memo(TableCourse);
