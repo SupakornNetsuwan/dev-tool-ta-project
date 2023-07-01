@@ -24,45 +24,21 @@ model User {
 }
 
 model Profile {
-  id                   String              @id
-  profile              User                @relation(fields: [id], references: [id], onDelete: Cascade)
-  educationRecords     EducationRecord[]
-  scholarshipRecords   ScholarshipRecord[]
+  id                   String        @id
+  profile              User          @relation(fields: [id], references: [id], onDelete: Cascade)
   UserDocument         UserDocument?
   studentId            String
   title                String?
   firstname            String?
   lastname             String?
-  dateOfBirth          DateTime?           @db.Date
-  age                  Int?
-  nationality          String?
-  religion             String?
-  address              String              @db.MediumText
+  address              String        @db.MediumText
   phoneNumber          String?
   email                String?
   carrer               String?
   carrerPosition       String?
   carrerAddress        String?
   educationExpenseFrom String?
-  income               Int?                @default(0)
-}
-
-model EducationRecord {
-  id            Int     @id() @default(autoincrement())
-  userId        String
-  Profile       Profile @relation(fields: [userId], references: [id])
-  degreeName    String
-  gpa           Float
-  graduatedYear Int
-}
-
-model ScholarshipRecord {
-  id           Int     @id() @default(autoincrement())
-  userId       String
-  Profile      Profile @relation(fields: [userId], references: [id])
-  name         String
-  duration     Int
-  typeOrAmount Int
+  income               Int?          @default(0)
 }
 
 model UserDocument {
