@@ -14,18 +14,15 @@ const useCustomDialog = () => {
    * @description ทำการเปิด dialog
    */
 
-  const openDialog = useCallback(
-    ({ actionButton, cancelButton, description, title }: DialogOpenFuncProps) => {
-      setDialogState({
-        showDialog: true,
-        actionButton: actionButton,
-        cancelButton: cancelButton,
-        description: description,
-        title: title,
-      });
-    },
-    [dialogState]
-  );
+  const openDialog = useCallback(({ actionButton, cancelButton, description, title }: DialogOpenFuncProps) => {
+    setDialogState({
+      showDialog: true,
+      actionButton: actionButton,
+      cancelButton: cancelButton,
+      description: description,
+      title: title,
+    });
+  }, []);
 
   /**
    * @description ทำการปิด dialog
