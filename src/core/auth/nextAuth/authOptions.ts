@@ -1,11 +1,11 @@
 import type { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from "next-auth/providers/credentials"
 import findUser from "../ldap/ldapFindUser"
-import storeUser from "./storeUser"
-import checkExistUser from "./checkExistUser"
 // Helper for development
+import checkExistUser from "./helper/checkExistUser"
 import checkExistFakeUser from './helper/checkExistFakeUser'
 import storeFakeUser from './helper/storeFakeUser'
+import storeUser from "./helper/storeUser"
 
 export const isUsingFakeUser = false;
 

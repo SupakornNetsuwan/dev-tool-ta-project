@@ -19,31 +19,24 @@ model User {
   department String
   createdAt  DateTime @default(now())
   Courses    Course[]
-
-  Profile Profile?
+  Profile    Profile?
 }
 
 model Profile {
-  id                   String        @id
-  profile              User          @relation(fields: [id], references: [id], onDelete: Cascade)
-  UserDocument         UserDocument?
-  studentId            String
-  title                String?
-  firstname            String?
-  lastname             String?
-  address              String        @db.MediumText
-  phoneNumber          String?
-  email                String?
-  carrer               String?
-  carrerPosition       String?
-  carrerAddress        String?
-  educationExpenseFrom String?
-  income               Int?          @default(0)
+  id           String        @id // id อันเดียวกันกับของ User
+  user         User          @relation(fields: [id], references: [id], onDelete: Cascade)
+  UserDocument UserDocument?
+  title        String?
+  firstname    String?
+  lastname     String?
+  address      String        @db.MediumText
+  phoneNumber  String?
+  email        String?
 }
 
 model UserDocument {
   userId         String  @id
-  userDocuemntId Profile @relation(fields: [userId], references: [id])
+  profile        Profile @relation(fields: [userId], references: [id], onDelete: Cascade)
   picturePath    String
   transcriptPath String
   classTablePath String

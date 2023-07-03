@@ -11,7 +11,8 @@ import { Course, Prisma } from "@prisma/client";
 // ร้องขอข้อมูลรายวิชา
 export const GET = async (request: NextRequest) => {
     // ตรวจสอบสิทธิ์
-    const { hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN"]);
+    const { hasPermission, session } = await checkAuth(["ADMIN", "SUPERADMIN"]);
+    if (!session) return NextResponse.json({ message: "โปรดเข้าสู่ระบบ" }, { status: 401 })
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
 
     try {
@@ -36,7 +37,8 @@ export const GET = async (request: NextRequest) => {
 
 export const POST = async (request: NextRequest) => {
     // ตรวจสอบสิทธิ์
-    const { hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN"]);
+    const { hasPermission, session } = await checkAuth(["ADMIN", "SUPERADMIN"]);
+    if (!session) return NextResponse.json({ message: "โปรดเข้าสู่ระบบ" }, { status: 401 })
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
 
     try {

@@ -31,7 +31,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           ]}
         >
           <Navbar />
-          <div className="pt-8">{children}</div>
+          <div className="pt-12">{children}</div>
         </Providers>
       </body>
     </html>

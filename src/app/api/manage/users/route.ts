@@ -5,7 +5,8 @@ import updateUser from "./func/updateUser"
 import getUsers from "./func/getUsers"
 
 export const PATCH = async (request: NextRequest) => {
-    const { hasPermission } = await checkAuth(["ADMIN"])
+    const { hasPermission, session } = await checkAuth(["ADMIN"])
+    if (!session) return NextResponse.json({ message: "โปรดเข้าสู่ระบบ" }, { status: 401 })
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
 
     try {
@@ -23,7 +24,8 @@ export const PATCH = async (request: NextRequest) => {
 }
 
 export const GET = async (request: NextRequest) => {
-    const { hasPermission } = await checkAuth(["ADMIN"])
+    const { hasPermission, session } = await checkAuth(["ADMIN"])
+    if (!session) return NextResponse.json({ message: "โปรดเข้าสู่ระบบ" }, { status: 401 })
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
 
     try {

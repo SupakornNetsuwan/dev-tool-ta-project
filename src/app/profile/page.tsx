@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
+// import ProfileWrapper from "./components/ProfileWrapper";
+// import ProfileForm from "./components/ProfileForm";
 
 const page = () => {
   return (
-    <div>page</div>
-  )
-}
+    <></>
+    // <ProfileWrapper>
+    //   <ProfileForm />
+    // </ProfileWrapper>
+  );
+};
 
-export default page
+export default page;

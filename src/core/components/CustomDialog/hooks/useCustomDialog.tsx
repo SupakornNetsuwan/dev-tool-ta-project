@@ -24,7 +24,7 @@ const useCustomDialog = () => {
         title: title,
       });
     },
-    [dialogState]
+    []
   );
 
   /**
