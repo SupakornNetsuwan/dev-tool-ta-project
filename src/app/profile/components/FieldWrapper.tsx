@@ -1,7 +1,11 @@
+"use client"
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
-const FieldWrapper: React.FC<{ children: React.ReactElement; label: React.ReactElement }> = ({ children, label }) => {
+const FieldWrapper: React.FC<{
+  children: React.ReactElement;
+  label: React.ReactElement;
+}> = ({ children, label }) => {
   const labelClassName = label?.props.className || "";
   const inputName = children?.props.name || "";
 

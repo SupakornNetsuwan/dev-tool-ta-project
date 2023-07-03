@@ -1,13 +1,12 @@
 import React from "react";
-// import ProfileWrapper from "./components/ProfileWrapper";
-// import ProfileForm from "./components/ProfileForm";
+import ProfileWrapper from "./components/ProfileWrapper";
+import ProfileForm from "./components/ProfileForm";
 
 const page = () => {
   return (
-    <></>
-    // <ProfileWrapper>
-    //   <ProfileForm />
-    // </ProfileWrapper>
+    <ProfileWrapper>
+      <ProfileForm />
+    </ProfileWrapper>
   );
 };
 

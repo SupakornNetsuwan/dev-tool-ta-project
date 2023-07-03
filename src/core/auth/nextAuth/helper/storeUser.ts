@@ -40,7 +40,6 @@ const storeUser: StoreUserFunctionType = async ({ LDAPemail, LDAPid, LDAPfullnam
                         },
                         create: {
                             address: "",
-                            studentId: LDAPid,
                             email: LDAPemail,
                             firstname: "",
                             lastname: "",

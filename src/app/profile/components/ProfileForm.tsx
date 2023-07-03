@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import FieldWrapper from "./FieldWrapper";
+import FileSectionWrapper from "./FileSectionWrapper";
 import ProfileFormHeader from "./ProfileFormHeader";
 import useGetProfile from "../hooks/useGetProfile";
 import * as Label from "@radix-ui/react-label";
@@ -98,6 +99,44 @@ const ProfileForm = () => {
             />
           </FieldWrapper>
         </div>
+        <FileSectionWrapper>
+          <div className="flex flex-col gap-3 sm:flex-row [&>div]:flex-1">
+            <FieldWrapper label={<Label.Root>สำเนาสมุดบัญชีธนาคาร</Label.Root>}>
+              <input
+                type="file"
+                accept="image/*"
+                {...register("UserDocument.bookBankPath")}
+                className="w-full cursor-pointer rounded border bg-white p-2 text-sm text-gray-500 outline-none file:mr-4 file:cursor-pointer file:rounded file:border file:border-solid file:border-blue-500 file:bg-blue-50  file:px-4 file:py-2 file:text-sm file:text-gray-500 hover:shadow-realistic-2 disabled:opacity-50"
+              />
+            </FieldWrapper>
+            <FieldWrapper label={<Label.Root>ตารางเรียนส่วนบุคคล</Label.Root>}>
+              <input
+                type="file"
+                accept="image/*"
+                {...register("UserDocument.classTablePath")}
+                className="w-full cursor-pointer rounded border bg-white p-2 text-sm text-gray-500 outline-none file:mr-4 file:cursor-pointer file:rounded file:border file:border-solid file:border-blue-500 file:bg-blue-50  file:px-4 file:py-2 file:text-sm file:text-gray-500 hover:shadow-realistic-2 disabled:opacity-50"
+              />
+            </FieldWrapper>
+          </div>
+          <div className="flex flex-col gap-3 sm:flex-row [&>div]:flex-1">
+            <FieldWrapper label={<Label.Root>สำเนาทรานสคริปปัจจุบัน</Label.Root>}>
+              <input
+                type="file"
+                accept=".pdf"
+                {...register("UserDocument.transcriptPath")}
+                className="w-full cursor-pointer rounded border bg-white p-2 text-sm text-gray-500 outline-none file:mr-4 file:cursor-pointer file:rounded file:border file:border-solid file:border-blue-500 file:bg-blue-50  file:px-4 file:py-2 file:text-sm file:text-gray-500 hover:shadow-realistic-2 disabled:opacity-50"
+              />
+            </FieldWrapper>
+            <FieldWrapper label={<Label.Root>รูปถ่ายขนาด 1 นิ้ว</Label.Root>}>
+              <input
+                accept="image/*"
+                type="file"
+                {...register("UserDocument.picturePath")}
+                className="w-full cursor-pointer rounded border bg-white p-2 text-sm text-gray-500 outline-none file:mr-4 file:cursor-pointer file:rounded file:border file:border-solid file:border-blue-500 file:bg-blue-50  file:px-4 file:py-2 file:text-sm file:text-gray-500 hover:shadow-realistic-2 disabled:opacity-50"
+              />
+            </FieldWrapper>
+          </div>
+        </FileSectionWrapper>
         <button
           type="submit"
           className="btn click-animation mt-4 self-start rounded border border-blue-500 bg-blue-50 px-12 text-blue-500"
