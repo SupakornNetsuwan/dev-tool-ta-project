@@ -6,7 +6,14 @@ const getProfile = async (userId: string) => {
             id: userId
         },
         include: {
-            UserDocument: true
+            UserDocument: {
+                select: {
+                    bookBankPath: true,
+                    classTablePath: true,
+                    picturePath: true,
+                    transcriptPath: true
+                }
+            }
         }
     });
 

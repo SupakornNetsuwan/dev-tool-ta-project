@@ -1,19 +1,27 @@
 "use client";
 import React, { useEffect } from "react";
-import FieldWrapper from "./FieldWrapper";
+import dynamic from "next/dynamic";
+// Components
+const FieldWrapper = dynamic(() => import("./FieldWrapper"), {
+  ssr: false,
+  loading: () => <div className="h-6 w-full animate-pulse rounded bg-gray-200" />,
+});
 import FileSectionWrapper from "./FileSectionWrapper";
 import ProfileFormHeader from "./ProfileFormHeader";
-import useGetProfile from "../hooks/useGetProfile";
 import * as Label from "@radix-ui/react-label";
+// React query
+import useGetProfile from "../hooks/useGetProfile";
+import useUpdateProfile from "../hooks/useUpdateProfile";
 // React hooks form
 import { useForm, SubmitHandler } from "react-hook-form";
-import type { FormType } from "../types/FormType";
+import type { ProfileFormType } from "../types/ProfileFormType";
 import TitleSelector from "./TitleSelector";
 import ProfileFormProvider from "../providers/ProfileFormProvider";
 
 const ProfileForm = () => {
   const { data, isSuccess, isLoading } = useGetProfile();
-  const methods = useForm<FormType>({
+  const updateProfile = useUpdateProfile();
+  const methods = useForm<ProfileFormType>({
     defaultValues: {
       id: "",
       firstname: "",
@@ -22,13 +30,19 @@ const ProfileForm = () => {
       email: "",
       lastname: "",
       phoneNumber: "",
+      UserDocument: {
+        bookBankPath: undefined,
+        classTablePath: undefined,
+        picturePath: undefined,
+        transcriptPath: undefined,
+      },
     },
   });
   const { handleSubmit, register, setValue } = methods;
 
   useEffect(() => {
     if (isSuccess) {
-      const { id, title, email, firstname, lastname, address, phoneNumber } = data?.data.data || {};
+      const { id, title, email, firstname, lastname, address, phoneNumber } = data.data.data;
       setValue("title", title);
       setValue("email", email);
       setValue("id", id);
@@ -39,8 +53,23 @@ const ProfileForm = () => {
     }
   }, [isSuccess, data?.data.data, setValue]);
 
-  const submit: SubmitHandler<FormType> = (data) => {
-    console.log(data);
+  const submit: SubmitHandler<ProfileFormType> = (toUpdateData) => {
+    // console.log(toUpdateData);
+    if (!toUpdateData.UserDocument) return;
+
+    const newUserDocument = Object.fromEntries(
+      Object.entries(toUpdateData.UserDocument).map(([key, file]) => [key, file[0]])
+    ) as ProfileFormType["UserDocument"];
+
+    toUpdateData.UserDocument = newUserDocument;
+    updateProfile.mutate(toUpdateData, {
+      onSuccess: (response) => {
+        console.log(response.data.message);
+      },
+      onError: (error) => {
+        console.log(error.response?.data.message);
+      },
+    });
   };
 
   return (
