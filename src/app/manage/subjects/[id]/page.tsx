@@ -1,8 +1,13 @@
+"use client"
+
+import StatusCourse from "./components/StatusCourseComponent";
 const page = ({ params }: { params: { id: string } }) => {
+  const param:string = params.id
   return (
     <>
-      <p className="mb-4 text-gray-500">รายวิชาเรียน</p>
+      <StatusCourse course={param}></StatusCourse>
     </>
   );
 };
 export default page;
+  

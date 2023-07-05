@@ -1,6 +1,6 @@
 import React from "react";
 import * as Toast from "@radix-ui/react-toast";
-import type { CustomToastProps } from "./CustomToastTypes";
+import type { CustomToastProps } from "./customToastTypes";
 
 /**
  * @param showToast เป็น boolean ที่แสดงว่าจะแสดง toast หรือไม่
