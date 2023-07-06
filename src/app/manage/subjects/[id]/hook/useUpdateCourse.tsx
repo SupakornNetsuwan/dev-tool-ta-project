@@ -1,19 +1,19 @@
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import type { User } from "@prisma/client";
+import type {Course } from "@prisma/client";
 import type { ResponseGetUserType } from "@/app/api/manage/users/UsersType";
 
-const useUpdateProfessor = () => {
+const useUpdateCourse = (param:string) => {
   return useMutation<
     AxiosResponse<{ message: string; data: ResponseGetUserType }>,
     AxiosError<{ message: string }>,
-    Pick<User, "id" | "role">,
+    Pick<Course,  "subjectId" | "professorId">,  
     unknown
   >({
     mutationFn: (payload) => {
-      return axios.patch("/api/manage/users", payload);
+      return axios.patch(`/api/manage/subjects/${param}`, payload);
     },
   });
 };
 
-export default useUpdateProfessor;
+export default useUpdateCourse;

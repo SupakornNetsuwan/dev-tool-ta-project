@@ -1,4 +1,3 @@
-"use client"
 
 import StatusCourse from "./components/StatusCourseComponent";
 const page = ({ params }: { params: { id: string } }) => {

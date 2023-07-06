@@ -1,21 +1,25 @@
 "use client";
-import React, { forwardRef } from "react";
-import type { Role } from "@prisma/client";
+import React, { forwardRef, useState, useEffect } from "react";
+// type
+
+import type { ResponseGetUsersType, ResponseGetUserType } from "@/app/api/manage/users/UsersType";
+
+// component 
 import * as Select from "@radix-ui/react-select";
 import { HiOutlineChevronUp, HiOutlineChevronDown, HiOutlineChevronUpDown, HiOutlineCheck } from "react-icons/hi2";
-import { GridRenderCellParams } from "@mui/x-data-grid";
-import type { ResponseGetUsersType } from "@/app/api/manage/users/UsersType";
+import { uniqBy } from "lodash";
 
 
-const SelectItem = forwardRef<
-  HTMLDivElement,
-  { children: React.ReactNode; value: string } & React.ComponentProps<typeof Select.Item>
->(({ value, children, ...props }, ref) => {
+
+const SelectItem = React.forwardRef<
+    HTMLDivElement,
+  { children: React.ReactNode; value: string} & React.ComponentProps<typeof Select.Item>
+>(({ value, children, ...props }, forwardRef) => {
   return (
     <Select.Item
       className="relative flex h-[25px] cursor-pointer select-none items-center rounded py-4 pl-6 pr-8 text-sm text-gray-500 data-[disabled]:pointer-events-none data-[highlighted]:bg-gray-50 data-[disabled]:text-gray-300 data-[highlighted]:text-gray-600 data-[highlighted]:outline-none"
       value={value}
-      ref={ref}
+      ref={forwardRef}
       {...props}
     >
       <Select.ItemIndicator asChild>
@@ -30,11 +34,25 @@ SelectItem.displayName = "SelectItem";
 
 const SelectProfessorComponent:React.FC<{
     body: ResponseGetUsersType,
+    selectedProfessor : string | undefined
     setProfessor : (professorFullName:string) => void
-}> = ({body, setProfessor})=>{
+}> = ({body, setProfessor, selectedProfessor})=>{
+  useEffect(()=>{
+    const user = body.find((user) => user.id === selectedProfessor);
+    if(user){
+      selectedProfessor = user.fullname
+    }
+    else{
+      selectedProfessor = undefined;
+    }
+  },[selectedProfessor])
  return(
         <>
-            <Select.Root onValueChange={(professorFullName: string) => setProfessor(professorFullName)}>
+            <Select.Root onValueChange={(professorId: string ) => {
+              setProfessor(professorId)
+            }}
+            value={selectedProfessor}
+            >
                 <Select.Trigger
                     className="flex w-50 items-center justify-between gap-1 rounded bg-white px-[15px] py-2 text-sm text-gray-500 shadow outline-none hover:shadow-realistic-1 focus:shadow-realistic-2"
                     aria-label="Professor choosing"
@@ -51,7 +69,7 @@ const SelectProfessorComponent:React.FC<{
                         </Select.ScrollUpButton>
                         <Select.Viewport className="p-2">
                             {body.map((user) => (
-                                <SelectItem key={user.id} value={user.fullname}>
+                                <SelectItem key={user.id} value={user.id}>
                                     {user.fullname}
                                 </SelectItem>
                             ))}
@@ -62,6 +80,7 @@ const SelectProfessorComponent:React.FC<{
                     </Select.Content>
                     </Select.Portal>
             </Select.Root>
+            {selectedProfessor == undefined ?<p className="text-red-500 text-sm mt-2">*ต้องกำหนดอาจารย์ของรายวิชานี้</p>: undefined}
         </>
  )
 }

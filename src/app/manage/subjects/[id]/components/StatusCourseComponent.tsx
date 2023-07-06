@@ -1,16 +1,35 @@
 "use client"
 import DetailCourseComponent from "./DetailCourseComponent"
-import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { HiOutlineArrowSmallLeft } from "react-icons/hi2";
+// ้hook 
 import useGetDetailCourse from "../hook/useGetDetailCourse";
 const StatusCourse: React.FC<{ course: string}> = ({course}) => {
     const queryCourse = course.replaceAll("-"," ")
     const { data, isLoading, isError } = useGetDetailCourse(queryCourse)
-    if (isLoading) return <p>กำลังโหลดรายวิชา</p>;
+    const router = useRouter();
+    
+    if (isLoading) return ( 
+    <>
+        <div className="relative flex  flex-col  overflow-hidden animate-pulse  mt-5 ">
+            <div className="flex items-center justify-center" >
+                <div className="w-8/12 bg-blue-400  p-2 ">
+                    
+                </div>
+            </div>
+        </div>
+    </>)
     if (isError) return <p>เกิดข้อผิดพลาด</p>;
 
     const courseDetail = data.data.data;
+
     return(
-        <>
+        <>  
+           
+            <button onClick={() => router.back()} className="mb-4 flex items-center space-x-1 text-blue-500" >
+                <HiOutlineArrowSmallLeft />
+                <span>ย้อนกลับ</span>
+            </button>
             <DetailCourseComponent course={courseDetail}></DetailCourseComponent>
             <div className="relative flex  flex-col  overflow-hidden bg-gray-50  mt-5 ">
                 <div className="flex items-center justify-center" >
@@ -26,8 +45,8 @@ const StatusCourse: React.FC<{ course: string}> = ({course}) => {
                                 <dd className="mt-1 text-sm leading-6 text-blue-700 sm:col-span-2 sm:mt-0">ตรวจสอบรายชื่อ</dd>
                             </div>
                             <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-80 sm:px-0">
-                                <dt className="text-sm font-medium leading-6 text-gray-900">แบบฟอร์มขออนุมัตินักศึกษา(csv)</dt>
-                                <dd className="mt-1 text-sm leading-6 text-blue-700 sm:col-span-2 sm:mt-0">ตรวจสอบรายชื่อ</dd>
+                                <dt className="text-sm font-medium leading-6 text-gray-900">แบบฟอร์มขออนุมัตินักศึกษา(excel.)</dt>
+                                <dd className="mt-1 text-sm leading-6 text-blue-700 sm:col-span-2 sm:mt-0">ดาวน์โหลด</dd>
                             </div>
                         </dl>
                     </div>
