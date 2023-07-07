@@ -1,9 +1,10 @@
 "use client"
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 //
 import { HiOutlineXMark } from "react-icons/hi2";
 //type
 import type { Course } from "@prisma/client"
+import type { ResponseGetUsersType, ResponseGetUserType } from "@/app/api/manage/users/UsersType";
 // components 
 import SelectProfessorComponent from "./SelectProfessorComponent"
 // custom hook
@@ -17,6 +18,12 @@ const DetailCourseComponent: React.FC<{ course: Course}> = ({course}) =>{
     const updateProfessor = useUpdateCourse(course.subjectId)
     const getUsers = useGetUsers();
     const users = useMemo(() => getUsers.data?.data.data || [], [getUsers.data]);
+    const [professorList, setProfessorList] = useState<ResponseGetUsersType>()
+    // filter users role "professor"
+    useEffect(()=>{
+        const professors = users.filter(user => user.role === "PROFESSOR");
+        setProfessorList(professors)
+    }, [users])
     // ถ้า coures มีอาจารย์อยู่แล้ว
     const couresProfessor = (!course.professorId) ? undefined : course.professorId;
     const queryClient = useQueryClient();
@@ -28,8 +35,8 @@ const DetailCourseComponent: React.FC<{ course: Course}> = ({course}) =>{
             },
             {
                 onSuccess(data, variables, context) {
-                    openToast({
-                      title: <p className="text-blue-500">แก้ไข Role สำเร็จ</p>,
+                    openToast({ 
+                      title: <p className="text-blue-500">แก้ไขอาจารย์สำเร็จ</p>,
                       description: <p>{data.data.message || "ไม่ทราบสาเหตุ"}</p>,
                       actionButton: <HiOutlineXMark className="text-2xl text-gray-900" />,
                     });
@@ -73,7 +80,7 @@ const DetailCourseComponent: React.FC<{ course: Course}> = ({course}) =>{
                         </div>
                         <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-80 sm:px-0">
                             <dt className="text-sm font-medium leading-6 text-gray-900">อาจารย์ผู้สอน</dt>
-                            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><SelectProfessorComponent body={users} setProfessor={setProfessor} selectedProfessor={couresProfessor} ></SelectProfessorComponent></dd>
+                            <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><SelectProfessorComponent body={professorList} setProfessor={setProfessor} selectedProfessor={couresProfessor} ></SelectProfessorComponent></dd>
                         </div>
                         <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-80 sm:px-0">
                             <dt className="text-sm font-medium leading-6 text-gray-900">จำนวนนักศึกษาที่สมัคร</dt>

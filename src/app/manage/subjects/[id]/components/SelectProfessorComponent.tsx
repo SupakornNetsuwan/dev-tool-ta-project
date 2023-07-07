@@ -1,5 +1,5 @@
 "use client";
-import React, { forwardRef, useState, useEffect } from "react";
+import React, { useEffect } from "react";
 // type
 
 import type { ResponseGetUsersType, ResponseGetUserType } from "@/app/api/manage/users/UsersType";
@@ -7,7 +7,7 @@ import type { ResponseGetUsersType, ResponseGetUserType } from "@/app/api/manage
 // component 
 import * as Select from "@radix-ui/react-select";
 import { HiOutlineChevronUp, HiOutlineChevronDown, HiOutlineChevronUpDown, HiOutlineCheck } from "react-icons/hi2";
-import { uniqBy } from "lodash";
+
 
 
 
@@ -33,18 +33,20 @@ const SelectItem = React.forwardRef<
 SelectItem.displayName = "SelectItem";
 
 const SelectProfessorComponent:React.FC<{
-    body: ResponseGetUsersType,
+    body: ResponseGetUsersType | undefined,
     selectedProfessor : string | undefined
     setProfessor : (professorFullName:string) => void
 }> = ({body, setProfessor, selectedProfessor})=>{
   useEffect(()=>{
-    const user = body.find((user) => user.id === selectedProfessor);
-    if(user){
-      selectedProfessor = user.fullname
-    }
-    else{
-      selectedProfessor = undefined;
-    }
+      if(body){
+        const user = body.find((user) => user.id === selectedProfessor);
+        if(user){
+          selectedProfessor = user.fullname
+        }
+        else{
+          selectedProfessor = undefined;
+        }
+     }
   },[selectedProfessor])
  return(
         <>
@@ -68,7 +70,7 @@ const SelectProfessorComponent:React.FC<{
                             <HiOutlineChevronUp className="text-gray-500" />
                         </Select.ScrollUpButton>
                         <Select.Viewport className="p-2">
-                            {body.map((user) => (
+                            {body&& body.map((user) => (
                                 <SelectItem key={user.id} value={user.id}>
                                     {user.fullname}
                                 </SelectItem>

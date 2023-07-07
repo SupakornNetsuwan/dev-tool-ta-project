@@ -7,7 +7,7 @@ import checkExistUser from "./checkExistUser"
 import checkExistFakeUser from './helper/checkExistFakeUser'
 import storeFakeUser from './helper/storeFakeUser'
 
-export const isUsingFakeUser = false;
+export const isUsingFakeUser = true;
 
 /**
  * @description ทำการ export ตัว authOptions ออกไปให้ next-auth ใช้งาน (Next.js 13.0.0 ขึ้นไป)

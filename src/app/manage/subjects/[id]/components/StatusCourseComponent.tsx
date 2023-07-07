@@ -22,10 +22,8 @@ const StatusCourse: React.FC<{ course: string}> = ({course}) => {
     if (isError) return <p>เกิดข้อผิดพลาด</p>;
 
     const courseDetail = data.data.data;
-
     return(
         <>  
-           
             <button onClick={() => router.back()} className="mb-4 flex items-center space-x-1 text-blue-500" >
                 <HiOutlineArrowSmallLeft />
                 <span>ย้อนกลับ</span>
