@@ -26,7 +26,7 @@ const Navbar = () => {
       <div
         className={`${
           atcrollThreshold ? "translate-y-0 px-0" : "translate-y-4 px-4"
-        } sticky top-0 transition-all duration-200`}
+        } sticky top-0 z-40 transition-all duration-200`}
       >
         <div
           className={`${

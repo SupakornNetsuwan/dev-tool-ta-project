@@ -11,7 +11,8 @@ import { Course, Prisma } from "@prisma/client";
 // ร้องขอข้อมูลรายวิชา
 export const GET = async (request: NextRequest) => {
     // ตรวจสอบสิทธิ์
-    const { hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN"]);
+    const { hasPermission, session } = await checkAuth(["ADMIN", "SUPERADMIN"]);
+    if (!session) return NextResponse.json({ message: "โปรดเข้าสู่ระบบ" }, { status: 401 })
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
 
     try {
@@ -34,23 +35,26 @@ export const GET = async (request: NextRequest) => {
         }
     }
 
-    export const POST = async (request: NextRequest) => {
-        // ตรวจสอบสิทธิ์
-        const { hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN"]);
-        if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
 
-        try {
-            const body = await request.json();
-            // Create course
-            const update = await createCourses(body)
-            return NextResponse.json({ message: "ทำการเพิ่มข้อมูลสำเร็จ", data: update })
-        } catch (error) {
-            let message = "เกิดปัญหาที่ไม่ทราบสาเหตุ"
-            console.log(error)
-            if (error instanceof Prisma.PrismaClientKnownRequestError) {
-                // Error handling for prisma CRUD error
-                if (error.code === 'P2002') message = "มีรายวิชาที่ถูกสร้างซ้ำกัน"
-            } else {
+export const POST = async (request: NextRequest) => {
+    // ตรวจสอบสิทธิ์
+    const { hasPermission, session } = await checkAuth(["ADMIN", "SUPERADMIN"]);
+    if (!session) return NextResponse.json({ message: "โปรดเข้าสู่ระบบ" }, { status: 401 })
+    if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
+
+    try {
+        const body = await request.json();
+        // Create course
+        const update = await createCourses(body)
+        return NextResponse.json({ message: "ทำการเพิ่มข้อมูลสำเร็จ", data: update })
+    } catch (error) {
+        let message = "เกิดปัญหาที่ไม่ทราบสาเหตุ"
+
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            // Error handling for prisma CRUD error
+            if (error.code === 'P2002') message = "มีรายวิชาที่ถูกสร้างซ้ำกัน"
+        } else {
+
             // Error handling for other errors
             if (error instanceof Object && !(error instanceof Error)) message = JSON.stringify(error)
             if (error instanceof Error) message = error.message

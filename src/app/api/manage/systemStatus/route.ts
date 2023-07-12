@@ -12,7 +12,8 @@ import deleteSystemStatus from "./func/deleteSystemStatus";
 
 export const POST = async (request: NextRequest) => {
     // ตรวจสอบสิทธิ์
-    const { hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN"]);
+    const { hasPermission, session } = await checkAuth(["ADMIN", "SUPERADMIN"]);
+    if (!session) return NextResponse.json({ message: "โปรดเข้าสู่ระบบ" }, { status: 401 })
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
 
     try {
@@ -37,7 +38,8 @@ export const POST = async (request: NextRequest) => {
 
 export const DELETE = async (request: NextRequest) => {
     // ตรวจสอบสิทธิ์
-    const { hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN"]);
+    const { hasPermission, session } = await checkAuth(["ADMIN", "SUPERADMIN"]);
+    if (!session) return NextResponse.json({ message: "โปรดเข้าสู่ระบบ" }, { status: 401 })
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
 
     try {

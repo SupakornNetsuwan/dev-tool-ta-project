@@ -32,7 +32,35 @@ const storeUser: StoreUserFunctionType = async ({ LDAPemail, LDAPid, LDAPfullnam
                 id: LDAPid.toLowerCase(),
                 fullname: LDAPfullname.toLowerCase(),
                 password: hashedPassword,
-                department: LDAPdepartment
+                department: LDAPdepartment,
+                Profile: {
+                    connectOrCreate: {
+                        where: {
+                            id: LDAPid
+                        },
+                        create: {
+                            address: "",
+                            email: LDAPemail,
+                            firstname: "",
+                            lastname: "",
+                            phoneNumber: "",
+                            title: "",
+                            UserDocument: {
+                                connectOrCreate: {
+                                    where: {
+                                        userId: LDAPid
+                                    },
+                                    create: {
+                                        bookBankPath: "",
+                                        classTablePath: "",
+                                        picturePath: "",
+                                        transcriptPath: ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         })
 

@@ -13,10 +13,38 @@ const createFakeUser = async (username: string, password: string, fullname?: str
         data: {
             id: username,
             email: `${username}@kmitl.ac.th`,
-            fullname: fullname || "John smith",
+            fullname: fullname || "John Doe",
             password: hashedPassword,
             role: role || "STUDENT",
-            department: "it"
+            department: "it",
+            Profile: {
+                connectOrCreate: {
+                    where: {
+                        id: username
+                    },
+                    create: {
+                        address: "",
+                        email: `${username}@kmitl.ac.th`,
+                        firstname: "",
+                        lastname: "",
+                        phoneNumber: "",
+                        title: "",
+                        UserDocument: {
+                            connectOrCreate: {
+                                where: {
+                                    userId: username
+                                },
+                                create: {
+                                    bookBankPath: "",
+                                    classTablePath: "",
+                                    picturePath: "",
+                                    transcriptPath: ""
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     })
     return newUser
