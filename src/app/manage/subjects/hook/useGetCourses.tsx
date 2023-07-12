@@ -3,7 +3,7 @@ import type { AxiosResponse, AxiosError } from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { Course } from "@prisma/client";
 
-const useGetCourse = () => {
+const useGetCourses = () => {
   return useQuery<AxiosResponse<{ message: string; data: Course[] }>, AxiosError<{ message: string }>>({
     queryKey: ["getCourses"],
     queryFn: async () => {
@@ -13,4 +13,4 @@ const useGetCourse = () => {
   });
 };
 
-export default useGetCourse;
+export default useGetCourses;

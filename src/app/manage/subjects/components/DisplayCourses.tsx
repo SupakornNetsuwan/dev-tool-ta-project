@@ -10,7 +10,17 @@ import type { Course } from "@prisma/client";
 const DisplayCourse = () => {
   const { data, isLoading, isError } = useGetCourses();
 
-  if (isLoading) return <p>กำลังโหลดรายวิชา</p>;
+  if (isLoading) return (
+    <>
+        <div className="relative flex  flex-col  overflow-hidden animate-pulse  mt-5 ">
+            <div className="flex items-center justify-center" >
+                <div className="w-8/12 bg-blue-400  p-2 ">
+                    
+                </div>
+            </div>
+        </div>
+    </>)
+
   if (isError) return <p>เกิดข้อผิดพลาด</p>;
 
   const courses = data.data.data;

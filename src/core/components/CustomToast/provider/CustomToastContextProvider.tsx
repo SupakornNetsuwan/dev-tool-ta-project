@@ -2,7 +2,7 @@
 import React, { useState, useCallback } from "react";
 import CustomToast from "../index";
 import CustomToastContext from "../context/CustomToastContext";
-import type { ToastStateProps, ToastOpenFuncProps } from "../CustomToastTypes";
+import type { ToastStateProps, ToastOpenFuncProps } from "../customToastTypes";
 
 const CustomToastContextProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
   const [toastState, setToastState] = useState<ToastStateProps>({
