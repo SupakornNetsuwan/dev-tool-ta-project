@@ -9,7 +9,7 @@ const useGetCourses = () => {
     queryFn: async () => {
       return await axios.get("/api/manage/subjects");
     },
-    cacheTime: 5 * 60 * 1000,
+    cacheTime: 2 * 60 * 1000,
   });
 };
 
