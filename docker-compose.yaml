@@ -12,7 +12,10 @@ services:
       - .env.production #important กำหนดให้ใช้ .env.production
     networks:
       - application
+    volumes:
+      - uploads_dir:/usr/src/app/public/uploads
   mysql:
+    container_name: tawebsite_mysql
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
@@ -30,6 +33,7 @@ services:
     networks:
       - application
   phpmyadmin:
+    container_name: tawebsite_phpmyadmin
     image: phpmyadmin
     restart: always
     ports:
@@ -40,8 +44,19 @@ services:
       - mysql
     networks:
       - application
+  portainer:
+    container_name: tawebsite_portainer
+    image: portainer/portainer-ce:latest
+    restart: always
+    ports:
+      - 9000:9000 # Shouldn't be used on production
+    volumes:
+      - portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
 networks:
   application:
     driver: bridge
 volumes:
   mysql_data:
+  uploads_dir:
+  portainer_data:

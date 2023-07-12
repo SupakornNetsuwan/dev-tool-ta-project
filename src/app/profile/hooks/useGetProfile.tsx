@@ -4,12 +4,12 @@ import type { AxiosResponse, AxiosError } from "axios";
 import type { ProfileFormType } from "../types/ProfileFormType";
 
 const useGetProfile = () => {
-  return useQuery<AxiosResponse<{ message: string; data: ProfileFormType }>, AxiosError<{ message: string }>>({
+  return useQuery<AxiosResponse<{ message: string; data: ProfileFormType | null }>, AxiosError<{ message: string }>>({
     queryKey: ["getProfile"],
     queryFn: async () => {
       return axios.get("/api/user/profile");
     },
-    staleTime: 3 * 60 * 1000,
+    staleTime: 10 * 1000,
   });
 };
 

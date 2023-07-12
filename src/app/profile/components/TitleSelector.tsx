@@ -34,13 +34,13 @@ const TitleSelector = () => {
       control={control}
       name="title"
       render={({ field: { name, onBlur, onChange, ref, value } }) => (
-        <Select.Root value={value} onValueChange={onChange} name={name}>
+        <Select.Root  value={value} onValueChange={onChange} name={name}>
           <Select.Trigger
             ref={ref}
-            className="flex h-full w-full items-center justify-between gap-1 rounded border  bg-white px-[15px] py-2 text-gray-500 outline-none hover:shadow-realistic-1 focus:shadow-realistic-2"
+            className="flex w-full items-center justify-between gap-1 rounded border  bg-white px-[15px] py-2 text-gray-500 outline-none hover:shadow-realistic-1 focus:shadow-realistic-2"
             aria-label="Title choosing"
           >
-            <Select.Value placeholder="เลือกคำนำหน้า" aria-label="เลือกคำนำหน้า" />
+            <Select.Value  placeholder="เลือกคำนำหน้า" aria-label="เลือกคำนำหน้า"/>
             <Select.Icon asChild>
               <HiOutlineChevronUpDown className="text-lg text-blue-500" />
             </Select.Icon>

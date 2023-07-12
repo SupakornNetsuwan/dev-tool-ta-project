@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server"
 import checkAuth from "@/core/func/checkAuth"
 import getProfile from "./func/getProfile"
-import type { ProfileFormType as PayloadProfileFormType } from "@/app/profile/types/ProfileFormType"
 // Form upload handling
 import fileUploadHandler from "@/core/func/fileUploadHandler"
+import checkRemoveOldFiles from "./func/checkRemoveOldFiles"
+import updateProfile from "./func/updateProfile"
 
 export const GET = async (request: NextRequest) => {
     const { hasPermission, session } = await checkAuth(["ADMIN", "PROFESSOR", "STUDENT", "SUPERADMIN"])
@@ -23,29 +24,32 @@ export const GET = async (request: NextRequest) => {
     }
 }
 
-export const PATCH = async (request: NextRequest & { url: string }) => {
+export const PATCH = async (request: NextRequest) => {
     const { hasPermission, session } = await checkAuth(["ADMIN", "PROFESSOR", "STUDENT", "SUPERADMIN"])
     if (!session) return NextResponse.json({ message: "โปรดเข้าสู่ระบบ" }, { status: 401 })
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
 
     try {
         const formData = await request.formData();
-        const { firstname, lastname, title, address, phoneNumber } = Object.fromEntries(formData)
-        const id = session.user.id;
-        const email = session.user.email;
-        const [classTablePath, transcriptPath, picturePath, bookBankPath] = await Promise.all([
-            fileUploadHandler(formData.get("UserDocument[transcriptPath]"), email, "ทรานสคริป"),
-            fileUploadHandler(formData.get("UserDocument[classTablePath]"), email, "ตารางเรียน"),
+        const { firstname, lastname, title, address, phoneNumber } = (Object.fromEntries(formData)) as { [key: string]: string | null }
+        const id = session.user.id; // เราไม่เชื่อในสิ่งที่ User ส่งมา จึงเช็คจาก session
+        const email = session.user.email; // เราไม่เชื่อในสิ่งที่ User ส่งมา จึงเช็คจาก session
+        const [bookBankPath, classTablePath, transcriptPath, picturePath] = await Promise.all([
             fileUploadHandler(formData.get("UserDocument[bookBankPath]"), email, "สำเนาบัญชี"),
+            fileUploadHandler(formData.get("UserDocument[classTablePath]"), email, "ตารางเรียน"),
+            fileUploadHandler(formData.get("UserDocument[transcriptPath]"), email, "ทรานสคริป"),
             fileUploadHandler(formData.get("UserDocument[picturePath]"), email, "รูปถ่าย")
         ])
-        console.log({ classTablePath, transcriptPath, picturePath, bookBankPath })
 
-        /**
-         * @remark todo : ทำให้สามารถบันทึกลง DB ได้ และ ทำ Docker volume mount ไว้ที่ /app/public/uploads
-         */
+        await checkRemoveOldFiles({ bookBankPath, classTablePath, picturePath, transcriptPath }, id)
 
-        return NextResponse.json({ message: "I got your message bra!" })
+        const updatedProfile = await updateProfile({
+            title, firstname, lastname, address, phoneNumber, email, id, UserDocument: {
+                classTablePath, transcriptPath, picturePath, bookBankPath
+            }
+        });
+
+        return NextResponse.json({ message: "ทำการอัปเดตข้อมูลเรียบร้อย", data: updatedProfile })
     } catch (error) {
         // หากเกิด error ให้ทำการตรวจสอบ error และตอบกลับ
         let message = "เกิดปัญหาที่ไม่ทราบสาเหตุ"

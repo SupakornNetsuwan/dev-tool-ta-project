@@ -1,12 +1,20 @@
 import React from "react";
-import ProfileWrapper from "./components/ProfileWrapper";
+import PageWrapper from "./components/PageWrapper";
 import ProfileForm from "./components/ProfileForm";
+// React hook form
+import ProfileFormProvider from "./providers/ProfileFormProvider";
+
+export const metadata = {
+  title: "จัดการบัญชีผู้ใช้",
+};
 
 const page = () => {
   return (
-    <ProfileWrapper>
-      <ProfileForm />
-    </ProfileWrapper>
+    <PageWrapper>
+      <ProfileFormProvider>
+        <ProfileForm />
+      </ProfileFormProvider>
+    </PageWrapper>
   );
 };
 

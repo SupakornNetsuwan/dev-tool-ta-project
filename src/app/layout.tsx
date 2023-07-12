@@ -11,8 +11,12 @@ import CustomToastContextProvider from "@/core/components/CustomToast/provider/C
 import LoadingScreenContextProvider from "@/core/components/LoadingScreen/provider/LoadingScreenContextProvider";
 import ClientLocalizationProvider from "@/core/providers/ClientLocalizationProvider";
 import ClientQueryClientProvider from "@/core/providers/ClientQueryClientProvider";
+
 export const metadata = {
-  title: "ระบบรับสมัครผู้ช่วยสอน | ITKMITL",
+  title: {
+    template: "%s | ITKMITL",
+    default: "ระบบรับสมัครผู้ช่วยสอน | ITKMITL",
+  },
   description: "ระบบรับสมัครผู้ช่วยสอนสำหรับคณะเทคโนโลยีสารสนเทศ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง",
 };
 

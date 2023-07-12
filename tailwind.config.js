@@ -44,7 +44,8 @@ module.exports = {
         slideOut: 'slideOut 150ms  cubic-bezier(0.16, 1, 0.3, 1) ',
         slideUpAndFade: 'slideUpAndFade 200ms ease-out both',
         openDialog: "toggleDialog 0.25s ease-out both",
-        closeDialog: "toggleDialog 0.25s ease-out reverse"
+        closeDialog: "toggleDialog 0.25s ease-out reverse",
+        
       },
       fontFamily: {
         "noto": ["Noto Sans Thai", "sans-serif"]

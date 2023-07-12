@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 
 const FileSectionWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {

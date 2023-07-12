@@ -29,7 +29,7 @@ model Profile {
   title        String?
   firstname    String?
   lastname     String?
-  address      String        @db.MediumText
+  address      String?       @db.MediumText
   phoneNumber  String?
   email        String?
 }
@@ -37,10 +37,10 @@ model Profile {
 model UserDocument {
   userId         String  @id
   profile        Profile @relation(fields: [userId], references: [id], onDelete: Cascade)
-  picturePath    String
-  transcriptPath String
-  classTablePath String
-  bookBankPath   String
+  picturePath    String?
+  transcriptPath String?
+  classTablePath String?
+  bookBankPath   String?
 }
 
 model SystemStatus {

@@ -1,6 +1,7 @@
 import { prisma } from "@/core/libs/prisma/connector";
+import type { ProfileFormType } from "@/app/profile/types/ProfileFormType";
 
-const getProfile = async (userId: string) => {
+const getProfile = async (userId: string): Promise<ProfileFormType | null> => {
     const profile = await prisma.profile.findUnique({
         where: {
             id: userId
