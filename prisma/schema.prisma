@@ -70,5 +70,5 @@ model Course {
   nameEng     String
   nameThai    String
   credit      String
-  description String?
+  description String? @db.Text
 }
