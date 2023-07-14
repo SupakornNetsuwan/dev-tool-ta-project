@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
 import type { User } from "@prisma/client";
-import type { ResponseGetUserType } from "@/app/api/manage/users/UsersType";
+import type { ResponseGetUserType } from "@/app/api/users/UsersType";
 
 const useUpdateRole = () => {
   return useMutation<
@@ -11,7 +11,7 @@ const useUpdateRole = () => {
     unknown
   >({
     mutationFn: (payload) => {
-      return axios.patch("/api/manage/users", payload);
+      return axios.patch(`/api/users/${payload.id}`, payload);
     },
   });
 };

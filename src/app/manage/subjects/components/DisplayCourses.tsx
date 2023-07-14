@@ -1,13 +1,14 @@
 "use client";
+import { useMemo } from "react";
 import CourseCard from "./CourseCard";
 import UplaodCourseCard from "./UploadCourseCard";
 // Hooks
 import useGetCourses from "../hook/useGetCourses";
 // Types
 import type { Course } from "@prisma/client";
-import { useMemo } from "react";
 
 const DisplayCourse = () => {
+  // ก็ทำให้มัน response มามีการ include professor ด้วย
   const { data, isLoading, isError, error } = useGetCourses();
   const courses = useMemo(() => data?.data.data, [data?.data]);
 
@@ -28,7 +29,7 @@ const DisplayCourse = () => {
     <>
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-7">
         {courses?.map((course: Course, index) => (
-          <CourseCard key={index} course={course}></CourseCard>
+          <CourseCard key={index} course={course} />
         ))}
         <UplaodCourseCard />
       </div>

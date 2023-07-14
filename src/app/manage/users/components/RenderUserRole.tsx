@@ -4,7 +4,7 @@ import type { Role } from "@prisma/client";
 import * as Select from "@radix-ui/react-select";
 import { HiOutlineChevronUp, HiOutlineChevronDown, HiOutlineChevronUpDown, HiOutlineCheck } from "react-icons/hi2";
 import { GridRenderCellParams } from "@mui/x-data-grid";
-import type { ResponseGetUserType } from "@/app/api/manage/users/UsersType";
+import type { ResponseGetUserType } from "@/app/api/users/UsersType";
 
 const SelectItem = forwardRef<
   HTMLDivElement,

@@ -26,7 +26,7 @@ model Profile {
   id           String        @id // id อันเดียวกันกับของ User
   user         User          @relation(fields: [id], references: [id], onDelete: Cascade)
   UserDocument UserDocument?
-  title        String?
+  title        String?       @default("นาย")
   firstname    String?
   lastname     String?
   address      String?       @db.MediumText

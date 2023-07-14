@@ -5,8 +5,7 @@ import { redirect } from "next/navigation";
 
 const layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => {
   const { session, hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN", "STUDENT", "PROFESSOR"]);
-  if (!hasPermission) return redirect("/");
-  
+  if (!session) return redirect("/login");
 
   return <>{children}</>;
 };

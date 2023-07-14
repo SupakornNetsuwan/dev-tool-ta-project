@@ -6,7 +6,7 @@ import colors from "tailwindcss/colors";
 import dynamic from "next/dynamic";
 const FileStatus = dynamic(() => import("./FileStatus"));
 
-const InputFile: React.FC<{ input: React.ReactElement }> = ({ input }) => {
+const InputFile: React.FC<{ input: React.ReactElement, label: string }> = ({ input, label }) => {
   const watch = useWatch({ name: input.props.name });
   const [isShowInput, setIsShowInput] = useState(false);
   const WrapperRef = useRef<HTMLDivElement>(null);
@@ -52,7 +52,7 @@ const InputFile: React.FC<{ input: React.ReactElement }> = ({ input }) => {
         },
       ],
     ]).finished.then(() => {
-      divInWrapper.getElementsByTagName("p")[0].innerHTML = "กดเพื่อแก้ไขไฟล์";
+      divInWrapper.getElementsByTagName("p")[0].innerHTML = "กดเพื่อแก้ไข";
       timeline([
         [
           divInWrapper.getElementsByTagName("p")[0],
@@ -111,7 +111,7 @@ const InputFile: React.FC<{ input: React.ReactElement }> = ({ input }) => {
         },
       ],
     ]).finished.then(() => {
-      divInWrapper.getElementsByTagName("p")[0].innerHTML = "กดเพื่อแก้ไข";
+      divInWrapper.getElementsByTagName("p")[0].innerHTML = `มีไฟล์ ${label}แล้ว`;
 
       timeline([
         [
@@ -245,7 +245,7 @@ const InputFile: React.FC<{ input: React.ReactElement }> = ({ input }) => {
             isShowInput ? "" : ""
           } absolute inset-0 z-10 flex h-full items-center rounded bg-white p-2 px-6 text-blue-500`}
         >
-          <p>กดเพื่อแก้ไข</p>
+          <p>มีไฟล์ {label}แล้ว</p>
         </div>
         <div className="pointer-events-none opacity-0">{input}</div>
       </div>

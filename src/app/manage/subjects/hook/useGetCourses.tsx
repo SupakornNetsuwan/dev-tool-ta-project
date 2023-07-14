@@ -1,15 +1,15 @@
 import axios from "axios";
 import type { AxiosResponse, AxiosError } from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { Course } from "@prisma/client";
+import type { FetchCourseType } from "@/app/api/subjects/[subjectId]/CourseTypes";
 
 const useGetCourses = () => {
-  return useQuery<AxiosResponse<{ message: string; data: Course[] }>, AxiosError<{ message: string }>>({
+  return useQuery<AxiosResponse<{ message: string; data: FetchCourseType[] }>, AxiosError<{ message: string }>>({
     queryKey: ["getCourses"],
     queryFn: async () => {
-      return await axios.get("/api/manage/subjects");
+      return await axios.get("/api/subjects");
     },
-    cacheTime: 2 * 60 * 1000,
+    cacheTime: 1 * 60 * 1000,
   });
 };
 

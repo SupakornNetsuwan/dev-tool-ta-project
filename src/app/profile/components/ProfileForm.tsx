@@ -29,10 +29,12 @@ import type { ProfileFormType } from "../types/ProfileFormType";
 import TitleSelector from "./TitleSelector";
 // Custom hooks
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
+import type { Session } from "next-auth";
 
-const ProfileForm = () => {
-  const { data, isSuccess, isLoading } = useGetProfile();
-  const updateProfile = useUpdateProfile();
+const ProfileForm = ({ session }: { session: Session }) => {
+  const { data, isSuccess, isLoading } = useGetProfile(session.user.id);
+
+  const updateProfile = useUpdateProfile(session.user.id);
   const {
     handleSubmit,
     register,
@@ -48,7 +50,7 @@ const ProfileForm = () => {
       const { bookBankPath, classTablePath, picturePath, transcriptPath } = UserDocument || {};
       setValue("id", id);
       setValue("email", email);
-      setValue("title", title);
+      setValue("title", title || "นาย");
       setValue("firstname", firstname);
       setValue("lastname", lastname);
       setValue("address", address);
@@ -173,6 +175,7 @@ const ProfileForm = () => {
           <div className="flex flex-col gap-3 sm:flex-row [&>div]:flex-1">
             <FieldWrapper label={<Label.Root>สำเนาสมุดบัญชีธนาคาร</Label.Root>}>
               <InputFile
+                label="สำเนาสมุดบัญชีธนาคาร"
                 input={
                   <input
                     type="file"
@@ -185,6 +188,7 @@ const ProfileForm = () => {
             </FieldWrapper>
             <FieldWrapper label={<Label.Root>ตารางเรียนส่วนบุคคล</Label.Root>}>
               <InputFile
+                label="ตารางเรียนส่วนบุคคล"
                 input={
                   <input
                     type="file"
@@ -199,6 +203,7 @@ const ProfileForm = () => {
           <div className="flex flex-col gap-3 sm:flex-row [&>div]:flex-1">
             <FieldWrapper label={<Label.Root>สำเนาทรานสคริปปัจจุบัน</Label.Root>}>
               <InputFile
+                label="สำเนาทรานสคริปปัจจุบัน"
                 input={
                   <input
                     type="file"
@@ -211,6 +216,7 @@ const ProfileForm = () => {
             </FieldWrapper>
             <FieldWrapper label={<Label.Root>รูปถ่ายขนาด 1 นิ้ว</Label.Root>}>
               <InputFile
+                label="รูปถ่ายขนาด 1 นิ้ว"
                 input={
                   <input
                     accept="image/png,image/jpg,image/jpeg"
