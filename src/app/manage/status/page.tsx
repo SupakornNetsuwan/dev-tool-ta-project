@@ -1,7 +1,7 @@
 import DisplaySystemStatus from "./components/DisplaySystemStatus";
 import CreateStatusForm from "./components/CreateStatusForm";
 // Using API
-import getSystemStatus from "@/app/api/manage/systemStatus/func/getSystemStatus";
+import getSystemStatus from "@/app/api/systemStatus/func/getSystemStatus";
 
 const page = async () => {
   const systemStatus = await getSystemStatus();

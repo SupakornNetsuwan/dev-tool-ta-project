@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 const useCreateCourse = () => {
   return useMutation<AxiosResponse<{ message: string }>, AxiosError<{ message: string }>, Course[]>({
     mutationFn: (Courses) => {
-      return axios.post("/api/manage/subjects", Courses);
+      return axios.post("/api/subjects", Courses);
     },
   });
 };

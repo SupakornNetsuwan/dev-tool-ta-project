@@ -39,8 +39,9 @@ export const POST = async (request: NextRequest) => {
         const update = await createCourse(body)
         return NextResponse.json({ message: "ทำการเพิ่มข้อมูลสำเร็จ", data: update })
     } catch (error) {
+        console.log(error);
+        
         let message = "เกิดปัญหาที่ไม่ทราบสาเหตุ"
-
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
             // Error handling for prisma CRUD error
             if (error.code === 'P2002') message = "มีรายวิชาที่ถูกสร้างซ้ำกัน"

@@ -13,7 +13,7 @@ import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
 import useCreateSystemStatus from "../hooks/useCreateSystemStatus";
 import useLoadingScreen from "@/core/components/LoadingScreen/hook/useLoadingScreen";
 // types
-import { SystemStatusPayloadType } from "@/app/api/manage/systemStatus/SystemStatusType";
+import { SystemStatusPayloadType } from "@/app/api/systemStatus/SystemStatusType";
 
 dayjs.locale("th");
 

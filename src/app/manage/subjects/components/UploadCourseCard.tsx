@@ -1,20 +1,12 @@
-"use client";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const CardUpload = () => {
-  const router = useRouter();
-
-  const navigateToUploadCourse = () => {
-    router.push("/manage/subjects/upload");
-  };
-
   return (
     <>
-      <div
-        onClick={navigateToUploadCourse}
-        className="flex cursor-pointer items-center justify-center border-2 border-dashed border-gray-300 bg-white p-4"
-      >
-        <p className="text-blue-500">+ เพิ่มรายวิชา</p>
+      <div className="flex cursor-pointer items-center justify-center border-2 border-dashed border-gray-300 bg-white p-4">
+        <Link href="/manage/subjects/upload" className="text-blue-500">
+          เพิ่มรายวิชา
+        </Link>
       </div>
     </>
   );

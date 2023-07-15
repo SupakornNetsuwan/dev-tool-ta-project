@@ -2,10 +2,11 @@
 import { useMemo } from "react";
 import CourseCard from "./CourseCard";
 import UplaodCourseCard from "./UploadCourseCard";
+import CourseListWrapper from "./CourseListWrapper";
 // Hooks
 import useGetCourses from "../hook/useGetCourses";
 // Types
-import type { Course } from "@prisma/client";
+import type { FetchCourseType } from "@/app/api/subjects/[subjectId]/CourseTypes";
 
 const DisplayCourse = () => {
   // ก็ทำให้มัน response มามีการ include professor ด้วย
@@ -27,12 +28,12 @@ const DisplayCourse = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-7">
-        {courses?.map((course: Course, index) => (
+      <CourseListWrapper>
+        {courses?.map((course: FetchCourseType, index) => (
           <CourseCard key={index} course={course} />
         ))}
         <UplaodCourseCard />
-      </div>
+      </CourseListWrapper>
     </>
   );
 };
