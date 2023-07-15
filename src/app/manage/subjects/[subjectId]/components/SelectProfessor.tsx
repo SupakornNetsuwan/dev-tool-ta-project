@@ -86,11 +86,11 @@ const SelectProfessorComponent: React.FC<{
           </Select.Icon>
         </Select.Trigger>
         <Select.Portal>
-          <Select.Content className="overflow-hidden rounded-md bg-white shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]">
+          <Select.Content position="popper" className="overflow-hidden rounded-md bg-white shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]">
             <Select.ScrollUpButton className="flex h-[25px] cursor-default items-center justify-center bg-white ">
               <HiOutlineChevronUp className="text-gray-500" />
             </Select.ScrollUpButton>
-            <Select.Viewport className="p-2">
+            <Select.Viewport className="p-2 max-h-[12em]">
               {data?.data.data.map(({ id, fullname }) => (
                 <SelectItem key={id} value={id}>
                   {fullname}
