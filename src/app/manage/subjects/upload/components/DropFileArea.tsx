@@ -1,7 +1,9 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
+import * as XLSX from 'xlsx'
 // Change csv files
 import Papa from "papaparse";
+import { unknown } from "zod";
 
 interface PreviewFile extends File {
   preview: string;
@@ -16,20 +18,58 @@ const FileUploadComponet: React.FC<FileUploaderProps> = ({ onFileUpload }) => {
 
   // function to manage files
   const onDrop = useCallback(
-    (acceptFiles: File[]) => {
+    async (acceptFiles: File[]) => {
       if (acceptFiles?.length) {
-        setFiles((previousFiles) => [
-          ...acceptFiles.map((file) => Object.assign(file, { preview: URL.createObjectURL(file) })),
-        ]);
-        // change file to object
-        Papa.parse(acceptFiles[0], {
-          header: true,
-          skipEmptyLines: true,
-          complete: (result: Papa.ParseResult<Record<string, unknown>>) => changeCSV(result),
-        });
+       
+        // check type of files for changes 
+        const fileTypes = acceptFiles[0].name.split('.').pop()
+        switch(fileTypes){
+          case "xls":
+          case "xlsx" :{
+              const fileData = acceptFiles[0];
+              const arrayBuffer = await fileData.arrayBuffer()
+              const data = new Uint8Array(arrayBuffer)
+              const workbook = XLSX.read(data, { type: 'array' })
+              const worksheetName = workbook.SheetNames[0];
+              const worksheet = workbook.Sheets[worksheetName];
+              const jsonData: Array<Record<string, unknown>> = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+              const header:string[] = jsonData[0] as unknown as string[]
+              const dataRows = jsonData.slice(1);
+
+              const result = {
+                data: dataRows.map((row) => {
+                const rowObject: Record<string, string> = {}
+                header.forEach((column, columnIndex) => {
+                rowObject[column] = row[columnIndex]?.toString() as string;
+                  });
+        
+                    return rowObject
+                }),
+              }
+              const filteredResult = {
+                data: result.data.filter((row) => Object.values(row).every((value) => value !== undefined)),
+              };
+              console.log(filteredResult)
+    
+          
+            break
+          }
+          case "csv":{
+            Papa.parse(acceptFiles[0], {
+              header: true,
+              skipEmptyLines: true,
+              complete: (result: Papa.ParseResult<Record<string, unknown>>) => changeFileToString(result),
+            });
+            break
+          }
+          case "xls":{
+
+          }
+        }
+        
       }
-      // function to change csv
-      const changeCSV = (results: Papa.ParseResult<Record<string, unknown>>) => {
+      // function to change xlsx or csv to string
+      const changeFileToString = (results: Papa.ParseResult<Record<string, unknown>>) => {
         const rowsArray: string[][] = [];
         const valuesArray: unknown[][] = [];
         // Iterating data to get column name and their values
@@ -45,7 +85,7 @@ const FileUploadComponet: React.FC<FileUploaderProps> = ({ onFileUpload }) => {
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    accept: { "text/csv": [".csv"] },
+    accept: { "text/csv": [".csv"] , "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":[".xlsx"]},
     maxFiles: 1,
     onDrop,
   });
