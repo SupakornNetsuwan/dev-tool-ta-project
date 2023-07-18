@@ -3,6 +3,11 @@ import type { FetchCourseType } from "../[subjectId]/CourseTypes";
 
 const getAllCourse = async (professorId?: string): Promise<FetchCourseType[]> => {
   const courses = await prisma.course.findMany({
+    ...(professorId && {
+      where: {
+        professorId,
+      },
+    }),
     include: {
       professor: true,
     },

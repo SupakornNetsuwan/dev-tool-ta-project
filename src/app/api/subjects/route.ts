@@ -17,16 +17,15 @@ export const GET = async (request: NextRequest) => {
     const professorId = url.searchParams.get("professorId")
 
     try {
-        const courses = await getAllCourses()
 
         if (!professorId) {
             const users = await getAllCourses()
-            return NextResponse.json({ message: "ร้องขอข้อมูลทุกวิชาสำเร็จ", data: courses })
+            return NextResponse.json({ message: "ร้องขอข้อมูลทุกวิชาสำเร็จ", data: users })
         }
 
         if (professorId) {
             const usersByRole = await getAllCourses(professorId)
-            return NextResponse.json({ message: `ร้องขอข้อมูลทุกวิชาของอาจารย์ที่มีไอดี = ${professorId}สำเร็จ`, data: courses })
+            return NextResponse.json({ message: `ร้องขอข้อมูลทุกวิชาของอาจารย์ที่มีไอดี ${professorId} สำเร็จ`, data: usersByRole })
         }
 
 

@@ -44,7 +44,7 @@ const DisplaySystemStatus: React.FC<{ openDate: Dayjs; closeDate: Dayjs; isOpen:
 };
 
 const layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => {
-  const { session, hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN", "PROFESSOR"]);
+  const { hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN", "PROFESSOR"]);
   if (!hasPermission) return redirect("/");
   const systemStatus = await getSystemStatus();
 
