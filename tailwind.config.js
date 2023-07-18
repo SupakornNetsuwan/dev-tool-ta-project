@@ -13,7 +13,8 @@ module.exports = {
       },
       backgroundImage: {
         "gradient-blue-purple": "linear-gradient(83deg, rgba(59,130,246,1) 0%, rgba(79,70,235,1) 100%)",
-        "gradient-metal": " linear-gradient(138deg, rgba(255,255,255,0.7903536414565826) 0%, rgba(240,240,240,0.8855917366946778) 38%, rgba(255,255,255,0.5746673669467788) 67%, rgba(255,255,255,0.9248074229691877) 88%, rgba(244,244,244,0.9360119047619048) 100%)"
+        "gradient-metal": "linear-gradient(138deg, rgba(255,255,255,0.7903536414565826) 0%, rgba(240,240,240,0.8855917366946778) 38%, rgba(255,255,255,0.5746673669467788) 67%, rgba(255,255,255,0.9248074229691877) 88%, rgba(244,244,244,0.9360119047619048) 100%)",
+        "gradient-trans-sky-blue": "linear-gradient(138deg, rgba(255,255,255,1) 0%, rgba(59,130,246,0.21332282913165268) 100%)"
       },
       keyframes: {
         hide: {
@@ -45,7 +46,7 @@ module.exports = {
         slideUpAndFade: 'slideUpAndFade 200ms ease-out both',
         openDialog: "toggleDialog 0.25s ease-out both",
         closeDialog: "toggleDialog 0.25s ease-out reverse",
-        
+
       },
       fontFamily: {
         "noto": ["Noto Sans Thai", "sans-serif"]

@@ -11,6 +11,7 @@ import type { FetchCourseType } from "@/app/api/subjects/[subjectId]/CourseTypes
 
 const DisplayCourses: React.FC<{ professorId: string }> = ({ professorId }) => {
   const { data, isLoading } = useGetCourseByProfessor(professorId);
+  const courses = data?.data.data;
 
   if (isLoading) {
     return <LoadingSkeleton />;
@@ -19,10 +20,14 @@ const DisplayCourses: React.FC<{ professorId: string }> = ({ professorId }) => {
   return (
     <>
       <CourseListWrapper>
-        {data?.data.data.map((course: FetchCourseType, index) => (
-          <CourseCard key={index} course={course} />
-        ))}
-        <CreateCourseCard />
+        {courses
+          ?.filter((course) => course.creationStatus === "CREATED")
+          ?.map((course: FetchCourseType, index) => (
+            <CourseCard key={index} createdCourse={course} />
+          ))}
+        {courses?.find((course) => course.creationStatus === "UNCREATED") && (
+          <CreateCourseCard uncreatedCourses={courses.filter((course) => course.creationStatus === "UNCREATED")} />
+        )}
       </CourseListWrapper>
     </>
   );
