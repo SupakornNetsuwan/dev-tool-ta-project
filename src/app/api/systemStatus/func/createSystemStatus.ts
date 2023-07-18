@@ -1,7 +1,6 @@
 import { prisma } from "@/core/libs/prisma/connector"
 import getSystemStatus from "./getSystemStatus"
 import dayjs, { Dayjs } from "dayjs"
-import type { SystemStatusPayloadType } from "../SystemStatusType"
 
 // ทำให้ใช้ type จากที่ export แทนจะได้มีความยืดหยุ่นในการเปลี่ยนแปลง
 

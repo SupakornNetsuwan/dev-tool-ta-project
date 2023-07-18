@@ -17,7 +17,10 @@ const rolesItem = {
     { name: "หน้าหลัก", path: "/" },
     { name: "จัดการ", path: "/manage" },
   ],
-  PROFESSOR: [{ name: "หน้าหลัก", path: "/" }],
+  PROFESSOR: [
+    { name: "หน้าหลัก", path: "/" },
+    { name: "คอร์ส", path: "/courses" },
+  ],
   STUDENT: [
     { name: "หน้าหลัก", path: "/" },
     { name: "สมัครทีเอ", path: "/enroll" },
