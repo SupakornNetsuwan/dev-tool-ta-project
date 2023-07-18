@@ -1,12 +1,12 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
-import * as XLSX from 'xlsx'
 // Change csv files
 import Papa from "papaparse";
-import { unknown } from "zod";
+// hook
+import ChnageXlsxToString from "../hook/useChangeXlsxToString";
 
 interface PreviewFile extends File {
-  preview: string;
+  preview: string;  
 }
 
 interface FileUploaderProps {
@@ -24,34 +24,12 @@ const FileUploadComponet: React.FC<FileUploaderProps> = ({ onFileUpload }) => {
         // check type of files for changes 
         const fileTypes = acceptFiles[0].name.split('.').pop()
         switch(fileTypes){
+          // case xls, xlsx
           case "xls":
           case "xlsx" :{
-              const fileData = acceptFiles[0];
-              const arrayBuffer = await fileData.arrayBuffer()
-              const data = new Uint8Array(arrayBuffer)
-              const workbook = XLSX.read(data, { type: 'array' })
-              const worksheetName = workbook.SheetNames[0];
-              const worksheet = workbook.Sheets[worksheetName];
-              const jsonData: Array<Record<string, unknown>> = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-              const header:string[] = jsonData[0] as unknown as string[]
-              const dataRows = jsonData.slice(1);
-
-              const result = {
-                data: dataRows.map((row) => {
-                const rowObject: Record<string, string> = {}
-                header.forEach((column, columnIndex) => {
-                rowObject[column] = row[columnIndex]?.toString() as string;
-                  });
-        
-                    return rowObject
-                }),
-              }
-              const filteredResult = {
-                data: result.data.filter((row) => Object.values(row).every((value) => value !== undefined)),
-              };
-              console.log(filteredResult)
-    
-          
+              const xlsxResult =  await ChnageXlsxToString(acceptFiles[0])
+              console.log("Result6")
+              // onFileUpload(acceptFiles[0], xlsxResult)
             break
           }
           case "csv":{
@@ -61,9 +39,6 @@ const FileUploadComponet: React.FC<FileUploaderProps> = ({ onFileUpload }) => {
               complete: (result: Papa.ParseResult<Record<string, unknown>>) => changeFileToString(result),
             });
             break
-          }
-          case "xls":{
-
           }
         }
         
@@ -77,6 +52,7 @@ const FileUploadComponet: React.FC<FileUploaderProps> = ({ onFileUpload }) => {
           rowsArray.push(Object.keys(d));
           valuesArray.push(Object.values(d));
         });
+        console.log("csv",results)
         // send file and result Data to parent components
         onFileUpload(acceptFiles[0], results);
       };
