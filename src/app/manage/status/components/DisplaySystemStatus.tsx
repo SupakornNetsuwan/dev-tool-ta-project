@@ -11,14 +11,22 @@ dayjs.locale("th");
 
 const DisplaySystemStatus: React.FC<{ systemStatus: SystemStatus }> = ({ systemStatus }) => {
   return (
-    <div className="bg-white p-4">
-      <div className="my-6 flex space-x-2 rounded-md ">
-        <DisplayDate preText={<p className="text-gray-800">เริ่มรับสมัคร</p>} date={dayjs(systemStatus.openDate)} />
-        <HiOutlineArrowSmallRight className="self-center text-2xl text-gray-500" />
-        <DisplayDate preText={<p className="text-gray-500">สิ้นสุดรับสมัคร</p>} date={dayjs(systemStatus.closeDate)} />
+    <>
+      <div className="bg-white p-4">
+        <p className="text-gray-500">
+          ปีการศึกษา {systemStatus.year} ภาคการศึกษา {systemStatus.semester}
+        </p>
+        <div className="my-6 flex space-x-2 rounded-md ">
+          <DisplayDate preText={<p className="text-gray-800">เริ่มรับสมัคร</p>} date={dayjs(systemStatus.openDate)} />
+          <HiOutlineArrowSmallRight className="self-center text-2xl text-gray-500" />
+          <DisplayDate
+            preText={<p className="text-gray-500">สิ้นสุดรับสมัคร</p>}
+            date={dayjs(systemStatus.closeDate)}
+          />
+        </div>
+        <CancelSystemStatus />
       </div>
-      <CancelSystemStatus />
-    </div>
+    </>
   );
 };
 
