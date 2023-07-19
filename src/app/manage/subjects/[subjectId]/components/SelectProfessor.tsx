@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useRef } from "react";
 // Hooks
 import useGetProfessor from "../hook/useGetProfessor";
 import useUpdateCourse from "../hook/useUpdateCourse";
@@ -41,6 +41,8 @@ const SelectProfessorComponent: React.FC<{
   subjectId: string;
 }> = ({ value, subjectId }) => {
   const { data } = useGetProfessor();
+  const [fitlerSearch, setFitlerSearch] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
   const updateCourse = useUpdateCourse();
   const queryClient = useQueryClient();
   const { openToast } = useCustomToast();
@@ -73,9 +75,17 @@ const SelectProfessorComponent: React.FC<{
     );
   };
 
+  const closeSelectHandler = (isOpen: boolean) => {
+    if (!isOpen) {
+      setFitlerSearch("");
+    } else {
+      setTimeout(() => inputRef.current?.focus(), 0);
+    }
+  };
+
   return (
     <div className="flex flex-col items-end">
-      <Select.Root onValueChange={setProfessor} value={value}>
+      <Select.Root onValueChange={setProfessor} value={value} onOpenChange={closeSelectHandler}>
         <Select.Trigger
           className="w-50 flex items-center justify-between gap-1 rounded bg-white px-[15px] py-2 text-sm text-gray-500 shadow outline-none hover:shadow-realistic-1 focus:shadow-realistic-2"
           aria-label="Professor choosing"
@@ -86,16 +96,30 @@ const SelectProfessorComponent: React.FC<{
           </Select.Icon>
         </Select.Trigger>
         <Select.Portal>
-          <Select.Content position="popper" className="overflow-hidden rounded-md bg-white shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]">
+          <Select.Content
+            position="popper"
+            className="overflow-hidden rounded-md bg-white shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]"
+          >
             <Select.ScrollUpButton className="flex h-[25px] cursor-default items-center justify-center bg-white ">
               <HiOutlineChevronUp className="text-gray-500" />
             </Select.ScrollUpButton>
-            <Select.Viewport className="p-2 max-h-[12em]">
-              {data?.data.data.map(({ id, fullname }) => (
-                <SelectItem key={id} value={id}>
-                  {fullname}
-                </SelectItem>
-              ))}
+            <div className="w-full p-1">
+              <input
+                ref={inputRef}
+                type="text"
+                value={fitlerSearch}
+                onChange={(e) => setFitlerSearch(e.target.value)}
+                className="w-full rounded border p-1.5 text-sm text-gray-500 outline-none"
+              />
+            </div>
+            <Select.Viewport className="max-h-[12em] p-2">
+              {data?.data.data
+                .filter((professor) => professor.fullname.includes(fitlerSearch) || professor.id === value)
+                .map(({ id, fullname }) => (
+                  <SelectItem key={id} value={id}>
+                    {fullname}
+                  </SelectItem>
+                ))}
             </Select.Viewport>
             <Select.ScrollDownButton className="flex h-[25px] cursor-default items-center justify-center bg-white">
               <HiOutlineChevronDown className="text-gray-500" />

@@ -15,14 +15,15 @@ const FileInput = () => {
   const createCourse = useCreateCourse();
   const [fileFromUpload, setFileFromUpload] = useState<File | undefined>();
   const [fileObject, setFileObject] = useState<Papa.ParseResult<Record<string, string>>>();
-
+  type ResultData = Papa.ParseResult<Record<string, unknown>>
   // Handle the uploaded file in the parent component
   const fileUploadHandler = useCallback(
-    (file: File, resultdata: Papa.ParseResult<Record<string, unknown>>) => {
+    (file: File, resultdata:ResultData) => {
+      console.log(resultdata)
       // เป็นการตรวจสอบว่าข้อมูลที่ให้มาในแต่ละ course นั้นตัว value จะเป็น string และ ไม่ว่างเปล่าแน่ ๆ
-      const checkValidCourseData = resultdata.data.map((course) =>
-        Object.values(course).every((value) => typeof value == "string" && value.length > 0)
-      );
+        const checkValidCourseData = resultdata.data.map((course) =>
+          Object.values(course).every((value) => typeof value == "string" && value.length > 0)
+        );
 
       if (checkValidCourseData.includes(false)) {
         openToast({
@@ -38,7 +39,7 @@ const FileInput = () => {
     },
     [openToast]
   );
-
+  
   const uploadNewCourses = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
