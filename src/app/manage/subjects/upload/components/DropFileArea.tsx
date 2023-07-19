@@ -3,7 +3,7 @@ import { useDropzone } from "react-dropzone";
 // Change csv files
 import Papa from "papaparse";
 // hook
-import ChnageXlsxToString from "../hook/useChangeXlsxToString";
+import ChangeXlsxToString from "../hook/useChangeXlsxToString";
 
 interface PreviewFile extends File {
   preview: string;  
@@ -20,16 +20,14 @@ const FileUploadComponet: React.FC<FileUploaderProps> = ({ onFileUpload }) => {
   const onDrop = useCallback(
     async (acceptFiles: File[]) => {
       if (acceptFiles?.length) {
-       
         // check type of files for changes 
         const fileTypes = acceptFiles[0].name.split('.').pop()
         switch(fileTypes){
           // case xls, xlsx
           case "xls":
           case "xlsx" :{
-              const xlsxResult =  await ChnageXlsxToString(acceptFiles[0])
-              console.log("Result6")
-              // onFileUpload(acceptFiles[0], xlsxResult)
+              const xlsxResult =  await ChangeXlsxToString(acceptFiles[0])
+              onFileUpload(acceptFiles[0], xlsxResult)
             break
           }
           case "csv":{
