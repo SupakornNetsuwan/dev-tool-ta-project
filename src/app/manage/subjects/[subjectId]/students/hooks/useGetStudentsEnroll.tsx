@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { ResponseGetUsersType } from "@/app/api/users/UsersType";
+import { ResponseGetEnrollType } from "@/app/api/enroll/[subjectId]/EnrollType";
 
-const useGetStudentsEnroll = () => {
-  return useQuery<AxiosResponse<{ message: string; data: ResponseGetUsersType }>, AxiosError<{ message: string }>>({
-    queryKey: ["getUsers"],
-    queryFn: () => axios.get("/api/users")
+const useGetStudentsEnroll = (subjectId:string) => {
+  return useQuery<AxiosResponse<{ message: string; data:ResponseGetEnrollType }>, AxiosError<{ message: string }>>({
+    queryKey: ["getEnroll"],
+    queryFn: () => axios.get(`/api/enroll/${subjectId}`)
   });
 };
 

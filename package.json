@@ -60,6 +60,6 @@
     "@types/papaparse": "^5.3.7",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.3.0",
-    "prisma": "^4.15.0"
+    "prisma": "^5.0.0"
   }
 }
