@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import useCustomDialog from "@/core/components/CustomDialog/hooks/useCustomDialog";
 import CustomDialog from "@/core/components/CustomDialog";
 import type { FetchCourseType } from "@/app/api/subjects/[subjectId]/CourseTypes";
@@ -8,8 +9,8 @@ import useCreateCourseByProfessor from "../hooks/useCreateCourseByProfessor";
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
 import { useQueryClient } from "@tanstack/react-query";
 
-const CreateCourseCard: React.FC<{ uncreatedCourses: FetchCourseType[] }> = ({ uncreatedCourses }) => {
-  const { openDialog, dialogState, setShowDialog } = useCustomDialog();
+const CreateCourseOption = ({ course, closeDialog }: { course: FetchCourseType; closeDialog: () => void }) => {
+  const [showConfirm, setShowConfirm] = useState(false);
   const { openToast } = useCustomToast();
   const updateCourseByProfessor = useCreateCourseByProfessor();
   const queryClient = useQueryClient();
@@ -37,10 +38,48 @@ const CreateCourseCard: React.FC<{ uncreatedCourses: FetchCourseType[] }> = ({ u
             actionButton: <HiOutlineXMark className="text-2xl text-gray-900" />,
           });
         },
-        onSettled() {},
+        onSettled() {
+          setShowConfirm(false);
+          closeDialog()
+        },
       }
     );
   };
+
+  return (
+    <div className={`flex gap-2`}>
+      <button
+        onClick={() => setShowConfirm(true)}
+        className={`${
+          showConfirm ? "hidden" : "block"
+        } group w-full rounded-md border p-2 text-sm ring-0 ring-blue-500 ring-offset-0 ring-offset-white duration-100 hover:bg-blue-50 hover:ring-1 hover:ring-offset-4`}
+      >
+        <p className="inline text-gray-800 group-hover:text-blue-500">
+          {course.nameThai}
+          <span className="text-gray-500 group-hover:text-blue-500 ml-1">({course.subjectId})</span>
+        </p>
+        <HiOutlineCheck className="ml-2 inline -translate-x-4 text-lg text-emerald-600 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
+      </button>
+      <div className={`${showConfirm ? "flex" : "hidden"} w-full space-x-2`}>
+        <button
+          onClick={() => setShowConfirm(false)}
+          className="btn click-animation flex-1 border bg-white  text-gray-500 hover:border-red-500 hover:bg-red-50 hover:text-red-500"
+        >
+          ยกเลิก
+        </button>
+        <button
+          onClick={() => addNewCourse(course.subjectId)}
+          className="btn click-animation flex-1 border bg-white  text-gray-500 hover:border-blue-500 hover:bg-blue-50 hover:text-blue-500"
+        >
+          เพิ่มวิชา
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const CreateCourseCard: React.FC<{ uncreatedCourses: FetchCourseType[] }> = ({ uncreatedCourses }) => {
+  const { openDialog, dialogState, setShowDialog, closeDialog } = useCustomDialog();
 
   const openAddingCourseDialog = (e: React.MouseEvent) => {
     openDialog({
@@ -51,22 +90,9 @@ const CreateCourseCard: React.FC<{ uncreatedCourses: FetchCourseType[] }> = ({ u
           <ScrollArea.Root>
             <ScrollArea.Viewport>
               <div className="mt-2 grid h-44 grid-cols-1 content-start space-y-2 p-4">
-                {uncreatedCourses.map((course) => {
-                  return (
-                    <div key={course.subjectId} className="group">
-                      <button
-                        onClick={() => addNewCourse(course.subjectId)}
-                        className="block w-full rounded-md border p-2 text-sm ring-0 ring-blue-500 ring-offset-0 ring-offset-white duration-100 group-hover:bg-blue-50 group-hover:ring-1 group-hover:ring-offset-4"
-                      >
-                        <p className="inline text-gray-800 group-hover:text-blue-500">
-                          {course.nameThai}
-                          <span className="text-gray-500 group-hover:text-blue-500">({course.subjectId})</span>
-                        </p>
-                        <HiOutlineCheck className="ml-2 inline -translate-x-4 text-lg text-emerald-600 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
-                      </button>
-                    </div>
-                  );
-                })}
+                {uncreatedCourses.map((course) => (
+                  <CreateCourseOption closeDialog={closeDialog} key={course.subjectId} course={course} />
+                ))}
                 <ScrollArea.Scrollbar
                   className="flex w-2.5 touch-none select-none bg-gray-50 p-0.5 transition-colors duration-[160ms] ease-out hover:bg-gray-100"
                   orientation="vertical"
