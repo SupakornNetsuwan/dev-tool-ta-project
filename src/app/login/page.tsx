@@ -25,13 +25,13 @@ const LoginPage = () => {
           <label htmlFor="username" className="font-medium text-gray-900">
             ชื่อผู้ใช้
           </label>
-          <input type="text" name="username" id="username" className="text-input w-full" />
+          <input type="text" name="username" id="username" className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 outline-none focus:shadow-sm w-full" />
         </div>
         <div>
           <label htmlFor="password" className="font-medium text-gray-900">
             รหัสผ่าน
           </label>
-          <input type="password" name="password" id="password" className="text-input w-full" />
+          <input type="password" name="password" id="password" className="rounded-md border border-gray-300 px-3 py-2 text-gray-900 outline-none focus:shadow-sm w-full" />
         </div>
         <button className="btn click-animation w-full bg-gradient-blue-purple text-white">เข้าสู่ระบบ</button>
       </LoginForm>

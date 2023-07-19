@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Course` MODIFY `creationStatus` ENUM('CREATED', 'UNCREATED') NULL DEFAULT 'UNCREATED';

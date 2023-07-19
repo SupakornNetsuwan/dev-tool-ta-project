@@ -1,10 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
 import type { SystemStatusPayloadType } from "./SystemStatusType"
-// Create function
 import createSystemStatus from "./func/createSystemStatus";
+import getSystemStatus from "./func/getSystemStatus";
+import deleteSystemStatus from "./func/deleteSystemStatus";
 // Auth check
 import checkAuth from "@/core/func/checkAuth";
-import deleteSystemStatus from "./func/deleteSystemStatus";
+
+export const GET = async (request: NextRequest) => {
+    try {
+        const status = await getSystemStatus()
+        return NextResponse.json({ message: "ร้องขอข้อมูสถานะการเปิดปิดระบบสำเร็จ", data: status })
+    } catch (error) {
+        let message = "เกิดปัญหาที่ไม่ทราบสาเหตุ"
+        if (error instanceof Object && !(error instanceof Error)) message = JSON.stringify(error);
+        if (error instanceof Error) message = error.message
+        if (typeof error == "string") message = error
+        return NextResponse.json({ message }, { status: 400 })
+    }
+}
 
 /**
  * @description เป็น API Route สำหรับการสร้างข้อมูลระบบสถานะการเปิด-ปิดระบบ
