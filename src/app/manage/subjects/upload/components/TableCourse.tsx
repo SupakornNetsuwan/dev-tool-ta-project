@@ -29,7 +29,6 @@ const TableCourse: React.FC<TableCourseProps> = ({ fileFromUpload, fileObject })
       setDataEachCell(valuesArray);
     }
   }, [fileFromUpload, fileObject]);
-
   return (
     <>
       {fileFromUpload && (
