@@ -20,6 +20,7 @@ model User {
   createdAt  DateTime @default(now())
   Courses    Course[]
   Profile    Profile?
+   Enroll Enroll[]
 }
 
 model Profile {
@@ -64,4 +65,20 @@ model Course {
   nameThai    String
   credit      String
   description String? @db.Text
+  Enroll Enroll[]
+}
+enum EnrollStatus {
+  PENDING
+  APPROVED
+}
+
+model Enroll{
+  enrollId Int @id @unique @default(autoincrement())
+  enrollDate DateTime
+  enrollStatus EnrollStatus
+  courseId String?
+  course Course? @relation(fields: [courseId], references: [subjectId])
+  studentId String?
+  student User? @relation(fields: [studentId], references: [id])
+  @@unique([courseId, studentId])
 }

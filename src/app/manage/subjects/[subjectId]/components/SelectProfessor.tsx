@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useRef } from "react";
 // Hooks
-import useGetProfessor from "../hook/useGetProfessor";
-import useUpdateCourse from "../hook/useUpdateCourse";
+import useGetProfessor from "../hooks/useGetProfessor";
+import useUpdateCourse from "../hooks/useUpdateCourse";
 import { useQueryClient } from "@tanstack/react-query";
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
 // component
