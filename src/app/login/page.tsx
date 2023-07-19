@@ -4,7 +4,7 @@ import LoginForm from "./components/LoginForm";
 import { isUsingFakeUser } from "@/core/auth/nextAuth/authOptions";
 
 export const metadata: Metadata = {
-  title: "เข้าสู่ระบบ | ITKMITL",
+  title: "เข้าสู่ระบบ",
   description: "เข้าสู่ระบบรับสมัครผู้ช่วยสอน",
 };
 
