@@ -60,14 +60,20 @@ enum Role {
 }
 
 model Course {
-  subjectId      String                @id
-  professorId    String?
-  professor      User?                 @relation(fields: [professorId], references: [id])
-  nameEng        String
-  nameThai       String
-  credit         String
-  description    String?               @db.Text
-  creationStatus CourseCreationStatus? @default(UNCREATED)
+  subjectId       String                @id
+  professorId     String?
+  professor       User?                 @relation(fields: [professorId], references: [id])
+  nameEng         String
+  nameThai        String
+  credit          String
+  description     String?               @db.Text
+  creationStatus  CourseCreationStatus? @default(UNCREATED)
+  title           String?               @default("นาย")
+  firstname       String?
+  lastname        String?
+  contact         String?
+  enrollCondition String?
+  secretCode      String?
 }
 
 enum CourseCreationStatus {

@@ -59,7 +59,8 @@ const layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => 
       </div>
     );
 
-  const { openDate, closeDate } = {
+  const { openDate, closeDate, semester, year, isOpen } = {
+    ...systemStatus,
     openDate: dayjs(systemStatus.openDate),
     closeDate: dayjs(systemStatus.closeDate),
   };
@@ -75,16 +76,11 @@ const layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => 
           ภาพรวม
         </SubNavbar.Item>
       </SubNavbar.Wrapper>
-      <DisplaySystemStatus
-        semester={systemStatus.semester}
-        year={systemStatus.year}
-        openDate={openDate}
-        closeDate={closeDate}
-        isOpen={systemStatus.isOpen}
-      />
-      {systemStatus.isOpen ? (
+      <DisplaySystemStatus semester={semester} year={year} openDate={openDate} closeDate={closeDate} isOpen={isOpen} />
+      {isOpen ? (
         <div className=" min-h-[60vh] bg-gray-50 p-4 ">{children}</div>
       ) : (
+        // อยู่ในช่วงปิดรับสมัคร
         <div className="flex h-full min-h-[60vh] items-center justify-center bg-gray-50">
           <p className="text-gray-500">ระบบได้ปิดรับสมัครไปแล้ววันที่ {closeDate.format("DD/MM/YYYY")}</p>
         </div>
