@@ -5,6 +5,7 @@ import getSystemStatus from "./func/getSystemStatus";
 import deleteSystemStatus from "./func/deleteSystemStatus";
 // Auth check
 import checkAuth from "@/core/func/checkAuth";
+import { ZodError, z } from "zod"
 
 export const GET = async (request: NextRequest) => {
     try {
@@ -33,9 +34,24 @@ export const POST = async (request: NextRequest) => {
         const body: SystemStatusPayloadType = await request.json()
 
         // เช็คว่า body มีข้อมูลมาใช่มั้ย
-        if (!body.openDate || !body.closeDate) return NextResponse.json({ message: "กรุณากรอกข้อมูลให้ครบถ้วน" }, { status: 400 })
+        try {
+            console.log(body);
+            
+            const schema = z.object({
+                openDate: z.string(),
+                closeDate: z.string(),
+                semester: z.number({invalid_type_error:"โปรดกรอกภาคการศึกษาเป็นตัวเลข"}),
+                year: z.number({invalid_type_error:"โปรดกรอกปีการศึกษา"})
+            }).required()
+            schema.parse(body)
+        } catch (error) {
+            if (error instanceof ZodError) {
+                return NextResponse.json({ message: error.errors[0].message }, { status: 400 })
+            }
+        }
+
         // ทำการสร้างช่วงเวลาเปิดปิด
-        const created = await createSystemStatus(body.openDate, body.closeDate)
+        const created = await createSystemStatus(body)
         // สำเร็จ
         return NextResponse.json({ message: "กำหนดช่วงเปิดปิดสำเร็จ!", data: created })
     } catch (error) {

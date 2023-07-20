@@ -10,14 +10,18 @@ import "dayjs/locale/th";
 
 dayjs.locale("th");
 
-const DisplaySystemStatus: React.FC<{ openDate: Dayjs; closeDate: Dayjs; isOpen: boolean }> = async ({
-  openDate,
-  closeDate,
-  isOpen,
-}) => {
+const DisplaySystemStatus: React.FC<{
+  openDate: Dayjs;
+  closeDate: Dayjs;
+  isOpen: boolean;
+  semester: number;
+  year: number;
+}> = async ({ openDate, closeDate, isOpen, semester, year }) => {
   return (
     <div className=" bg-white px-4 pb-4">
-      <p className="pb-2 text-gray-500">ระยะเวลาที่ระบบเปิดรับสมัคร</p>
+      <p className="pb-2 text-gray-500">
+        ระยะเวลาที่ระบบเปิดรับสมัคร สำหรับ ปีการศึกษา {year} ภาคการศึกษา {semester}
+      </p>
       <div className="flex flex-col space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
         <div
           className={`${
@@ -55,10 +59,9 @@ const layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => 
       </div>
     );
 
-  const { openDate, closeDate, isOpen } = {
+  const { openDate, closeDate } = {
     openDate: dayjs(systemStatus.openDate),
     closeDate: dayjs(systemStatus.closeDate),
-    isOpen: systemStatus.isOpen,
   };
 
   return (
@@ -72,8 +75,14 @@ const layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => 
           ภาพรวม
         </SubNavbar.Item>
       </SubNavbar.Wrapper>
-      <DisplaySystemStatus openDate={openDate} closeDate={closeDate} isOpen={isOpen} />
-      {isOpen ? (
+      <DisplaySystemStatus
+        semester={systemStatus.semester}
+        year={systemStatus.year}
+        openDate={openDate}
+        closeDate={closeDate}
+        isOpen={systemStatus.isOpen}
+      />
+      {systemStatus.isOpen ? (
         <div className=" min-h-[60vh] bg-gray-50 p-4 ">{children}</div>
       ) : (
         <div className="flex h-full min-h-[60vh] items-center justify-center bg-gray-50">

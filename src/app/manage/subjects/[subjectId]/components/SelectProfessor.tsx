@@ -114,7 +114,7 @@ const SelectProfessorComponent: React.FC<{
             </div>
             <Select.Viewport className="max-h-[12em] p-2">
               {data?.data.data
-                .filter((professor) => professor.fullname.includes(fitlerSearch) || professor.id === value)
+                .filter((professor) => professor.fullname.toLowerCase().includes(fitlerSearch) || professor.id === value)
                 .map(({ id, fullname }) => (
                   <SelectItem key={id} value={id}>
                     {fullname}
