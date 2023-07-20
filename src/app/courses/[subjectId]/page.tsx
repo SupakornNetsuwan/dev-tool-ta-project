@@ -1,9 +1,12 @@
 import React from "react";
+import Course from "./components/Course";
 
-const page = ({ params }: { params: { subjectId: string } }) => {
-  console.log(params.subjectId);
-
-  return <div>Subject ID</div>;
+const page = async ({ params }: { params: { subjectId: string } }) => {
+  return (
+    <>
+      <Course subjectId={params.subjectId} />
+    </>
+  );
 };
 
 export default page;

@@ -17,7 +17,7 @@ type ParamsType = {
  */
 
 export const GET = async (request: NextRequest, { params: { subjectId } }: ParamsType) => {
-    const { hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN", "STUDENT"]);
+    const { hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN", "STUDENT", "PROFESSOR"]);
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
 
     try {

@@ -74,6 +74,49 @@ model Course {
   contact         String?
   enrollCondition String?
   secretCode      String?
+  approvalFrom    ApprovalFromType?
+  GTEForm         GTEForm[]
+  LTForm          LTForm[]
+  RefScheduleForm RefScheduleForm[]
+  TheoryForm      TheoryForm[]
+}
+
+enum ApprovalFromType {
+  GTE_EIGHT
+  LT_EIGHT
+  REF_SCHEDULE
+  THEORY
+  PROJECTBASE
+  RESEARCH_HELPER
+  OTHERS
+}
+
+// เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษา >= 8 คน
+// ใช้กับ ApprovalFromType = GTE_EIGHT
+model GTEForm {
+  id     String @id
+  course Course @relation(fields: [id], references: [subjectId])
+}
+
+// เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษา < 8 คน
+// ใช้กับ ApprovalFromType = LT_EIGHT
+model LTForm {
+  id     String @id
+  course Course @relation(fields: [id], references: [subjectId])
+}
+
+// เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษาตามหน้าตารางจริง
+// ใช้กับ ApprovalFromType = REF_SCHEDULE
+model RefScheduleForm {
+  id     String @id
+  course Course @relation(fields: [id], references: [subjectId])
+}
+
+// เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษาตามรายวิชาทฤษฎี
+// ใช้กับ ApprovalFromType = THEORY
+model TheoryForm {
+  id     String @id
+  course Course @relation(fields: [id], references: [subjectId])
 }
 
 enum CourseCreationStatus {
