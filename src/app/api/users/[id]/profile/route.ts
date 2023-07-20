@@ -60,7 +60,7 @@ export const PATCH = async (request: NextRequest, { params }: ParamsType) => {
 
     try {
         const formData = await request.formData();
-        const { firstname, lastname, title, address, phoneNumber } = (Object.fromEntries(formData)) as { [key: string]: string | null }
+        const { firstname, lastname, title, address, phoneNumber, bookBankNumber } = (Object.fromEntries(formData)) as { [key: string]: string | null }
         const id = params.id; // เราไม่เชื่อในสิ่งที่ User ส่งมา จึงเช็คจาก session
         const [bookBankPath, classTablePath, transcriptPath, picturePath] = await Promise.all([
             fileUploadHandler(formData.get("UserDocument[bookBankPath]"), id, "สำเนาบัญชี"),
@@ -72,7 +72,7 @@ export const PATCH = async (request: NextRequest, { params }: ParamsType) => {
         await checkRemoveOldFiles({ bookBankPath, classTablePath, picturePath, transcriptPath }, id)
 
         const updatedProfile = await updateProfile({
-            title, firstname, lastname, address, phoneNumber, id, UserDocument: {
+            title, firstname, lastname, address, phoneNumber, bookBankNumber, id, UserDocument: {
                 classTablePath, transcriptPath, picturePath, bookBankPath
             }
         });

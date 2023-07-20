@@ -9,6 +9,7 @@ const profileSchema = z.object({
     firstname: z.string().nonempty({ message: "กรุณากรอกชื่อจริง" }),
     lastname: z.string().nonempty({ message: "กรุณากรอกนามสกุล" }),
     address: z.string().nonempty({ message: "กรุณากรอกที่อยู่" }),
+    bookBankNumber: z.string().nonempty({ message: "กรุณากรอกเลขที่บัญชีธนาคาร" }),
     phoneNumber: z
         .string()
         .nonempty({ message: "กรุณากรอกเบอร์โทรศัพท์" })
@@ -26,11 +27,11 @@ const profileSchema = z.object({
 })
 
 const updateProfile = async (toUpdatePayload: Omit<ProfileFormType, "email">): Promise<ProfileFormType> => {
-    const { title, firstname, lastname, address, phoneNumber, id, UserDocument } = toUpdatePayload
+    const { title, firstname, lastname, address, phoneNumber, id, UserDocument, bookBankNumber } = toUpdatePayload
     const { bookBankPath, classTablePath, picturePath, transcriptPath } = UserDocument || {};
 
     console.log(".\n.\n.\nข้อมูลที่ได้รับมา และ เตรียมจัดเก็บ :", {
-        title, firstname, lastname, address, phoneNumber, id, UserDocument: {
+        title, firstname, lastname, address, phoneNumber, id, bookBankNumber, UserDocument: {
             classTablePath, transcriptPath, picturePath, bookBankPath
         }
     });
@@ -41,6 +42,7 @@ const updateProfile = async (toUpdatePayload: Omit<ProfileFormType, "email">): P
             firstname,
             lastname,
             title,
+            bookBankNumber,
             address,
             phoneNumber,
             UserDocument: {
@@ -62,6 +64,7 @@ const updateProfile = async (toUpdatePayload: Omit<ProfileFormType, "email">): P
             title,
             firstname,
             lastname,
+            bookBankNumber,
             phoneNumber,
             UserDocument: {
                 connectOrCreate: {
@@ -80,6 +83,7 @@ const updateProfile = async (toUpdatePayload: Omit<ProfileFormType, "email">): P
             title,
             firstname,
             lastname,
+            bookBankNumber,
             phoneNumber,
             UserDocument: {
                 upsert: {
