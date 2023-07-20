@@ -23,15 +23,16 @@ model User {
 }
 
 model Profile {
-  id           String        @id // id อันเดียวกันกับของ User
-  user         User          @relation(fields: [id], references: [id], onDelete: Cascade)
-  UserDocument UserDocument?
-  title        String?       @default("นาย")
-  firstname    String?
-  lastname     String?
-  address      String?       @db.MediumText
-  phoneNumber  String?
-  email        String?
+  id             String        @id // id อันเดียวกันกับของ User
+  user           User          @relation(fields: [id], references: [id], onDelete: Cascade)
+  UserDocument   UserDocument?
+  title          String?       @default("นาย")
+  firstname      String?
+  lastname       String?
+  address        String?       @db.MediumText
+  phoneNumber    String?
+  email          String?
+  bookBankNumber String?
 }
 
 model UserDocument {
