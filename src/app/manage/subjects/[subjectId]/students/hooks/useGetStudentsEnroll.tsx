@@ -4,7 +4,7 @@ import { ResponseGetEnrollType } from "@/app/api/enroll/[subjectId]/EnrollType";
 
 const useGetStudentsEnroll = (subjectId:string) => {
   return useQuery<AxiosResponse<{ message: string; data:ResponseGetEnrollType }>, AxiosError<{ message: string }>>({
-    queryKey: ["getEnroll"],
+    queryKey: ["getStudentsEnroll"],
     queryFn: () => axios.get(`/api/enroll/${subjectId}`)
   });
 };

@@ -56,7 +56,9 @@ const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
             </Link>
           </List.Item>
           <List.Item topic="รายชื่อนึกศึกษาที่ผ่านการคัดเลือก">
-            <Link href={`/manage/subjects/${subjectId}/students`}>
+            <Link href={{pathname:`/manage/subjects/${subjectId}/students`, query:{
+              courseName:courseDetail?.nameEng
+            }}}>
               <p className="text-blue-600">ตรวจสอบรายชื่อ</p>
             </Link>
           </List.Item>

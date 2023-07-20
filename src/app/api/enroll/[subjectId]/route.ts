@@ -1,7 +1,7 @@
 
 import checkAuth from "@/core/func/checkAuth";
 import { NextRequest, NextResponse } from "next/server";
-import getEnroll from "./func/getEnroll";
+import getStudentsEnroll from "./func/getStudentsEnroll";
 type ParamsType = {
     params: {
         subjectId: string
@@ -15,8 +15,8 @@ export const GET = async (request: NextRequest, { params: { subjectId } }: Param
 
     try {
         if (subjectId !== undefined) {
-            const enroll = await getEnroll(subjectId)
-            return NextResponse.json({ message: "ร้องขอข้อมูลรายวิชาสำเร็จ", data: enroll})
+            const studentsenroll = await getStudentsEnroll(subjectId)
+            return NextResponse.json({ message: "ร้องขอข้อมูลผู้สมัครรายวิชาสำเร็จ", data: studentsenroll})
         }
     } catch (error) {
         console.log(error);

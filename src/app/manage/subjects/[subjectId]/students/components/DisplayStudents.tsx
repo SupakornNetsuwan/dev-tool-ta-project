@@ -1,12 +1,15 @@
 "use client"
 import React, { useMemo } from "react";
 import { DataGrid } from "@mui/x-data-grid";
+import { useRouter } from "next/navigation";
+import { HiOutlineArrowSmallLeft } from "react-icons/hi2";
+import { useSearchParams } from 'next/navigation'
 // custom hook
-import { useQueryClient } from "@tanstack/react-query";
 import useGetStudentsEnroll from "../hooks/useGetStudentsEnroll";
 
 const DisplayStudents: React.FC<{ subjectId: string }> = ({subjectId}) => {
-    const queryClient = useQueryClient();
+    const router = useRouter()
+    const searchParams = useSearchParams()
     const getStudentsEnroll = useGetStudentsEnroll(subjectId)
     const studentsEnroll = useMemo(()=>getStudentsEnroll.data?.data.data|| [], [getStudentsEnroll.data])
     if (getStudentsEnroll.isLoading) {
@@ -20,8 +23,12 @@ const DisplayStudents: React.FC<{ subjectId: string }> = ({subjectId}) => {
       }
     return(
         <>
+         <button onClick={() => router.back()} className="mb-4 flex items-center space-x-1 text-blue-500">
+            <HiOutlineArrowSmallLeft />
+            <span>ย้อนกลับ</span>
+             </button>
             <div className="rounded-md bg-white p-4">
-             <p className="mb-4 text-gray-500">รายชื่อของผู้สมัครผู้ช่วยสอนในรายวิชา{}</p>
+             <p className="mb-4 text-gray-800">รายชื่อของผู้สมัครผู้ช่วยสอนในรายวิชา: {searchParams.get('courseDetail')}</p>
                 <DataGrid
                     sx={{ fontFamily: "Noto Sans Thai", color: "#6b7280" }}
                     autoHeight
@@ -30,10 +37,12 @@ const DisplayStudents: React.FC<{ subjectId: string }> = ({subjectId}) => {
                     getCellClassName={(row)=>row.value?.enrollStatus ==='APPROVED'? "bg-green-600":'bg-grey-600'}
                     getRowId={(rows)=>rows.enrollId}
                     columns={[
+                        
                         {
                             field:"sequence",
                             headerName:"ลำดับ",
                             headerClassName: "text-blue-500",
+                            renderCell:(index) => index.api.getAllRowIds()
                         },
                         {
                             field:"studentId",
@@ -79,7 +88,7 @@ const DisplayStudents: React.FC<{ subjectId: string }> = ({subjectId}) => {
                             headerClassName: "text-blue-500",
                             renderCell:(param)=>{
                                 return(
-                                    <p className={param.row.enrollStatus === 'PENDING'? "text-red-500":"text-green-500"}>
+                                    <p className={param.row.enrollStatus === 'PENDING'? "text-yellow-500":"text-green-500"}>
                                         {param.row.enrollStatus}
                                     </p>
                                 )

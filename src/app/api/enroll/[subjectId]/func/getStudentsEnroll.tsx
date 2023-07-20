@@ -1,7 +1,7 @@
 import { prisma } from "@/core/libs/prisma/connector";
 import type { ResponseGetEnrollType } from "../EnrollType";
 
-const getEnroll = async (subjectId: string):Promise<ResponseGetEnrollType> =>{
+const getStudentsEnroll = async (subjectId: string):Promise<ResponseGetEnrollType> =>{
     const Enroll = await prisma.enroll.findMany({
         where:{
             course:{
@@ -27,4 +27,4 @@ const getEnroll = async (subjectId: string):Promise<ResponseGetEnrollType> =>{
     })
     return Enroll
 }
-export default getEnroll
+export default getStudentsEnroll
