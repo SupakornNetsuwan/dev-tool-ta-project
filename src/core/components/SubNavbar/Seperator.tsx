@@ -3,7 +3,7 @@ import React from "react";
 import * as Separator from "@radix-ui/react-separator";
 
 type SubNavbarSapartorType = (
-  props: React.HTMLAttributes<typeof Separator.Root> & { orientation: "vertical" | "horizontal" }
+  props: React.ComponentPropsWithoutRef<typeof Separator.Root> & { orientation: "vertical" | "horizontal" }
 ) => JSX.Element;
 
 const SubNavbarSapartor: SubNavbarSapartorType = ({ orientation }) => {

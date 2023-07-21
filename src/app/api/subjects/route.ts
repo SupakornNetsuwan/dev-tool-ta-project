@@ -9,13 +9,26 @@ import { Prisma } from "@prisma/client";
  */
 
 export const GET = async (request: NextRequest) => {
-    const { hasPermission, session } = await checkAuth(["ADMIN", "SUPERADMIN"]);
+    const { hasPermission, session } = await checkAuth(["ADMIN", "SUPERADMIN", "PROFESSOR"]);
     if (!session) return NextResponse.json({ message: "โปรดเข้าสู่ระบบ" }, { status: 401 })
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
 
+    const url = new URL(request.nextUrl)
+    const professorId = url.searchParams.get("professorId")
+
     try {
-        const courses = await getAllCourses()
-        return NextResponse.json({ message: "ร้องขอข้อมูลทุกวิชาสำเร็จ", data: courses })
+
+        if (!professorId) {
+            const users = await getAllCourses()
+            return NextResponse.json({ message: "ร้องขอข้อมูลทุกวิชาสำเร็จ", data: users })
+        }
+
+        if (professorId) {
+            const usersByRole = await getAllCourses(professorId)
+            return NextResponse.json({ message: `ร้องขอข้อมูลทุกวิชาของอาจารย์ที่มีไอดี ${professorId} สำเร็จ`, data: usersByRole })
+        }
+
+
     } catch (error) {
         let message = "เกิดปัญหาที่ไม่ทราบสาเหตุ"
         if (error instanceof Object && !(error instanceof Error)) message = JSON.stringify(error)
@@ -40,7 +53,7 @@ export const POST = async (request: NextRequest) => {
         return NextResponse.json({ message: "ทำการเพิ่มข้อมูลสำเร็จ", data: update })
     } catch (error) {
         console.log(error);
-        
+
         let message = "เกิดปัญหาที่ไม่ทราบสาเหตุ"
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
             // Error handling for prisma CRUD error

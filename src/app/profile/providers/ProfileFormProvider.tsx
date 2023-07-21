@@ -15,6 +15,7 @@ const schema = z.object({
   firstname: z.string().nonempty({ message: "กรุณากรอกชื่อจริง" }),
   lastname: z.string().nonempty({ message: "กรุณากรอกนามสกุล" }),
   address: z.string().nonempty({ message: "กรุณากรอกที่อยู่" }),
+  bookBankNumber: z.string().transform(val => parseInt(val)).pipe(z.number({invalid_type_error:"โปรดกรอกตัวเลข"})),
   phoneNumber: z
     .string()
     .nonempty({ message: "กรุณากรอกเบอร์โทรศัพท์" })
@@ -42,6 +43,7 @@ const ProfileFormProvider = ({ children }: any) => {
       email: "",
       lastname: "",
       phoneNumber: "",
+      bookBankNumber: "",
       UserDocument: {
         bookBankPath: null,
         classTablePath: null,

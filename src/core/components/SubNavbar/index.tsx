@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -15,7 +15,11 @@ export const Wrapper: React.FC<{ children: React.ReactNode }> = ({ children }) =
  * @description Item ใน Wrapper ของ Sub Navbar
  */
 
-export const Item: React.FC<{ children: React.ReactNode; path: string; icon?: JSX.Element }> = ({ children, path, icon }) => {
+export const Item: React.FC<{ children: React.ReactNode; path: string; icon?: JSX.Element }> = ({
+  children,
+  path,
+  icon,
+}) => {
   const currentPathName = usePathname();
   const isActive = path === currentPathName;
 

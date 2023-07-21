@@ -1,7 +1,7 @@
 import React from "react";
-import * as SubNavbar from "./components/SubNavbar";
+import * as SubNavbar from "../../core/components/SubNavbar";
 import { HiOutlinePlus, HiOutlineUsers, HiOutlinePower } from "react-icons/hi2";
-import Seperator from "./components/SubNavbar/Seperator";
+import Seperator from "../../core/components/SubNavbar/Seperator";
 import checkAuth from "@/core/func/checkAuth";
 import { redirect } from "next/navigation";
 
