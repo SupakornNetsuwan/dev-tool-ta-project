@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -55,12 +58,14 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "@types/bcrypt": "^5.0.0",
     "@types/ldapjs": "^3.0.0",
     "@types/mime": "^3.0.1",
     "@types/papaparse": "^5.3.7",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.3.0",
-    "prisma": "^4.15.0"
+    "prisma": "^4.15.0",
+    "tsx": "^3.12.7"
   }
 }
