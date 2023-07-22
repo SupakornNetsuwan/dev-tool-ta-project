@@ -74,6 +74,7 @@ model Course {
   contact         String?
   enrollCondition String?
   secretCode      String?
+  // ฟอร์มการขออนุมัติจ้างนักศึกษา
   approvalForm    ApprovalFormType?
   GTEForm         GTEForm[]
   LTForm          LTForm[]
