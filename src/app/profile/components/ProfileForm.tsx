@@ -2,11 +2,11 @@
 import React, { useCallback, useEffect } from "react";
 import dynamic from "next/dynamic";
 // Components
-const FieldWrapper = dynamic(() => import("./FieldWrapper"), {
+const FieldWrapper = dynamic(() => import("../../../core/components/form/FieldWrapper"), {
   ssr: false,
   loading: () => <div className="h-6 w-full animate-pulse rounded bg-gray-200" />,
 });
-const ShowInputError = dynamic(() => import("./ShowInputError"), {
+const ShowInputError = dynamic(() => import("../../../core/components/form/ShowInputError"), {
   loading: () => <div className="h-6 w-full animate-pulse rounded bg-gray-200" />,
 });
 const InputFile = dynamic(() => import("./InputFile"), {
@@ -25,8 +25,8 @@ import useGetProfile from "../hooks/useGetProfile";
 import useUpdateProfile from "../hooks/useUpdateProfile";
 // React hook form
 import { SubmitHandler, useFormContext } from "react-hook-form";
-import type { ProfileFormType } from "../types/ProfileFormType";
-import TitleSelector from "./TitleSelector";
+import type { ProfileFormType } from "../../api/users/[id]/profile/ProfileFormType";
+import TitleSelector from "../../../core/components/form/TitleSelector";
 // Custom hooks
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
 import type { Session } from "next-auth";

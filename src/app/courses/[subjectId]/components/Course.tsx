@@ -1,16 +1,18 @@
 "use client";
 import { useMemo } from "react";
-import { useRouter } from "next/navigation";
-import { HiOutlineArrowSmallLeft, HiOutlinePencil } from "react-icons/hi2";
+import { usePathname } from "next/navigation";
+import { HiOutlinePencil } from "react-icons/hi2";
+import Link from "next/link";
 // Components
-import List from "./List";
 import LoadingSkeleton from "./LoadingSkeleton";
+import List from "./List";
+import GoBackBtn from "@/core/components/GoBackBtn";
 // hook
-import useGetDetailCourse from "@/app/manage/subjects/[subjectId]/hook/useGetDetailCourse";
+import useGetCourseDetail from "@/app/manage/subjects/[subjectId]/hook/useGetCourseDetail";
 
 const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
-  const { data, isLoading, isError, error } = useGetDetailCourse(subjectId);
-  const router = useRouter();
+  const { data, isLoading, isError, error } = useGetCourseDetail(subjectId);
+  const pathname = usePathname();
   const courseDetail = useMemo(() => data?.data.data, [data]);
 
   if (isLoading) return <LoadingSkeleton />;
@@ -18,25 +20,32 @@ const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
 
   return (
     <>
-      <button onClick={() => router.back()} className="mb-4 flex items-center space-x-1 text-blue-500">
-        <HiOutlineArrowSmallLeft />
-        <span>ย้อนกลับ</span>
-      </button>
+      <GoBackBtn />
       <div className="mt-4 bg-white p-4">
         <p className="pb-2 text-lg font-medium text-blue-500">การคัดเลือก</p>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:h-24 md:grid-cols-4">
-          <button className="flex items-center justify-center space-x-2 btn click-animation rounded-lg border bg-gray-50 px-12 py-4 ring-0 ring-blue-500 ring-offset-0 ring-offset-white duration-100 hover:border-blue-500 hover:ring-1 hover:ring-offset-2">
-            <span>รายละเอียดวิชาผู้ส่งคำขอ</span>
-            <HiOutlinePencil className="text-lg" />
-          </button>
-          <button className="flex items-center justify-center space-x-2 btn click-animation rounded-lg border bg-gray-50 px-12 py-4 ring-0 ring-blue-500 ring-offset-0 ring-offset-white duration-100 hover:border-blue-500 hover:ring-1 hover:ring-offset-2">
-            <span>ประเภทวิชาที่ต้องการเปิดรับสมัคร</span>
-            <HiOutlinePencil className="text-lg" />
-          </button>
-          <button className="flex items-center justify-center space-x-2 btn click-animation rounded-lg border bg-gray-50 px-12 py-4 ring-0 ring-blue-500 ring-offset-0 ring-offset-white duration-100 hover:border-blue-500 hover:ring-1 hover:ring-offset-2">
+          <Link
+            href={`${pathname}/detail`}
+            className="btn click-animation flex flex-col items-center justify-center space-x-2 rounded-lg border bg-gray-50 px-12 py-4 text-gray-500 ring-0 ring-blue-300 ring-offset-0 ring-offset-white duration-100 hover:border-blue-500 hover:bg-blue-50 hover:text-gray-800 hover:ring-1 hover:ring-offset-2"
+          >
+            <span>รายละเอียดวิชาเบื้องต้น</span>
+            <HiOutlinePencil className="mt-1 text-lg" />
+          </Link>
+          <Link
+            href={`${pathname}/type`}
+            className="btn click-animation flex flex-col items-center justify-center space-x-2 rounded-lg border bg-gray-50 px-12 py-4 text-gray-500 ring-0 ring-blue-300 ring-offset-0 ring-offset-white duration-100 hover:border-blue-500 hover:bg-blue-50 hover:text-gray-800 hover:ring-1 hover:ring-offset-2"
+          >
+            <span>ประเภทวิชาที่เปิดรับสมัคร </span>
+            <HiOutlinePencil className="mt-1 text-lg" />
+          </Link>
+
+          <Link
+            href={`${pathname}/verify`}
+            className="btn click-animation flex flex-col items-center justify-center space-x-2 rounded-lg border bg-gray-50 px-12 py-4 text-gray-500 ring-0 ring-blue-300 ring-offset-0 ring-offset-white duration-100 hover:border-blue-500 hover:bg-blue-50 hover:text-gray-800 hover:ring-1 hover:ring-offset-2"
+          >
             <span>ตรวจสอบ และ ยืนยัน</span>
-            <HiOutlinePencil className="text-lg" />
-          </button>
+            <HiOutlinePencil className="mt-1 text-lg" />
+          </Link>
         </div>
       </div>
       <div className="mt-4 bg-white p-4">

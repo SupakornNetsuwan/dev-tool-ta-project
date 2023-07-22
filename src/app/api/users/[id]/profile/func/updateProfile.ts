@@ -1,4 +1,4 @@
-import type { ProfileFormType } from "@/app/profile/types/ProfileFormType"
+import type { ProfileFormType } from "../ProfileFormType"
 import { prisma } from "@/core/libs/prisma/connector"
 import { ZodError, z } from "zod"
 

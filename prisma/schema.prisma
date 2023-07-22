@@ -74,14 +74,14 @@ model Course {
   contact         String?
   enrollCondition String?
   secretCode      String?
-  approvalFrom    ApprovalFromType?
+  approvalForm    ApprovalFormType?
   GTEForm         GTEForm[]
   LTForm          LTForm[]
   RefScheduleForm RefScheduleForm[]
   TheoryForm      TheoryForm[]
 }
 
-enum ApprovalFromType {
+enum ApprovalFormType {
   GTE_EIGHT
   LT_EIGHT
   REF_SCHEDULE

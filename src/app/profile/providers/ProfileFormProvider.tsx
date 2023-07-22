@@ -5,7 +5,7 @@ import { FormProvider } from "react-hook-form";
 import * as z from "zod";
 // React hook form
 import { useForm } from "react-hook-form";
-import type { ProfileFormType } from "../types/ProfileFormType";
+import type { ProfileFormType } from "../../api/users/[id]/profile/ProfileFormType";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const schema = z.object({
