@@ -40,8 +40,9 @@ export const GET = async (request: NextRequest, { params: { subjectId } }: Param
  * @description สำหรับการแก้ไขข้อมูลรายวิชา [subjectId]
  */
 
+
 export const PATCH = async (request: NextRequest, { params: { subjectId } }: ParamsType) => {
-    const { hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN"]);
+    const { hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN", "PROFESSOR"]);
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
 
     try {

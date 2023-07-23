@@ -1,5 +1,5 @@
 import React from "react";
-import type { ToastStateProps, ToastOpenFuncProps } from "../customToastTypes";
+import type { ToastStateProps, ToastOpenFuncProps } from "../CustomToastTypes";
 
 type CustomToastContextType = {
   toastState: ToastStateProps;

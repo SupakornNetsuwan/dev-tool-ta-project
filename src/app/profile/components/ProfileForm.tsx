@@ -33,6 +33,7 @@ import type { Session } from "next-auth";
 
 const ProfileForm = ({ session }: { session: Session }) => {
   const { data, isSuccess, isLoading } = useGetProfile(session.user.id);
+  console.log(data?.data.data);
 
   const updateProfile = useUpdateProfile(session.user.id);
   const {
@@ -46,12 +47,14 @@ const ProfileForm = ({ session }: { session: Session }) => {
 
   const setFormValues = useCallback(
     (toUpdateFormValues: ProfileFormType) => {
-      const { id, title, email, firstname, lastname, address, phoneNumber, UserDocument } = toUpdateFormValues;
+      const { id, title, email, firstname, bookBankNumber, lastname, address, phoneNumber, UserDocument } =
+        toUpdateFormValues;
       const { bookBankPath, classTablePath, picturePath, transcriptPath } = UserDocument || {};
       setValue("id", id);
       setValue("email", email);
       setValue("title", title || "นาย");
       setValue("firstname", firstname);
+      setValue("bookBankNumber", bookBankNumber);
       setValue("lastname", lastname);
       setValue("address", address);
       setValue("phoneNumber", phoneNumber);
@@ -167,6 +170,18 @@ const ProfileForm = ({ session }: { session: Session }) => {
               type="email"
               disabled
               {...register("email")}
+              className="w-full rounded border p-2 text-gray-500 outline-none disabled:opacity-50"
+            />
+          </FieldWrapper>
+        </div>
+        <div className="flex flex-col gap-3 sm:flex-row [&>div]:flex-1">
+          <FieldWrapper
+            errorComponent={<ShowInputError inputName="bookBankNumber" />}
+            label={<Label.Root>เลขบัญชีธนาคาร</Label.Root>}
+          >
+            <input
+              type="text"
+              {...register("bookBankNumber")}
               className="w-full rounded border p-2 text-gray-500 outline-none disabled:opacity-50"
             />
           </FieldWrapper>

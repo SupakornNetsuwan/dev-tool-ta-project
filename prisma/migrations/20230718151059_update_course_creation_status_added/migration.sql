@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Course` ADD COLUMN `creationStatus` ENUM('CREATED', 'UNCREATED') NOT NULL DEFAULT 'UNCREATED';

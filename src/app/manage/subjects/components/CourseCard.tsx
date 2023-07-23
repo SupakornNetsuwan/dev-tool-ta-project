@@ -1,4 +1,3 @@
-import { Course } from "@prisma/client";
 import Link from "next/link";
 import type { FetchCourseType } from "@/app/api/subjects/[subjectId]/CourseTypes";
 

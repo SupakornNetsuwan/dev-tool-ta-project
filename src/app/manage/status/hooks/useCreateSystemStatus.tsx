@@ -5,11 +5,8 @@ import { useMutation } from "@tanstack/react-query";
 
 const useCreateSystemStatus = () => {
   return useMutation<AxiosResponse<{ message: string }>, AxiosError<{ message: string }>, SystemStatusPayloadType, unknown>({
-    mutationFn: ({ openDate, closeDate }) => {
-      return axios.post("/api/systemStatus", {
-        openDate,
-        closeDate,
-      });
+    mutationFn: (payload) => {
+      return axios.post("/api/systemStatus", payload);
     },
   });
 };
