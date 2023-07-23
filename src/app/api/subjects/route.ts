@@ -19,13 +19,13 @@ export const GET = async (request: NextRequest) => {
     try {
 
         if (!professorId) {
-            const users = await getAllCourses()
-            return NextResponse.json({ message: "ร้องขอข้อมูลทุกวิชาสำเร็จ", data: users })
+            const courses = await getAllCourses()
+            return NextResponse.json({ message: "ร้องขอข้อมูลทุกวิชาสำเร็จ", data: courses })
         }
 
         if (professorId) {
-            const usersByRole = await getAllCourses(professorId)
-            return NextResponse.json({ message: `ร้องขอข้อมูลทุกวิชาของอาจารย์ที่มีไอดี ${professorId} สำเร็จ`, data: usersByRole })
+            const coursesByProfessorId = await getAllCourses(professorId)
+            return NextResponse.json({ message: `ร้องขอข้อมูลทุกวิชาของอาจารย์ที่มีไอดี ${professorId} สำเร็จ`, data: coursesByProfessorId })
         }
 
 

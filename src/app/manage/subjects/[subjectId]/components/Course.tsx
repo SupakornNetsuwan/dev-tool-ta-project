@@ -6,10 +6,10 @@ import List from "./List";
 import LoadingSkeleton from "./LoadingSkeleton";
 import SelectProfessor from "./SelectProfessor";
 // hook
-import useGetCourseDetail from "../hook/useGetCourseDetail";
+import useGetCourse from "../hook/useGetCourse";
 
 const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
-  const { data, isLoading, isError, error } = useGetCourseDetail(subjectId);
+  const { data, isLoading, isError, error } = useGetCourse(subjectId);
   const courseDetail = useMemo(() => data?.data.data, [data]);
 
   if (isLoading) return <LoadingSkeleton />;

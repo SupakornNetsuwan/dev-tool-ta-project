@@ -54,12 +54,12 @@ const FileInput = () => {
         description: data["คำอธิบายรายวิชา"] || "",
         creationStatus: "UNCREATED",
         professorId: null,
-        title: null,
-        secretCode: null,
-        firstname: null,
-        lastname: null,
-        enrollCondition: null,
-        contact: null,
+        title: "นาย",
+        secretCode: "",
+        firstname: "",
+        lastname: "",
+        enrollCondition: "",
+        contact: "",
         approvalForm: null,
       }));
 

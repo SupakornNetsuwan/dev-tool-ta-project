@@ -50,14 +50,16 @@ const SelectProfessorComponent: React.FC<{
   const setProfessor = (newProfessorId: string) => {
     updateCourse.mutate(
       {
-        professorId: newProfessorId,
+        professor: {
+          connect: {
+            id: newProfessorId,
+          },
+        },
         subjectId: subjectId,
       },
       {
         onSuccess(data, variables, context) {
-          queryClient.invalidateQueries({
-            queryKey: ["getCourse"],
-          });
+          queryClient.invalidateQueries(["getCourse", subjectId]);
           openToast({
             title: <p className="text-blue-500">บันทึกวิชาสำเร็จ 🎉</p>,
             description: <p>อัพโหลดรายวิชาเรียบร้อย</p>,

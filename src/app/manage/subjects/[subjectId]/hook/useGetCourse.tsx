@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import type { FetchCourseType } from "@/app/api/subjects/[subjectId]/CourseTypes";
 
 ///  ใช้เพื่อดึงรายละเอียดของวิชา
-const useGetCourseDetail = (subjectId: string) => {
+const useGetCourse = (subjectId: string) => {
   return useQuery<AxiosResponse<{ message: string; data: FetchCourseType }>, AxiosError<{ message: string }>>({
     queryKey: ["getCourse", subjectId],
     queryFn: async () => {
@@ -13,4 +13,4 @@ const useGetCourseDetail = (subjectId: string) => {
     cacheTime: 5 * 60 * 1000,
   });
 };
-export default useGetCourseDetail;
+export default useGetCourse;

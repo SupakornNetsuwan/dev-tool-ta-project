@@ -6,12 +6,12 @@ import Link from "next/link";
 // Components
 import LoadingSkeleton from "./LoadingSkeleton";
 import List from "./List";
-import GoBackBtn from "@/core/components/GoBackBtn";
+import NavigateAction from "./NavigateAction";
 // hook
-import useGetCourseDetail from "@/app/manage/subjects/[subjectId]/hook/useGetCourseDetail";
+import useGetCourse from "@/app/manage/subjects/[subjectId]/hook/useGetCourse";
 
 const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
-  const { data, isLoading, isError, error } = useGetCourseDetail(subjectId);
+  const { data, isLoading, isError, error } = useGetCourse(subjectId);
   const pathname = usePathname();
   const courseDetail = useMemo(() => data?.data.data, [data]);
 
@@ -20,32 +20,18 @@ const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
 
   return (
     <>
-      <GoBackBtn />
       <div className="mt-4 bg-white p-4">
         <p className="pb-2 text-lg font-medium text-blue-500">การคัดเลือก</p>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:h-24 md:grid-cols-4">
-          <Link
-            href={`${pathname}/detail`}
-            className="btn click-animation flex flex-col items-center justify-center space-x-2 rounded-lg border bg-gray-50 px-12 py-4 text-gray-500 ring-0 ring-blue-300 ring-offset-0 ring-offset-white duration-100 hover:border-blue-500 hover:bg-blue-50 hover:text-gray-800 hover:ring-1 hover:ring-offset-2"
-          >
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:h-24 md:grid-cols-3">
+          <NavigateAction isCompleted={courseDetail?.isBasicDetailCompleted} href={`${pathname}/detail`}>
             <span>รายละเอียดวิชาเบื้องต้น</span>
-            <HiOutlinePencil className="mt-1 text-lg" />
-          </Link>
-          <Link
-            href={`${pathname}/type`}
-            className="btn click-animation flex flex-col items-center justify-center space-x-2 rounded-lg border bg-gray-50 px-12 py-4 text-gray-500 ring-0 ring-blue-300 ring-offset-0 ring-offset-white duration-100 hover:border-blue-500 hover:bg-blue-50 hover:text-gray-800 hover:ring-1 hover:ring-offset-2"
-          >
+          </NavigateAction>
+          <NavigateAction isCompleted={false} href={`${pathname}/type`}>
             <span>ประเภทวิชาที่เปิดรับสมัคร </span>
-            <HiOutlinePencil className="mt-1 text-lg" />
-          </Link>
-
-          <Link
-            href={`${pathname}/verify`}
-            className="btn click-animation flex flex-col items-center justify-center space-x-2 rounded-lg border bg-gray-50 px-12 py-4 text-gray-500 ring-0 ring-blue-300 ring-offset-0 ring-offset-white duration-100 hover:border-blue-500 hover:bg-blue-50 hover:text-gray-800 hover:ring-1 hover:ring-offset-2"
-          >
+          </NavigateAction>
+          <NavigateAction isCompleted={false} href={`${pathname}/verify`}>
             <span>ตรวจสอบ และ ยืนยัน</span>
-            <HiOutlinePencil className="mt-1 text-lg" />
-          </Link>
+          </NavigateAction>
         </div>
       </div>
       <div className="mt-4 bg-white p-4">

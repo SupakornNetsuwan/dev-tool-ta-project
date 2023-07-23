@@ -1,12 +1,14 @@
-import { Prisma, User } from "@prisma/client";
+import { Course, Prisma } from "@prisma/client";
 
 export type FetchCourseType = Prisma.CourseGetPayload<{
     include: {
         professor: true
     },
-}>
+}> & { isBasicDetailCompleted: boolean }
 
-export type DetailCourseModifyType = Prisma.CourseGetPayload<{
+export type UpdateCourseType = Prisma.CourseUpdateInput
+
+export type CourseDetailModifyType = Prisma.CourseGetPayload<{
     select: {
         title: true,
         firstname: true,

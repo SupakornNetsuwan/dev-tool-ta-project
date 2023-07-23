@@ -5,40 +5,29 @@ import { FormProvider } from "react-hook-form";
 import * as z from "zod";
 // Hooks
 import { useForm } from "react-hook-form";
-import type { DetailCourseModifyType } from "@/app/api/subjects/[subjectId]/CourseTypes";
+import type { CourseDetailModifyType } from "@/app/api/subjects/[subjectId]/CourseTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
-import useGetCourseDetail from "@/app/manage/subjects/[subjectId]/hook/useGetCourseDetail";
+import useGetCourse from "@/app/manage/subjects/[subjectId]/hook/useGetCourse";
 import useGetSystemStatus from "@/app/manage/status/hooks/useGetSystemStatus";
 
-// const schema = z.object({
-//   id: z.string().nullish(),
-//   email: z.string().nullish(),
-//   title: z.string().nonempty({ message: "กรุณาเลือกคำนำหน้า" }),
-//   firstname: z.string().nonempty({ message: "กรุณากรอกชื่อจริง" }),
-//   lastname: z.string().nonempty({ message: "กรุณากรอกนามสกุล" }),
-//   address: z.string().nonempty({ message: "กรุณากรอกที่อยู่" }),
-//   bookBankNumber: z.string().transform(val => parseInt(val)).pipe(z.number({invalid_type_error:"โปรดกรอกตัวเลข"})),
-//   phoneNumber: z
-//     .string()
-//     .nonempty({ message: "กรุณากรอกเบอร์โทรศัพท์" })
-//     .startsWith("0", { message: "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง" })
-//     .length(10, { message: "กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 หลัก" })
-//     .refine((value) => new RegExp(/^0[0-9]{9}$/).test(value), {
-//       message: "กรุณากรอกเบอร์โทรศัพท์เป็นตัวเลข",
-//     }),
-//   UserDocument: z.object({
-//     bookBankPath: z.any().nullish(),
-//     classTablePath: z.any().nullish(),
-//     picturePath: z.any().nullish(),
-//     transcriptPath: z.any().nullish(),
-//   }),
-// });
+const schema = z.object({
+  contact: z.string().nonempty({ message: "กรุณากรอกช่องทางการติดต่อ" }),
+  enrollCondition: z.string().nullish(),
+  firstname: z.string().nonempty({ message: "กรุณากรอกชื่อจริงของผู้สอน" }),
+  lastname: z.string().nonempty({ message: "กรุณากรอกนามสกุลของผู้สอน" }),
+  nameThai: z.string().nonempty({ message: "ไม่พบชื่อวิชา อาจเกิดข้อผิดพลาด" }),
+  secretCode: z.string().nullish(),
+  subjectId: z.string().nonempty({ message: "ไม่พบรหัสวิชา อาจเกิดข้อผิดพลาด" }),
+  title: z.string().nonempty({ message: "กรุณาเลือกคำนำหน้า" }),
+  semester: z.number({ required_error: "ไม่พบปีการศึกษา อาจเกิดข้อผิดพลาด" }),
+  year: z.number({ required_error: "ไม่พบภาคการศึกษา อาจเกิดข้อผิดพลาด" }),
+});
 
 const ProfileFormProvider = ({ children, subjectId }: { children: React.ReactNode; subjectId: string }) => {
-  const getCourseDetailQuery = useGetCourseDetail(subjectId);
+  const getCourseDetailQuery = useGetCourse(subjectId);
   const getSystemStatus = useGetSystemStatus();
-  const methods = useForm<DetailCourseModifyType>({
-    // resolver: zodResolver(schema),
+  const methods = useForm<CourseDetailModifyType>({
+    resolver: zodResolver(schema),
     defaultValues: {
       contact: "",
       enrollCondition: "",
