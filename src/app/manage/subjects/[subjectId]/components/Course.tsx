@@ -51,11 +51,10 @@ const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
         <p className="pb-2 text-lg font-medium text-blue-500">การคัดเลือก</p>
         <List.Wrapper>
           <List.Item topic="สถานะการคัดเลือก">
-            <Link href={`/manage/subjects/${subjectId}/students`}>
               <p className="text-green-600">คัดเลือกเรียบร้อย</p>
-            </Link>
           </List.Item>
           <List.Item topic="รายชื่อนึกศึกษาที่ผ่านการคัดเลือก">
+            {/* ///ใน enroll ไม่มีเก็บรายวิชา เราเลยจะส่งรายละเอียดของวิชาผ่าน query params */}
             <Link
               href={{
                 pathname: `/manage/subjects/${subjectId}/students`,
@@ -64,14 +63,15 @@ const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
                 },
               }}
             >
-              <p className="text-blue-600">ตรวจสอบรายชื่อ</p>
+              <p className="text-blue-600 underline">ตรวจสอบรายชื่อ</p>
             </Link>
           </List.Item>
           <List.Item topic="แบบฟอร์มขออนุมัติ(รายวิชา)">
+            {/* ///ใน enroll ไม่มีเก็บรายวิชา เราเลยจะส่งรายละเอียดของวิชาผ่าน query params */}
             <Link href={{pathname:`/manage/subjects/${subjectId}/enrollment`, query:{
                 courseName:courseDetail?.nameEng
               }}}>
-                <p className="text-blue-600">ตรวจสอบ</p>
+                <p className="text-blue-600 underline">ตรวจสอบ</p>
               </Link>
             </List.Item>
         </List.Wrapper>

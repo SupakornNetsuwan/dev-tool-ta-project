@@ -11,10 +11,10 @@ const TableStudentsEnroll = dynamic(() => import("./TableStudents"));
 const DisplayStudents: React.FC<{ subjectId: string }> = ({ subjectId }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const getEnrolledStudents = useGetEnroll(subjectId);
-  const enrolledStudents = useMemo(() => getEnrolledStudents.data?.data.data || [], [getEnrolledStudents.data]);
+  const getEnroll = useGetEnroll(subjectId);
+  const enrolledStudents = useMemo(() => getEnroll.data?.data.data || [], [getEnroll.data]);
 
-  if (getEnrolledStudents.isLoading) {
+  if (getEnroll.isLoading) {
     return (
       <div className="flex w-full animate-pulse flex-col space-y-4 rounded bg-white p-4 [&>div:nth-child(1)]:bg-blue-100 [&>div]:h-8 [&>div]:rounded-md [&>div]:bg-blue-50">
         {[...new Array(7)].map((_, index) => (
@@ -31,7 +31,7 @@ const DisplayStudents: React.FC<{ subjectId: string }> = ({ subjectId }) => {
         <span>ย้อนกลับ</span>
       </button>
       <div className="rounded-md bg-white p-4">
-        <p className="mb-4 text-gray-800">รายชื่อของผู้สมัครผู้ช่วยสอนในรายวิชา: {searchParams.get("courseDetail")}</p>
+        <p className="mb-4 text-gray-800 text-center">รายชื่อของผู้สมัครผู้ช่วยสอนในรายวิชา: {searchParams.get("courseName")}</p>
         <TableStudentsEnroll enrolledStudents={enrolledStudents} />
       </div>
     </>

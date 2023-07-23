@@ -1,6 +1,6 @@
 import checkAuth from "@/core/func/checkAuth";
 import { NextRequest, NextResponse } from "next/server";
-import getStudentsEnroll from "./func/getStudentsEnroll";
+import getEnroll from "./func/getEnroll";
 
 type ParamsType = {
     params: {
@@ -14,7 +14,7 @@ export const GET = async (request: NextRequest, { params: { subjectId } }: Param
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
 
     try {
-        const studentsEnroll = await getStudentsEnroll(subjectId)
+        const studentsEnroll = await getEnroll(subjectId)
         return NextResponse.json({ message: "ร้องขอข้อมูลผู้สมัครรายวิชาสำเร็จ", data: studentsEnroll })
     } catch (error) {
         console.log(error);

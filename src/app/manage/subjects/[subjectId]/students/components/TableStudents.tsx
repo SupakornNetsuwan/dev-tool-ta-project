@@ -46,7 +46,7 @@ const TableStudents: React.FC<{ enrolledStudents: ResponseGetEnrollType }> = ({ 
             minWidth: 100,
             headerClassName: "text-blue-500",
             renderCell: (param) => {
-              return <p className="text-blue-800">ตรวจสอบ</p>;
+              return <p className="text-blue-800 underline">ตรวจสอบ</p>;
             },
           },
           {
