@@ -20,7 +20,7 @@ model User {
   createdAt  DateTime @default(now())
   Courses    Course[]
   Profile    Profile?
-   Enroll Enroll[]
+  Enroll     Enroll[]
 }
 
 model Profile {
@@ -61,7 +61,6 @@ enum Role {
 }
 
 model Course {
-
   subjectId      String                @id
   professorId    String?
   professor      User?                 @relation(fields: [professorId], references: [id])
@@ -69,7 +68,7 @@ model Course {
   nameThai       String
   credit         String
   description    String?               @db.Text
-  Enroll Enroll[]
+  Enroll         Enroll[]
   creationStatus CourseCreationStatus? @default(UNCREATED)
 }
 
@@ -77,18 +76,20 @@ enum CourseCreationStatus {
   CREATED
   UNCREATED
 }
+
+model Enroll {
+  enrollId     Int          @id @unique @default(autoincrement())
+  enrollDate   DateTime     @default(now())
+  enrollStatus EnrollStatus
+  courseId     String?
+  course       Course?      @relation(fields: [courseId], references: [subjectId], onDelete: Cascade)
+  studentId    String?
+  student      User?        @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([courseId, studentId])
+}
+
 enum EnrollStatus {
   PENDING
   APPROVED
-}
-
-model Enroll{
-  enrollId Int @id @unique @default(autoincrement())
-  enrollDate DateTime
-  enrollStatus EnrollStatus
-  courseId String?
-  course Course? @relation(fields: [courseId], references: [subjectId])
-  studentId String?
-  student User? @relation(fields: [studentId], references: [id])
-  @@unique([courseId, studentId])
 }

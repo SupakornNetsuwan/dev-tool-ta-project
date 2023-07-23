@@ -17,7 +17,7 @@ const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
 
   if (isLoading) return <LoadingSkeleton />;
   if (isError) throw error.response?.data.message;
-  
+
   return (
     <>
       <button onClick={() => router.back()} className="mb-4 flex items-center space-x-1 text-blue-500">
@@ -52,13 +52,18 @@ const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
         <List.Wrapper>
           <List.Item topic="สถานะการคัดเลือก">
             <Link href={`/manage/subjects/${subjectId}/students`}>
-            <p className="text-green-600">คัดเลือกเรียบร้อย</p>
+              <p className="text-green-600">คัดเลือกเรียบร้อย</p>
             </Link>
           </List.Item>
           <List.Item topic="รายชื่อนึกศึกษาที่ผ่านการคัดเลือก">
-            <Link href={{pathname:`/manage/subjects/${subjectId}/students`, query:{
-              courseName:courseDetail?.nameEng
-            }}}>
+            <Link
+              href={{
+                pathname: `/manage/subjects/${subjectId}/students`,
+                query: {
+                  courseName: courseDetail?.nameEng,
+                },
+              }}
+            >
               <p className="text-blue-600">ตรวจสอบรายชื่อ</p>
             </Link>
           </List.Item>
