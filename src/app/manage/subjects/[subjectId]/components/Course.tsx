@@ -62,9 +62,13 @@ const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
               <p className="text-blue-600">ตรวจสอบรายชื่อ</p>
             </Link>
           </List.Item>
-          <List.Item topic="แบบฟอร์มขออนุมัตินักศึกษา(excel.)">
-            <p className="text-blue-600">ดาวน์โหลด</p>
-          </List.Item>
+          <List.Item topic="แบบฟอร์มขออนุมัติ(รายวิชา)">
+            <Link href={{pathname:`/manage/subjects/${subjectId}/enrollment`, query:{
+                courseName:courseDetail?.nameEng
+              }}}>
+                <p className="text-blue-600">ตรวจสอบ</p>
+              </Link>
+            </List.Item>
         </List.Wrapper>
       </div>
     </>
