@@ -19,7 +19,7 @@ const FileInput = () => {
   const [fileFromUpload, setFileFromUpload] = useState<File | undefined>();
   const [fileObject, setFileObject] = useState<Papa.ParseResult<Record<string, string>>>();
   type ResultData = Papa.ParseResult<Record<string, unknown>>;
-  // Handle the uploaded file in the parent component
+  
   const fileUploadHandler = useCallback(
     (file: File, resultdata: ResultData) => {
       console.log(resultdata);

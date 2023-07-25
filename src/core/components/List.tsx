@@ -1,5 +1,10 @@
 import React from "react";
 
+/**
+ * @description แสดงรายการของข้อมูลประกอบด้วย หัวข้อ และ ข้อมูล มี Wrapper เป็นตัวคลุม
+ * 
+ */
+
 export const Item: React.FC<{ children: React.ReactElement; topic: React.ReactNode }> = ({ children, topic }) => {
   return (
     <div className="flex items-center justify-between py-2 first:pt-0 last:pb-0">

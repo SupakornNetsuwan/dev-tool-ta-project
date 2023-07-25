@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { usePathname } from "next/navigation";
 // Components
 import LoadingSkeleton from "./LoadingSkeleton";
-import List from "./List";
+import List from "@/core/components/List";
 import NavigateAction from "./NavigateAction";
 // hook
 import useGetCourse from "@/core/hooks/courses/useGetCourse";

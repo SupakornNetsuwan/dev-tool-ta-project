@@ -4,27 +4,19 @@ import { useMemo } from "react";
 import CourseCard from "./CourseCard";
 import UplaodCourseCard from "./UploadCourseCard";
 import CourseListWrapper from "./CourseListWrapper";
+import LoadingSkeleton from "./LoadingSkeleton";
 // Hooks
 import useGetCourses from "@/core/hooks/courses/useGetCourses";
 // Types
 import type { FetchCourseType } from "@/app/api/subjects/[subjectId]/CourseTypes";
 
-const DisplayCourse = () => {
+const Courses = () => {
   const { data, isLoading, isError, error } = useGetCourses();
   const courses = useMemo(() => data?.data.data, [data?.data]);
 
   if (isError) throw new Error(error.response?.data.message);
 
-  if (isLoading)
-    return (
-      <>
-        <div className="grid animate-pulse grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-7">
-          <div className="relative aspect-video rounded bg-gray-200 before:absolute before:bottom-4 before:left-4 before:right-4 before:block before:h-4 before:bg-gray-300" />
-          <div className="relative aspect-video rounded bg-gray-200  before:absolute before:bottom-4 before:left-4 before:right-4 before:block before:h-4 before:bg-gray-300" />
-          <div className="relative aspect-video rounded bg-gray-200  before:absolute before:bottom-4 before:left-4 before:right-4 before:block before:h-4 before:bg-gray-300" />
-        </div>
-      </>
-    );
+  if (isLoading) return <LoadingSkeleton />;
 
   return (
     <>
@@ -37,4 +29,4 @@ const DisplayCourse = () => {
     </>
   );
 };
-export default DisplayCourse;
+export default Courses;

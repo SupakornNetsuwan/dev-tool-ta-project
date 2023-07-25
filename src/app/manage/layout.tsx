@@ -1,6 +1,6 @@
 import React from "react";
 import * as SubNavbar from "../../core/components/SubNavbar";
-import { HiOutlinePlus, HiOutlineUsers, HiOutlinePower } from "react-icons/hi2";
+import { HiOutlineAcademicCap, HiOutlineUsers, HiOutlinePower } from "react-icons/hi2";
 import Seperator from "../../core/components/SubNavbar/Seperator";
 import checkAuth from "@/core/func/checkAuth";
 import { redirect } from "next/navigation";
@@ -12,7 +12,7 @@ const layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => 
   return (
     <>
       <SubNavbar.Wrapper>
-        <SubNavbar.Item path="/manage/subjects" icon={<HiOutlinePlus />}>
+        <SubNavbar.Item path="/manage/subjects" icon={<HiOutlineAcademicCap />}>
           จัดการวิชาเรียน
         </SubNavbar.Item>
         <Seperator orientation="vertical" />
@@ -24,7 +24,7 @@ const layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => 
           เปิด/ปิด การสมัคร
         </SubNavbar.Item>
       </SubNavbar.Wrapper>
-      <div className="min-h-[60vh] bg-gray-50 p-4">{children}</div>
+      <div className="min-h-[80dvh] bg-gray-50 p-4">{children}</div>
     </>
   );
 };

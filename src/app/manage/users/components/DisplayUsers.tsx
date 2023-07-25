@@ -5,6 +5,7 @@ import { HiOutlineXMark } from "react-icons/hi2";
 import type { Role } from "@prisma/client";
 // Components
 import RenderUserRole from "./RenderUserRole";
+import LoadingSkeleton from "./LoadingSkeleton";
 // Custom hooks
 import useUpdateRole from "@/core/hooks/users/useUpdateRole";
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
@@ -14,22 +15,13 @@ import { useQueryClient } from "@tanstack/react-query";
 const roles: Role[] = ["ADMIN", "PROFESSOR", "SUPERADMIN", "STUDENT"];
 
 const DisplayUsers: React.FC = () => {
-  // const [users, setUsers] = useState<ResponseGetUsersType>([]);
   const queryClient = useQueryClient();
   const { openToast } = useCustomToast();
   const updateRole = useUpdateRole();
   const getUsers = useGetUsers();
   const users = useMemo(() => getUsers.data?.data.data || [], [getUsers.data]);
 
-  if (getUsers.isLoading) {
-    return (
-      <div className="flex w-full animate-pulse flex-col space-y-4 rounded bg-white p-4 [&>div:nth-child(1)]:bg-blue-100 [&>div]:h-8 [&>div]:rounded-md [&>div]:bg-blue-50">
-        {[...new Array(7)].map((_, index) => (
-          <div key={index} />
-        ))}
-      </div>
-    );
-  }
+  if (getUsers.isLoading) return <LoadingSkeleton />;
 
   return (
     <div className="rounded-md bg-white p-4">
@@ -81,11 +73,13 @@ const DisplayUsers: React.FC = () => {
             flex: 1,
             minWidth: 200,
             headerClassName: "text-blue-500",
-            sortComparator: (v1, v2, param1, param2) => {
+            sortComparator(v1, v2, param1, param2) {
               return v1.localeCompare(v2);
             },
-            valueGetter: (params) => params.value,
-            renderCell: (body) => {
+            valueGetter(params) {
+              return params.value;
+            },
+            renderCell(body) {
               const setNewRole = (newRole: Role) => {
                 if (newRole === body.value) return; // Role เดิม
                 if (!roles.includes(newRole)) return; // ไม่อยู่ในรายการ Role ที่มีอยู่

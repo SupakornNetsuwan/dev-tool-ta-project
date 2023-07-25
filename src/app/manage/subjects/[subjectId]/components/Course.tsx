@@ -1,13 +1,12 @@
 "use client";
 import { useMemo } from "react";
-import GoBackBtn from "@/core/components/GoBackBtn";
 import Link from "next/link";
 // Components
-import List from "./List";
+import List from "@/core/components/List";
 import LoadingSkeleton from "./LoadingSkeleton";
 import SelectProfessor from "./SelectProfessor";
 // hook
-import useGetCourse from "../../../../../core/hooks/courses/useGetCourse";
+import useGetCourse from "@/core/hooks/courses/useGetCourse";
 
 const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
   const { data, isLoading, isError, error } = useGetCourse(subjectId);
@@ -18,7 +17,6 @@ const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
 
   return (
     <>
-      <GoBackBtn />
       <div className="mt-4 bg-white p-4">
         <p className="pb-2 text-lg font-medium text-blue-500">รายละเอียดวิชา</p>
         <List.Wrapper>

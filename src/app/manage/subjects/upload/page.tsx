@@ -1,11 +1,7 @@
 import FileInput from "./components/FileInput";
 
 const UploadFile = () => {
-  return (
-    <>
-      <FileInput />
-    </>
-  );
+  return <FileInput />;
 };
 
 export default UploadFile;
