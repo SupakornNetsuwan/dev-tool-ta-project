@@ -1,14 +1,22 @@
+import React from "react";
+import { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { HiOutlineSquares2X2, HiOutlinePresentationChartLine, HiOutlineArrowSmallRight } from "react-icons/hi2";
+// Components
+import * as SubNavbar from "@/core/components/SubNavbar";
+import Seperator from "@/core/components/SubNavbar/Seperator";
+// Functions
+import dayjs, { Dayjs } from "dayjs";
 import checkAuth from "@/core/func/checkAuth";
 import getSystemStatus from "../api/systemStatus/func/getSystemStatus";
-import { redirect } from "next/navigation";
-import React from "react";
-import * as SubNavbar from "../../core/components/SubNavbar";
-import Seperator from "../../core/components/SubNavbar/Seperator";
-import { HiOutlineSquares2X2, HiOutlinePresentationChartLine, HiOutlineArrowSmallRight } from "react-icons/hi2";
-import dayjs, { Dayjs } from "dayjs";
 import "dayjs/locale/th";
 
 dayjs.locale("th");
+
+export const metadata: Metadata = {
+  title: "จัดการคอร์สเรียน",
+  description:"จัดการคอร์สเรียน สำหรับอาจารย์ประจำวิชา",
+};
 
 const DisplaySystemStatus: React.FC<{
   openDate: Dayjs;
@@ -78,7 +86,7 @@ const layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => 
       </SubNavbar.Wrapper>
       <DisplaySystemStatus semester={semester} year={year} openDate={openDate} closeDate={closeDate} isOpen={isOpen} />
       {isOpen ? (
-        <div className=" min-h-[60vh] bg-gray-50 p-4 ">{children}</div>
+        <div className=" min-h-[80vh] bg-gray-50 p-4 ">{children}</div>
       ) : (
         /**
          * มันต้องมี process อยู่ตรงนี้อีก เช่น คัดเลือก นศ. ตอนนี้ไหม ? หรือ ทำการอัปโหลดไฟล์แบบฟอร์มแบ่งภาระงานไหม ?

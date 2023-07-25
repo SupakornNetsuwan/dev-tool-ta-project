@@ -7,7 +7,7 @@ const PageWrapper: React.FC<{ children: React.ReactNode } & React.ComponentProps
   ...props
 }) => {
   return (
-    <div className={twMerge("mx-auto min-h-[150vh] w-full max-w-3xl px-4", className)} {...props}>
+    <div className={twMerge("mx-auto min-h-[80vh] w-full max-w-3xl px-4", className)} {...props}>
       {children}
     </div>
   );
