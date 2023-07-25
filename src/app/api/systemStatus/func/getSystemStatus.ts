@@ -6,8 +6,8 @@ import dayjs from "dayjs"
 const getSystemStatus = async (): Promise<SystemStatusResponseType> => {
     try {
         const systemStatus = await prisma.systemStatus.findFirstOrThrow({})
-
-        if (dayjs(systemStatus.closeDate).diff() < 0) {
+        
+        if (dayjs(systemStatus.closeDate).diff() < 0 || dayjs(systemStatus.openDate).diff() > 0) {
             return { ...systemStatus, isOpen: false }
         }
 

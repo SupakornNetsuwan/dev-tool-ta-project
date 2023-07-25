@@ -14,10 +14,10 @@ const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
 
   if (isLoading) return <LoadingSkeleton />;
   if (isError) throw error.response?.data.message;
-  
+
   return (
     <>
-      <GoBackBtn/>
+      <GoBackBtn />
       <div className="mt-4 bg-white p-4">
         <p className="pb-2 text-lg font-medium text-blue-500">รายละเอียดวิชา</p>
         <List.Wrapper>

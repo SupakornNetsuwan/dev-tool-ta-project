@@ -6,7 +6,7 @@ import type { FetchCourseType } from "@/app/api/subjects/[subjectId]/CourseTypes
 ///  ใช้เพื่อดึงรายละเอียดของวิชา
 const useGetCourse = (subjectId: string) => {
   return useQuery<AxiosResponse<{ message: string; data: FetchCourseType }>, AxiosError<{ message: string }>>({
-    queryKey: ["getCourse", subjectId],
+    queryKey: ["getCourses", subjectId],
     queryFn: async () => {
       return await axios.get(`/api/subjects/${subjectId}`);
     },

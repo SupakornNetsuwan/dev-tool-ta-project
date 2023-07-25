@@ -55,6 +55,7 @@ const ProfileFormProvider = ({ children, subjectId }: { children: React.ReactNod
       methods.setValue("lastname", courseDetail.lastname);
       methods.setValue("nameThai", courseDetail.nameThai);
       methods.setValue("secretCode", courseDetail.secretCode);
+      methods.setValue("title", courseDetail.title);
     }
   }, [getCourseDetailQuery.isSuccess, methods, getCourseDetailQuery.data?.data.data]);
 

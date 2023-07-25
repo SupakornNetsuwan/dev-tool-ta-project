@@ -17,7 +17,7 @@ const main = async () => {
         console.count("👨‍🏫 อาจารย์ทดสอบที่ถูกสร้าง")
     }
 
-    await createSystemStatus({ openDate: dayjs().add(1, "day"), closeDate: dayjs().add(20, "days"), semester: 1, year: dayjs().year() + 543 })
+    await createSystemStatus({ openDate: dayjs().add(-2, "days"), closeDate: dayjs().add(20, "days"), semester: 1, year: dayjs().year() + 543 })
 
     await createCourse([{
         "subjectId": "SUB001",
@@ -26,14 +26,14 @@ const main = async () => {
         "nameThai": "วิชาฟิสิกส์",
         "credit": "(3-3)",
         "description": "An introduction to the principles of Physics",
-        "creationStatus": "UNCREATED",
-        "title": "นาย",
-        "firstname": null,
-        "lastname": null,
-        "contact": null,
-        "enrollCondition": null,
-        "secretCode": null,
-        "approvalForm": null
+        creationStatus: "UNCREATED",
+        title: "นาย",
+        secretCode: "",
+        firstname: "",
+        lastname: "",
+        enrollCondition: "",
+        contact: "",
+        approvalForm: null,
     }, {
         "subjectId": "SUB002",
         "professorId": professorEarth.id,
@@ -41,14 +41,14 @@ const main = async () => {
         "nameThai": "วิชาเคมี",
         "credit": "4",
         "description": "Introduction to Organic Chemistry",
-        "creationStatus": "CREATED",
-        "title": "นาย",
-        "firstname": null,
-        "lastname": null,
-        "contact": null,
-        "enrollCondition": null,
-        "secretCode": null,
-        "approvalForm": null
+        creationStatus: "UNCREATED",
+        title: "นาย",
+        secretCode: "",
+        firstname: "",
+        lastname: "",
+        enrollCondition: "",
+        contact: "",
+        approvalForm: null,
     },
     {
         "subjectId": "SUB003",
@@ -57,14 +57,14 @@ const main = async () => {
         "nameThai": "วิชาคณิตศาสตร์",
         "credit": "3",
         "description": "Calculus and Linear Algebra",
-        "creationStatus": "UNCREATED",
-        "title": "นาย",
-        "firstname": null,
-        "lastname": null,
-        "contact": null,
-        "enrollCondition": null,
-        "secretCode": null,
-        "approvalForm": null
+        creationStatus: "UNCREATED",
+        title: "นาย",
+        secretCode: "",
+        firstname: "",
+        lastname: "",
+        enrollCondition: "",
+        contact: "",
+        approvalForm: null,
     }])
 }
 

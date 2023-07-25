@@ -2,7 +2,7 @@ import { prisma } from "@/core/libs/prisma/connector";
 import type { FetchCourseType } from "../CourseTypes";
 import { ZodError, z } from "zod";
 
-const schema = z.object({
+export const schema = z.object({
   title: z.string().nonempty({ message: "ขาดคำนำหน้า" }),
   firstname: z.string().nonempty({ message: "ขาดชื่อจริงของผู้สอน" }),
   lastname: z.string().nonempty({ message: "ขาดนามสกุลของผู้สอน" }),
@@ -12,6 +12,8 @@ const schema = z.object({
 });
 
 const getCourse = async (subjectId: string): Promise<FetchCourseType> => {
+  let isBasicDetailCompleted = false;
+
   const course = await prisma.course.findFirstOrThrow({
     where: {
       subjectId: subjectId,
@@ -20,7 +22,6 @@ const getCourse = async (subjectId: string): Promise<FetchCourseType> => {
       professor: true,
     },
   });
-  let isBasicDetailCompleted = false;
 
   try {
     console.log("กำลังตรวจสอบความครบถ้วนของข้อมูล...");
@@ -35,10 +36,10 @@ const getCourse = async (subjectId: string): Promise<FetchCourseType> => {
     console.log("ข้อมูลของคอร์ส ครบถ้วน ✅");
     isBasicDetailCompleted = true;
   } catch (error) {
-    console.log("ข้อมูลของคอร์ส ไม่ครบถ้วน ❌");
     if (error instanceof ZodError) {
-      console.log(error.issues.map((issue) => issue.message));
+      console.log(error.issues.map((issue) => issue.message).join(" . "));
     }
+    console.log("ข้อมูลของคอร์ส ไม่ครบถ้วน ❌");
   }
 
   return { ...course, isBasicDetailCompleted };

@@ -3,7 +3,7 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { Course } from "@prisma/client";
 import type { FetchCourseType } from "@/app/api/subjects/[subjectId]/CourseTypes";
 
-const useCreateCourseByProfessor = () => {
+const useUpdateCourseByProfessor = () => {
   return useMutation<
     AxiosResponse<{ message: string; data: FetchCourseType }>,
     AxiosError<{ message: string }>,
@@ -16,4 +16,4 @@ const useCreateCourseByProfessor = () => {
   });
 };
 
-export default useCreateCourseByProfessor;
+export default useUpdateCourseByProfessor;

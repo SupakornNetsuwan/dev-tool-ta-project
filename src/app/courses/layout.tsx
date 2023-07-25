@@ -72,7 +72,7 @@ const layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => 
           จัดการคอร์ส
         </SubNavbar.Item>
         <Seperator orientation="vertical" />
-        <SubNavbar.Item path="/courses/dashbaord" icon={<HiOutlinePresentationChartLine />}>
+        <SubNavbar.Item path="/courses/dashboard" icon={<HiOutlinePresentationChartLine />}>
           ภาพรวม
         </SubNavbar.Item>
       </SubNavbar.Wrapper>
@@ -80,9 +80,11 @@ const layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => 
       {isOpen ? (
         <div className=" min-h-[60vh] bg-gray-50 p-4 ">{children}</div>
       ) : (
-        // อยู่ในช่วงปิดรับสมัคร
+        /**
+         * มันต้องมี process อยู่ตรงนี้อีก เช่น คัดเลือก นศ. ตอนนี้ไหม ? หรือ ทำการอัปโหลดไฟล์แบบฟอร์มแบ่งภาระงานไหม ?
+         */
         <div className="flex h-full min-h-[60vh] items-center justify-center bg-gray-50">
-          <p className="text-gray-500">ระบบได้ปิดรับสมัครไปแล้ววันที่ {closeDate.format("DD/MM/YYYY")}</p>
+          <p className="text-gray-500">ระบบไม่ได้อยู่ในช่วงเปิดรับสมัคร</p>
         </div>
       )}
     </>

@@ -7,7 +7,6 @@ import { twMerge } from "tailwind-merge";
 const NavigateAction: React.FC<{
   href: string;
   children: React.ReactNode;
-  icon?: IconType;
   isCompleted: boolean | undefined;
 }> = ({ href, children, isCompleted }) => {
   return (

@@ -18,7 +18,6 @@ const CourseDetailForm: React.FC = () => {
     handleSubmit,
     getValues,
     register,
-    watch,
     formState: { errors },
   } = useFormContext<CourseDetailModifyType>();
   const { openToast } = useCustomToast();

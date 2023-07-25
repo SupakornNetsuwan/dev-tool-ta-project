@@ -59,7 +59,7 @@ const SelectProfessorComponent: React.FC<{
       },
       {
         onSuccess(data, variables, context) {
-          queryClient.invalidateQueries(["getCourse", subjectId]);
+          queryClient.invalidateQueries(["getCourses", subjectId]);
           openToast({
             title: <p className="text-blue-500">บันทึกวิชาสำเร็จ 🎉</p>,
             description: <p>อัพโหลดรายวิชาเรียบร้อย</p>,

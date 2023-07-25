@@ -1,8 +1,6 @@
 "use client";
 import { useMemo } from "react";
 import { usePathname } from "next/navigation";
-import { HiOutlinePencil } from "react-icons/hi2";
-import Link from "next/link";
 // Components
 import LoadingSkeleton from "./LoadingSkeleton";
 import List from "./List";
@@ -21,7 +19,7 @@ const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
   return (
     <>
       <div className="mt-4 bg-white p-4">
-        <p className="pb-2 text-lg font-medium text-blue-500">การคัดเลือก</p>
+        <p className="pb-2 text-lg font-medium text-blue-500">กำหนดข้อมูลรายวิชา</p>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:h-24 md:grid-cols-3">
           <NavigateAction isCompleted={courseDetail?.isBasicDetailCompleted} href={`${pathname}/detail`}>
             <span>รายละเอียดวิชาเบื้องต้น</span>
