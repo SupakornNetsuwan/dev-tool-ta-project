@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import type { ProfileFormType } from "../../api/users/[id]/profile/ProfileFormType";
+import type { ProfileFormType } from "@/app/api/users/[id]/profile/ProfileFormType";
 
 const useUpdateProfile = (id: string) => {
   return useMutation<

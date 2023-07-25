@@ -6,7 +6,7 @@ import LoadingSkeleton from "./LoadingSkeleton";
 import List from "./List";
 import NavigateAction from "./NavigateAction";
 // hook
-import useGetCourse from "@/app/manage/subjects/[subjectId]/hooks/useGetCourse";
+import useGetCourse from "@/core/hooks/courses/useGetCourse";
 
 const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
   const { data, isLoading, isError, error } = useGetCourse(subjectId);

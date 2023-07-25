@@ -21,8 +21,8 @@ import * as Label from "@radix-ui/react-label";
 // Helper functions
 import modifyUploadDocuments from "../func/modifyUploadDocuments";
 // React query
-import useGetProfile from "../hooks/useGetProfile";
-import useUpdateProfile from "../hooks/useUpdateProfile";
+import useGetProfile from "../../../core/hooks/users/profile/useGetProfile";
+import useUpdateProfile from "@/core/hooks/users/profile/useUpdateProfile";
 // React hook form
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import type { ProfileFormType } from "../../api/users/[id]/profile/ProfileFormType";

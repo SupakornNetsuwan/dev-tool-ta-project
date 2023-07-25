@@ -7,8 +7,7 @@ const useUpdateRole = () => {
   return useMutation<
     AxiosResponse<{ message: string; data: ResponseGetUserType }>,
     AxiosError<{ message: string }>,
-    Pick<User, "id" | "role">,
-    unknown
+    Pick<User, "id" | "role">
   >({
     mutationFn: (payload) => {
       return axios.patch(`/api/users/${payload.id}`, payload);

@@ -9,7 +9,7 @@ import { stat, mkdir, writeFile } from "fs/promises"
  * @returns `null | string`
  */
 
-const fileUploadHandler = async (file: FormDataEntryValue | null, folderName: string = "public", tracker: string | null = "") => {
+const fileUploadHandler = async (file: FormDataEntryValue | null, folderName: string, tracker: string | null = "") => {
     tracker += tracker ? " :" : ""
 
     if (!file) {

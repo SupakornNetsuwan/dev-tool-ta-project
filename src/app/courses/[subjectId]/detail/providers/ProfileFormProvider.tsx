@@ -7,8 +7,8 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import type { CourseDetailModifyType } from "@/app/api/subjects/[subjectId]/CourseTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
-import useGetCourse from "@/app/manage/subjects/[subjectId]/hooks/useGetCourse";
-import useGetSystemStatus from "@/app/manage/status/hooks/useGetSystemStatus";
+import useGetCourse from "@/core/hooks/courses/useGetCourse";
+import useGetSystemStatus from "@/core/hooks/systemStatus/useGetSystemStatus";
 
 const schema = z.object({
   contact: z.string().nonempty({ message: "กรุณากรอกช่องทางการติดต่อ" }),

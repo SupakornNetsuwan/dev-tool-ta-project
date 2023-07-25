@@ -6,7 +6,7 @@ import CourseCard from "./CourseCard";
 import CreateCourseCard from "./CreateCourseCard";
 import LoadingSkeleton from "./LoadingSkeleton";
 // Hooks
-import useGetCourseByProfessor from "../hooks/useGetCourseByProfessor";
+import useGetCourseByProfessor from "@/core/hooks/courses/useGetCourseByProfessor";
 import type { FetchCourseType } from "@/app/api/subjects/[subjectId]/CourseTypes";
 
 const DisplayCourses: React.FC<{ professorId: string }> = ({ professorId }) => {

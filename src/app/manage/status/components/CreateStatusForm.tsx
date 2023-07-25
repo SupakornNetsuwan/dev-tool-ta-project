@@ -10,7 +10,7 @@ import dayjs, { Dayjs } from "dayjs"; // Dayjs
 import "dayjs/locale/th";
 // Hooks
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
-import useCreateSystemStatus from "../hooks/useCreateSystemStatus";
+import useCreateSystemStatus from "../../../../core/hooks/systemStatus/useCreateSystemStatus";
 import useLoadingScreen from "@/core/components/LoadingScreen/hook/useLoadingScreen";
 // types
 import { SystemStatusPayloadType } from "@/app/api/systemStatus/SystemStatusType";

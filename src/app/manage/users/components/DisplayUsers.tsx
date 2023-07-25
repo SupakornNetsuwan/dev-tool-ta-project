@@ -6,9 +6,9 @@ import type { Role } from "@prisma/client";
 // Components
 import RenderUserRole from "./RenderUserRole";
 // Custom hooks
-import useUpdateRole from "../hooks/useUpdateRole";
+import useUpdateRole from "@/core/hooks/users/useUpdateRole";
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
-import useGetUsers from "../hooks/useGetUsers";
+import useGetUsers from "@/core/hooks/users/useGetUsers";
 import { useQueryClient } from "@tanstack/react-query";
 
 const roles: Role[] = ["ADMIN", "PROFESSOR", "SUPERADMIN", "STUDENT"];

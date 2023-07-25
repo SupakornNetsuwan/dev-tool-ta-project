@@ -7,7 +7,7 @@ import List from "./List";
 import LoadingSkeleton from "./LoadingSkeleton";
 import SelectProfessor from "./SelectProfessor";
 // hook
-import useGetCourse from "../hooks/useGetCourse";
+import useGetCourse from "../../../../../core/hooks/courses/useGetCourse";
 
 const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
   const { data, isLoading, isError, error } = useGetCourse(subjectId);

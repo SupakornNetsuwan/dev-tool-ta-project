@@ -80,7 +80,7 @@ export const PATCH = async (request: NextRequest, { params }: ParamsType) => {
         return NextResponse.json({ message: "ทำการอัปเดตข้อมูลเรียบร้อย", data: updatedProfile })
     } catch (error) {
         console.error(error);
-        
+
         // หากเกิด error ให้ทำการตรวจสอบ error และตอบกลับ
         let message = "เกิดปัญหาที่ไม่ทราบสาเหตุ"
         if (error instanceof Object && !(error instanceof Error)) message = JSON.stringify(error)

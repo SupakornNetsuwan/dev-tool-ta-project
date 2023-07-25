@@ -1,10 +1,11 @@
 "use client";
 import { useMemo } from "react";
+// Components
 import CourseCard from "./CourseCard";
 import UplaodCourseCard from "./UploadCourseCard";
 import CourseListWrapper from "./CourseListWrapper";
 // Hooks
-import useGetCourses from "../hook/useGetCourses";
+import useGetCourses from "@/core/hooks/courses/useGetCourses";
 // Types
 import type { FetchCourseType } from "@/app/api/subjects/[subjectId]/CourseTypes";
 

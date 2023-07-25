@@ -5,7 +5,7 @@ import { HiOutlineXMark } from "react-icons/hi2";
 // Components
 import CustomDialog from "@/core/components/CustomDialog";
 // Hooks
-import useDeleteSystemStatus from "../hooks/useDeleteSystemStatus";
+import useDeleteSystemStatus from "@/core/hooks/systemStatus/useDeleteSystemStatus";
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
 import useCustomDialog from "@/core/components/CustomDialog/hooks/useCustomDialog";
 import useLoadingScreen from "@/core/components/LoadingScreen/hook/useLoadingScreen";

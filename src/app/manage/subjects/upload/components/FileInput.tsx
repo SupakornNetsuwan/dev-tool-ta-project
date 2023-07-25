@@ -9,7 +9,7 @@ const DropFileArea = dynamic(()=>import("./DropFileArea"))
 import GoBackBtn from "@/core/components/GoBackBtn";
 // Custom hooks
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
-import useCreateCourse from "../hook/useCreateCourse";
+import useCreateCourse from "@/core/hooks/courses/useCreateCourse";
 import { Course } from "@prisma/client";
 
 const FileInput = () => {

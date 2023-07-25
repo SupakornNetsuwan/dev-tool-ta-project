@@ -4,7 +4,7 @@ import { useFormContext, SubmitHandler } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
 import { HiOutlineXMark } from "react-icons/hi2";
 import type { CourseDetailModifyType } from "@/app/api/subjects/[subjectId]/CourseTypes";
-import useUpdateCourse from "@/app/manage/subjects/[subjectId]/hooks/useUpdateCourse";
+import useUpdateCourse from "@/core/hooks/courses/useUpdateCourse";
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
 import { Prisma } from "@prisma/client";
 // Components
@@ -50,14 +50,14 @@ const CourseDetailForm: React.FC = () => {
       onSuccess(data, variables, context) {
         console.log("Success", data);
         openToast({
-          title: <p className="text-blue-500">เข้าสู่ระบบสำเร็จ 🎉</p>,
-          description: <p>ยินดีต้อนรับ</p>,
+          title: <p className="text-blue-500">แก้ไขข้อมูลสำเร็จ 🎉</p>,
+          description: <p>ข้อมูลรายวิชาแก้ไขแล้ว</p>,
           actionButton: <HiOutlineXMark className="text-2xl text-gray-900" />,
         });
       },
       onError(error, variables, context) {
         openToast({
-          title: <p className="text-red-500">ไม่สามารถเข้าสู่ระบบได้</p>,
+          title: <p className="text-red-500">ไม่สามารถแก้ไขข้อมูลได้</p>,
           description: <p>{error.message}</p>,
           actionButton: <HiOutlineXMark className="text-2xl text-gray-900" />,
         });

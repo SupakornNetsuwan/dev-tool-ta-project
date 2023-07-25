@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { HiOutlineArrowSmallLeft } from "react-icons/hi2";
 import dynamic from "next/dynamic";
 // custom hook
-import useGetEnroll from "../hooks/useGetEnroll";
+import useGetEnroll from "@/core/hooks/enroll/useGetEnroll";
 const TableStudentsEnroll = dynamic(() => import("./TableStudents"));
 
 const DisplayStudents: React.FC<{ subjectId: string }> = ({ subjectId }) => {
