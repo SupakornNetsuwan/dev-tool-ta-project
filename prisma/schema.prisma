@@ -63,7 +63,7 @@ enum Role {
 model Course {
   subjectId       String                @id
   professorId     String?
-  professor       User?                 @relation(fields: [professorId], references: [id])
+  professor       User?                 @relation(fields: [professorId], references: [id], onDelete: SetNull)
   nameEng         String
   nameThai        String
   credit          String
@@ -77,15 +77,15 @@ model Course {
   secretCode      String?
   // ตารางสำรายชื่อนักศึกษาที่สมัคร
   Enroll          Enroll[]
-  // ฟอร์มสำหรับการขออนุมัติจ้างนักศึกษา
-  approvalFrom    ApprovalFromType?
-  GTEForm         GTEForm[]
-  LTForm          LTForm[]
-  RefScheduleForm RefScheduleForm[]
-  TheoryForm      TheoryForm[]
+  // ฟอร์มการขออนุมัติจ้างนักศึกษา
+  approvalForm    ApprovalFormType?
+  GTEForm         GTEForm?
+  LTForm          LTForm?
+  RefScheduleForm RefScheduleForm?
+  TheoryForm      TheoryForm?
 }
 
-enum ApprovalFromType {
+enum ApprovalFormType {
   GTE_EIGHT
   LT_EIGHT
   REF_SCHEDULE
@@ -99,31 +99,32 @@ enum ApprovalFromType {
 // ใช้กับ ApprovalFromType = GTE_EIGHT
 model GTEForm {
   id     String @id
-  course Course @relation(fields: [id], references: [subjectId])
+  course Course @relation(fields: [id], references: [subjectId], onDelete: Cascade)
 }
 
 // เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษา < 8 คน
 // ใช้กับ ApprovalFromType = LT_EIGHT
 model LTForm {
   id     String @id
-  course Course @relation(fields: [id], references: [subjectId])
+  course Course @relation(fields: [id], references: [subjectId], onDelete: Cascade)
 }
 
 // เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษาตามหน้าตารางจริง
 // ใช้กับ ApprovalFromType = REF_SCHEDULE
 model RefScheduleForm {
   id     String @id
-  course Course @relation(fields: [id], references: [subjectId])
+  course Course @relation(fields: [id], references: [subjectId], onDelete: Cascade)
 }
 
 // เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษาตามรายวิชาทฤษฎี
 // ใช้กับ ApprovalFromType = THEORY
 model TheoryForm {
   id     String @id
-  course Course @relation(fields: [id], references: [subjectId])
+  course Course @relation(fields: [id], references: [subjectId], onDelete: Cascade)
 }
 
 enum CourseCreationStatus {
+  ENROLLABLE
   CREATED
   UNCREATED
 }

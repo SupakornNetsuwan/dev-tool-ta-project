@@ -1,18 +1,16 @@
 "use client";
 import { useMemo } from "react";
-import { useRouter } from "next/navigation";
-import { HiOutlineArrowSmallLeft } from "react-icons/hi2";
+import GoBackBtn from "@/core/components/GoBackBtn";
 import Link from "next/link";
 // Components
 import List from "./List";
 import LoadingSkeleton from "./LoadingSkeleton";
 import SelectProfessor from "./SelectProfessor";
 // hook
-import useGetDetailCourse from "../hooks/useGetDetailCourse";
+import useGetCourse from "../hooks/useGetCourse";
 
 const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
-  const { data, isLoading, isError, error } = useGetDetailCourse(subjectId);
-  const router = useRouter();
+  const { data, isLoading, isError, error } = useGetCourse(subjectId);
   const courseDetail = useMemo(() => data?.data.data, [data]);
 
   if (isLoading) return <LoadingSkeleton />;
@@ -20,10 +18,7 @@ const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
 
   return (
     <>
-      <button onClick={() => router.back()} className="mb-4 flex items-center space-x-1 text-blue-500">
-        <HiOutlineArrowSmallLeft />
-        <span>ย้อนกลับ</span>
-      </button>
+      <GoBackBtn />
       <div className="mt-4 bg-white p-4">
         <p className="pb-2 text-lg font-medium text-blue-500">รายละเอียดวิชา</p>
         <List.Wrapper>

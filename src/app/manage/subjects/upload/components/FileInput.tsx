@@ -6,6 +6,7 @@ import { HiOutlineXMark, HiOutlineArrowSmallLeft } from "react-icons/hi2";
 // Components
 const TableCourse = dynamic(()=>import("./TableCourse"))
 const DropFileArea = dynamic(()=>import("./DropFileArea"))
+import GoBackBtn from "@/core/components/GoBackBtn";
 // Custom hooks
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
 import useCreateCourse from "../hook/useCreateCourse";
@@ -52,8 +53,15 @@ const FileInput = () => {
         nameThai: data["ชื่อวิชาภาษาไทย"] || "",
         credit: data["หน่วยกิต"] || "",
         description: data["คำอธิบายรายวิชา"] || "",
-        professorId: null,
         creationStatus: "UNCREATED",
+        professorId: null,
+        title: "นาย",
+        secretCode: "",
+        firstname: "",
+        lastname: "",
+        enrollCondition: "",
+        contact: "",
+        approvalForm: null,
       }));
 
       if (courses) {
@@ -96,10 +104,7 @@ const FileInput = () => {
   return (
     <>
       <div>
-        <button onClick={() => router.back()} className="mb-4 flex items-center space-x-1 text-blue-500">
-          <HiOutlineArrowSmallLeft />
-          <span>ย้อนกลับ</span>
-        </button>
+        <GoBackBtn />
         <DropFileArea onFileUpload={fileUploadHandler} />
         <div className="mt-5 flex gap-4">
           {fileFromUpload && (

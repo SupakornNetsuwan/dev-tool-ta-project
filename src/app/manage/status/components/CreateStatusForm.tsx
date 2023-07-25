@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { HiOutlineXMark, HiOutlineArrowSmallRight, HiOutlineClock } from "react-icons/hi2";
+import { HiOutlineXMark, HiOutlineArrowSmallRight } from "react-icons/hi2";
 import DisplayDate from "./DisplayDate";
 // MUI-X (Date picker)
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";

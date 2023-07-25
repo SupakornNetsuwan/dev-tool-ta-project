@@ -1,15 +1,13 @@
+import { Prisma } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosResponse, AxiosError } from "axios";
-import type { FetchCourseType } from "@/app/api/subjects/[subjectId]/CourseTypes";
+import type { FetchCourseType , UpdateCourseType} from "@/app/api/subjects/[subjectId]/CourseTypes";
 
 const useUpdateCourse = () => {
   return useMutation<
     AxiosResponse<{ message: string; data: FetchCourseType }>,
     AxiosError<{ message: string }>,
-    {
-      professorId: string;
-      subjectId: string;
-    }
+    UpdateCourseType
   >({
     mutationFn: (payload) => {
       return axios.patch(`/api/subjects/${payload.subjectId}`, payload);

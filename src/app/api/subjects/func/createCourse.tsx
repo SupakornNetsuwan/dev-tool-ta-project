@@ -3,12 +3,12 @@ import type { Course } from "@prisma/client";
 
 const createCourse = async (courses: Course[]) => {
   console.log(`กำลังบันทึกวิชาที่เปิดรับสมัคร... `);
-  courses.forEach((course) => console.log(`- ${course}`));
+  courses.forEach((course) => console.log(`- ${course.nameThai} (${course.nameEng})`));
 
   const createdCourses = await prisma.course.createMany({
     data: courses,
   });
-  
+
   return createdCourses;
 };
 export default createCourse;

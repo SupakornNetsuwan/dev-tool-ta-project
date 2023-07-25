@@ -1,5 +1,5 @@
 import React from "react";
-import PageWrapper from "./components/PageWrapper";
+import PageWrapper from "@/core/components/PageWrapper";
 import ProfileForm from "./components/ProfileForm";
 // React hook form
 import ProfileFormProvider from "./providers/ProfileFormProvider";

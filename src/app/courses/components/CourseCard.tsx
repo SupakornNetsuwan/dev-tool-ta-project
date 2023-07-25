@@ -1,5 +1,7 @@
 import type { FetchCourseType } from "@/app/api/subjects/[subjectId]/CourseTypes";
 import Link from "next/link";
+// Components
+import SuccessStepper from "./SuccessStepper";
 
 const CourseCard: React.FC<{ createdCourse: FetchCourseType }> = ({ createdCourse }) => {
   return (
@@ -19,6 +21,11 @@ const CourseCard: React.FC<{ createdCourse: FetchCourseType }> = ({ createdCours
             {createdCourse.professor?.fullname || <span className="text-red-500">ยังไม่กำหนด</span>}
           </p>
         </div>
+      </div>
+      <div className="mb-2 grid w-full grid-cols-1 gap-2 bg-gray-50 p-2">
+        <SuccessStepper isCompleted={createdCourse.isBasicDetailCompleted}>กรอกรายละเอียดเบื้องต้นแล้ว</SuccessStepper>
+        <SuccessStepper isCompleted={false}>เลือกประเภทวิชาที่แล้ว</SuccessStepper>
+        <SuccessStepper isCompleted={false}>ตรวจสอบ และ ยืนยันแล้ว</SuccessStepper>
       </div>
       <div className="mt-auto flex items-center justify-end space-x-2">
         <Link href={`/courses/${createdCourse.subjectId}`}>

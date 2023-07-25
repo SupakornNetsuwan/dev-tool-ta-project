@@ -5,14 +5,14 @@ import CustomDialog from "@/core/components/CustomDialog";
 import type { FetchCourseType } from "@/app/api/subjects/[subjectId]/CourseTypes";
 import { HiOutlineCheck, HiOutlineXMark } from "react-icons/hi2";
 import * as ScrollArea from "@radix-ui/react-scroll-area";
-import useCreateCourseByProfessor from "../hooks/useCreateCourseByProfessor";
+import useUpdateCourseByProfessor from "../hooks/useUpdateCourseByProfessor";
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
 import { useQueryClient } from "@tanstack/react-query";
 
 const CreateCourseOption = ({ course, closeDialog }: { course: FetchCourseType; closeDialog: () => void }) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const { openToast } = useCustomToast();
-  const updateCourseByProfessor = useCreateCourseByProfessor();
+  const updateCourseByProfessor = useUpdateCourseByProfessor();
   const queryClient = useQueryClient();
 
   const addNewCourse = (subjectId: string) => {
@@ -29,7 +29,7 @@ const CreateCourseOption = ({ course, closeDialog }: { course: FetchCourseType; 
             actionButton: <HiOutlineXMark className="text-2xl text-gray-900" />,
           });
 
-          queryClient.invalidateQueries(["getCourses", data.data.data.professorId]);
+          queryClient.invalidateQueries(["getCoursesByProfessorId", data.data.data.professorId]);
         },
         onError(error) {
           openToast({

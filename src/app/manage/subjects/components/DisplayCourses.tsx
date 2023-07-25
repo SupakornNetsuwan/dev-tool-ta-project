@@ -9,7 +9,6 @@ import useGetCourses from "../hook/useGetCourses";
 import type { FetchCourseType } from "@/app/api/subjects/[subjectId]/CourseTypes";
 
 const DisplayCourse = () => {
-  // ก็ทำให้มัน response มามีการ include professor ด้วย
   const { data, isLoading, isError, error } = useGetCourses();
   const courses = useMemo(() => data?.data.data, [data?.data]);
 

@@ -1,11 +1,11 @@
-import DisplaySystemStatus from "./components/DisplaySystemStatus";
-import CreateStatusForm from "./components/CreateStatusForm";
+import dynamic from "next/dynamic";
+const CreateStatusForm = dynamic(() => import("./components/CreateStatusForm"), { ssr: true });
+const DisplaySystemStatus = dynamic(() => import("./components/DisplaySystemStatus"), { ssr: true });
 // Using API
 import getSystemStatus from "@/app/api/systemStatus/func/getSystemStatus";
 
 const page = async () => {
   const systemStatus = await getSystemStatus();
-
 
   return (
     <div>

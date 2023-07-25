@@ -1,4 +1,4 @@
-import type { ProfileFormType } from "../types/ProfileFormType"
+import type { ProfileFormType } from "../../api/users/[id]/profile/ProfileFormType"
 
 const modifyUploadDocuments = (UserDocument: ProfileFormType["UserDocument"]) => {
 

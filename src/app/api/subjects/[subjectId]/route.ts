@@ -48,7 +48,6 @@ export const PATCH = async (request: NextRequest, { params: { subjectId } }: Par
     try {
         const payload: Partial<Course> = await request.json()
         const updateCourseResult = await updateCourse(payload, subjectId)
-
         return NextResponse.json({ message: "ทำการอัพเดทข้อมูลรายวิชาสำเร็จ", data: updateCourseResult })
     } catch (error) {
         console.log(error);

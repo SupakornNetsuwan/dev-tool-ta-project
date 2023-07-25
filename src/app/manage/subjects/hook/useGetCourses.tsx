@@ -3,6 +3,7 @@ import type { AxiosResponse, AxiosError } from "axios";
 import { useQuery } from "@tanstack/react-query";
 import type { FetchCourseType } from "@/app/api/subjects/[subjectId]/CourseTypes";
 
+//  ใช้เพื่อดึงรายละเอียดของทุกวิชา
 const useGetCourses = () => {
   return useQuery<AxiosResponse<{ message: string; data: FetchCourseType[] }>, AxiosError<{ message: string }>>({
     queryKey: ["getCourses"],
