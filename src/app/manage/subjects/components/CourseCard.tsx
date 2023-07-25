@@ -4,7 +4,7 @@ import type { FetchCourseType } from "@/app/api/subjects/[subjectId]/CourseTypes
 const CardCourse: React.FC<{ course: FetchCourseType }> = ({ course }) => {
   return (
     <div className="flex flex-col rounded border border-gray-300 bg-white p-4">
-      <div className="[&>div]:pb-2">
+      <div className="[&>div]:pb-2 ">
         <div>
           <p className="text-xs text-gray-500">ชื่อวิชา</p>
           <p className="text-sm">{course.nameEng}</p>

@@ -2,12 +2,13 @@
 import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { HiOutlineArrowSmallLeft } from "react-icons/hi2";
+import Link from "next/link";
 // Components
 import List from "./List";
 import LoadingSkeleton from "./LoadingSkeleton";
 import SelectProfessor from "./SelectProfessor";
 // hook
-import useGetDetailCourse from "../hook/useGetDetailCourse";
+import useGetDetailCourse from "../hooks/useGetDetailCourse";
 
 const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
   const { data, isLoading, isError, error } = useGetDetailCourse(subjectId);
@@ -16,7 +17,7 @@ const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
 
   if (isLoading) return <LoadingSkeleton />;
   if (isError) throw error.response?.data.message;
-  
+
   return (
     <>
       <button onClick={() => router.back()} className="mb-4 flex items-center space-x-1 text-blue-500">
@@ -50,14 +51,29 @@ const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
         <p className="pb-2 text-lg font-medium text-blue-500">การคัดเลือก</p>
         <List.Wrapper>
           <List.Item topic="สถานะการคัดเลือก">
-            <p className="text-gray-500">คัดเลือกเรียบร้อย</p>
+              <p className="text-green-600">คัดเลือกเรียบร้อย</p>
           </List.Item>
           <List.Item topic="รายชื่อนึกศึกษาที่ผ่านการคัดเลือก">
-            <p className="text-gray-500">ตรวจสอบรายชื่อ</p>
+            {/* ///ใน enroll ไม่มีเก็บรายวิชา เราเลยจะส่งรายละเอียดของวิชาผ่าน query params */}
+            <Link
+              href={{
+                pathname: `/manage/subjects/${subjectId}/students`,
+                query: {
+                  courseName: courseDetail?.nameEng,
+                },
+              }}
+            >
+              <p className="text-blue-600 underline">ตรวจสอบรายชื่อ</p>
+            </Link>
           </List.Item>
-          <List.Item topic="แบบฟอร์มขออนุมัตินักศึกษา(excel.)">
-            <p className="text-gray-500">ดาวน์โหลด</p>
-          </List.Item>
+          <List.Item topic="แบบฟอร์มขออนุมัติ(รายวิชา)">
+            {/* ///ใน enroll ไม่มีเก็บรายวิชา เราเลยจะส่งรายละเอียดของวิชาผ่าน query params */}
+            <Link href={{pathname:`/manage/subjects/${subjectId}/enrollment`, query:{
+                courseName:courseDetail?.nameEng
+              }}}>
+                <p className="text-blue-600 underline">ตรวจสอบ</p>
+              </Link>
+            </List.Item>
         </List.Wrapper>
       </div>
     </>

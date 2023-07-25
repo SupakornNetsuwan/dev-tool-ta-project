@@ -1,10 +1,11 @@
 "use client";
 import React, { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import dynamic from 'next/dynamic'
 import { HiOutlineXMark, HiOutlineArrowSmallLeft } from "react-icons/hi2";
 // Components
-import TableCourse from "./TableCourse";
-import DropFileArea from "./DropFileArea";
+const TableCourse = dynamic(()=>import("./TableCourse"))
+const DropFileArea = dynamic(()=>import("./DropFileArea"))
 // Custom hooks
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
 import useCreateCourse from "../hook/useCreateCourse";
