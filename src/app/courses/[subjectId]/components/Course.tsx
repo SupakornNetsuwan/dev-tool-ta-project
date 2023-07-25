@@ -6,7 +6,7 @@ import { HiOutlineArrowSmallLeft, HiOutlinePencil } from "react-icons/hi2";
 import List from "./List";
 import LoadingSkeleton from "./LoadingSkeleton";
 // hook
-import useGetDetailCourse from "@/app/manage/subjects/[subjectId]/hook/useGetDetailCourse";
+import useGetDetailCourse from "@/app/manage/subjects/[subjectId]/hooks/useGetDetailCourse";
 
 const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
   const { data, isLoading, isError, error } = useGetDetailCourse(subjectId);
