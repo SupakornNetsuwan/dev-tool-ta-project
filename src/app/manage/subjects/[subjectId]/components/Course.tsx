@@ -25,7 +25,7 @@ const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
         <span>ย้อนกลับ</span>
       </button>
       <div className="mt-4 bg-white p-4">
-        <p className="pb-2 text-lg font-medium text-blue-500">การคัดเลือก</p>
+        <p className="pb-2 text-lg font-medium text-blue-500">รายละเอียดวิชา</p>
         <List.Wrapper>
           <List.Item topic="รหัสวิชา">
             <p className="text-gray-500">{courseDetail?.subjectId}</p>

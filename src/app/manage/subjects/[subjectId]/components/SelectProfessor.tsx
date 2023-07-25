@@ -87,7 +87,7 @@ const SelectProfessorComponent: React.FC<{
     <div className="flex flex-col items-end">
       <Select.Root onValueChange={setProfessor} value={value} onOpenChange={closeSelectHandler}>
         <Select.Trigger
-          className="w-50 flex items-center justify-between gap-1 rounded bg-white px-[15px] py-2 text-sm text-gray-500 shadow outline-none hover:shadow-realistic-1 focus:shadow-realistic-2"
+          className="w-50 flex items-center justify-between gap-1 rounded border-amber-500 bg-white px-[15px] py-2 text-sm text-gray-500 shadow outline-none hover:shadow-realistic-1 focus:shadow-realistic-2 data-[placeholder]:border-2"
           aria-label="Professor choosing"
         >
           <Select.Value placeholder="เลือกอาจารย์" aria-label="เลือกอาจารย์" />
@@ -98,7 +98,9 @@ const SelectProfessorComponent: React.FC<{
         <Select.Portal>
           <Select.Content
             position="popper"
-            className="overflow-hidden rounded-md bg-white shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]"
+            side="top"
+            align="center"
+            className="max-h-[20em] overflow-hidden rounded-md bg-white shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]"
           >
             <Select.ScrollUpButton className="flex h-[25px] cursor-default items-center justify-center bg-white ">
               <HiOutlineChevronUp className="text-gray-500" />
@@ -112,9 +114,11 @@ const SelectProfessorComponent: React.FC<{
                 className="w-full rounded border p-1.5 text-sm text-gray-500 outline-none"
               />
             </div>
-            <Select.Viewport className="max-h-[12em] p-2">
+            <Select.Viewport className=" p-2">
               {data?.data.data
-                .filter((professor) => professor.fullname.toLowerCase().includes(fitlerSearch) || professor.id === value)
+                .filter(
+                  (professor) => professor.fullname.toLowerCase().includes(fitlerSearch) || professor.id === value
+                )
                 .map(({ id, fullname }) => (
                   <SelectItem key={id} value={id}>
                     {fullname}
