@@ -1,6 +1,6 @@
 import React from "react";
 import PageWrapper from "@/core/components/PageWrapper";
-import ProfileForm from "./components/ProfileForm";
+import Main from "./components/Main";
 // React hook form
 import ProfileFormProvider from "./providers/ProfileFormProvider";
 import checkAuth from "@/core/func/checkAuth";
@@ -15,7 +15,7 @@ const page = async () => {
   return (
     <PageWrapper>
       <ProfileFormProvider>
-        <ProfileForm session={session!} />
+        <Main session={session!} />
       </ProfileFormProvider>
     </PageWrapper>
   );

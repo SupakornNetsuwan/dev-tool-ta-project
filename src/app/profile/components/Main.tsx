@@ -106,7 +106,7 @@ const ProfileForm = ({ session }: { session: Session }) => {
   return (
     <>
       <FormHeader isLoading={isLoading} />
-      <form onSubmit={handleSubmit(submit)} className="flex flex-col gap-3">
+      <form onSubmit={handleSubmit(submit)} className="flex flex-col gap-3 pb-24">
         <div className="flex flex-col gap-3 sm:flex-row [&>div]:flex-1">
           <FieldWrapper errorComponent={<ShowInputError inputName="title" />} label={<Label.Root>คำนำหน้า</Label.Root>}>
             <TitleSelector />
@@ -246,7 +246,7 @@ const ProfileForm = ({ session }: { session: Session }) => {
         </FileSectionWrapper>
         <button
           type="submit"
-          className="btn click-animation mt-4 self-start rounded border border-blue-500 bg-blue-50 px-12 text-blue-500"
+          className="btn click-animation self-start rounded border border-blue-500 bg-blue-50 px-12 text-blue-500"
         >
           แก้ไข
         </button>

@@ -6,7 +6,7 @@ import checkAuth from "@/core/func/checkAuth";
 import { redirect } from "next/navigation";
 
 const layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => {
-  const { session, hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN"]);
+  const { hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN"]);
   if (!hasPermission) return redirect("/");
 
   return (
