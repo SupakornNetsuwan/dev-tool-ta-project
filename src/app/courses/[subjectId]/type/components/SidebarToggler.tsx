@@ -1,13 +1,25 @@
 import React from "react";
-import { HiOutlineBars3BottomLeft } from "react-icons/hi2";
+import { HiOutlineBars3BottomLeft, HiOutlineXMark } from "react-icons/hi2";
+import { twMerge } from "tailwind-merge";
 
-const SidebarToggler: React.FC<React.HTMLProps<HTMLButtonElement>> = ({ onClick }) => {
+const SidebarToggler: React.FC<React.HTMLProps<HTMLButtonElement> & { isSidebarToggle: boolean }> = ({
+  onClick,
+  className,
+  isSidebarToggle,
+}) => {
   return (
     <button
       onClick={onClick}
-      className="btn btn-click-animation absolute right-0 flex aspect-square items-center justify-center rounded border border-blue-500 bg-blue-50 p-1.5 sm:hidden"
+      className={twMerge(
+        "btn btn-click-animation float-right inline-flex items-center justify-center rounded border border-blue-500 bg-blue-50 p-1.5",
+        className
+      )}
     >
-      <HiOutlineBars3BottomLeft className="text-lg text-gray-800" />
+      {isSidebarToggle ? (
+        <HiOutlineXMark className="text-lg text-gray-800" />
+      ) : (
+        <HiOutlineBars3BottomLeft className="text-lg text-gray-800" />
+      )}
     </button>
   );
 };

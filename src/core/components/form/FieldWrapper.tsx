@@ -11,11 +11,11 @@ const FieldWrapper: React.FC<{
 
   const deocratedLabel = React.cloneElement(label, {
     className: twMerge("block text-sm font-medium text-gray-500 mb-1", labelClassName),
-    ...(inputName && { htmlFor: `profile-form-${inputName}` }),
+    ...(inputName && { htmlFor: `input-marker-${inputName}` }),
   });
 
   const decoratedChildren = React.cloneElement(children, {
-    ...(inputName && { id: `profile-form-${inputName}` }),
+    ...(inputName && { id: `input-marker-${inputName}` }),
   });
 
   const decoratedErrorComponent = React.createElement(

@@ -1,10 +1,10 @@
 import { prisma } from "@/core/libs/prisma/connector";
-import type { Course } from "@prisma/client";
+import { Prisma, type Course } from "@prisma/client";
 import type { FetchCourseType } from "../CourseTypes";
 import { schema } from "./getCourse";
 import { ZodError } from "zod";
 
-const updateCourse = async (payload: Partial<Course>, subjectId: string): Promise<FetchCourseType> => {
+const updateCourse = async (payload: Prisma.CourseUpdateInput, subjectId: string): Promise<FetchCourseType> => {
   const response = await prisma.course.update({
     where: {
       subjectId: subjectId,
