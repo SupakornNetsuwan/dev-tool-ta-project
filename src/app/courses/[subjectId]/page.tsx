@@ -1,5 +1,5 @@
 import React from "react";
-import Main from "./components/Main";
+import Course from "./components/Course";
 import PageWrapper from "@/core/components/PageWrapper";
 import GoBackBtn from "@/core/components/GoBackBtn";
 
@@ -8,7 +8,7 @@ const page = async ({ params }: { params: { subjectId: string } }) => {
     <>
       <GoBackBtn />
       <PageWrapper>
-        <Main subjectId={params.subjectId} />
+        <Course subjectId={params.subjectId} />
       </PageWrapper>
     </>
   );

@@ -33,7 +33,7 @@ const CreateCourseOption = ({ course, closeDialog }: { course: FetchCourseType; 
         },
         onError(error) {
           openToast({
-            title: <p className="text-red-500">ไม่สามารถกำหนดเวลาได้</p>,
+            title: <p className="text-red-500">ไม่สามารถสร้างวิชาได้</p>,
             description: <p>{error?.response?.data.message || "ไม่ทราบสาเหตุ"}</p>,
             actionButton: <HiOutlineXMark className="text-2xl text-gray-900" />,
           });

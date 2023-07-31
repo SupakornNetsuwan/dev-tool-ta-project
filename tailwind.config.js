@@ -29,24 +29,38 @@ module.exports = {
           from: { transform: 'translateX(0)' },
           to: { transform: 'translateX(calc(100% + var(--viewport-padding)))' },
         },
-        slideUpAndFade: {
-          'from': { opacity: 0, transform: 'translateY(2px)' },
-          'to': { opacity: 1, transform: 'translateY(0)', boxShadow: "0 10px 38px -10px hsla(206,22%,7%,.35), 0 10px 20px -15px hsla(206,22%,7%,.2)" },
-        },
         toggleDialog: {
           "from": { opacity: 0, transform: 'scale(1.1) translate(-50%,-50%)' },
           "to": { opacity: 1, transform: 'scale(1) translate(-50%,-50%)' },
-        }
+        },
+        slideDownAndFade: {
+          from: { opacity: 0, transform: 'translateY(-2px)' },
+          to: { opacity: 1, transform: 'translateY(0)' },
+        },
+        slideLeftAndFade: {
+          from: { opacity: 0, transform: 'translateX(2px)' },
+          to: { opacity: 1, transform: 'translateX(0)' },
+        },
+        slideUpAndFade: {
+          from: { opacity: 0, transform: 'translateY(2px)' },
+          to: { opacity: 1, transform: 'translateY(0)' },
+        },
+        slideRightAndFade: {
+          from: { opacity: 0, transform: 'translateX(-2px)' },
+          to: { opacity: 1, transform: 'translateX(0)' },
+        },
+
       },
       animation: {
-        // slideUpAndFade: 'slideUpAndFade 400ms reverse ease-out',
         hide: 'hide 100ms ease-in',
         slideIn: 'slideIn 150ms cubic-bezier(0.16, 1, 0.3, 1)',
         slideOut: 'slideOut 150ms  cubic-bezier(0.16, 1, 0.3, 1) ',
-        slideUpAndFade: 'slideUpAndFade 200ms ease-out both',
         openDialog: "toggleDialog 0.25s ease-out both",
         closeDialog: "toggleDialog 0.25s ease-out reverse",
-
+        slideDownAndFade: 'slideDownAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+        slideLeftAndFade: 'slideLeftAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+        slideUpAndFade: 'slideUpAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+        slideRightAndFade: 'slideRightAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
       },
       fontFamily: {
         "noto": ["Noto Sans Thai", "sans-serif"]

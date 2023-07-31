@@ -24,7 +24,7 @@ const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
           <NavigateAction isCompleted={courseDetail?.isBasicDetailCompleted} href={`${pathname}/detail`}>
             <span>รายละเอียดวิชาเบื้องต้น</span>
           </NavigateAction>
-          <NavigateAction isCompleted={false} href={`${pathname}/type`}>
+          <NavigateAction isCompleted={Boolean(courseDetail?.approvalForm)} href={`${pathname}/type`}>
             <span>ประเภทวิชาที่เปิดรับสมัคร </span>
           </NavigateAction>
           <NavigateAction isCompleted={false} href={`${pathname}/verify`}>

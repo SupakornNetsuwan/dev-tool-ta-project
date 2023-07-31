@@ -1,11 +1,13 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
-const FieldWrapper: React.FC<{
-  children: React.ReactElement;
-  label: React.ReactElement;
-  errorComponent?: JSX.Element;
-}> = ({ children, label, errorComponent }) => {
+const FieldWrapper: React.FC<
+  {
+    children: React.ReactElement;
+    label: React.ReactElement;
+    errorComponent?: JSX.Element;
+  } & React.ComponentPropsWithoutRef<"div">
+> = ({ children, label, errorComponent, className }) => {
   const labelClassName = label?.props.className || "";
   const inputName = children?.props.name || "";
 

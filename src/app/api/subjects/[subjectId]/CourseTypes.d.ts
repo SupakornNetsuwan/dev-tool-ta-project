@@ -6,6 +6,16 @@ export type FetchCourseType = Prisma.CourseGetPayload<{
     },
 }> & { isBasicDetailCompleted: boolean }
 
+type FetchCourseTypeWithApprovementType = Prisma.CourseGetPayload<{
+    include: {
+        professor: true,
+        GTEForm: true,
+        LTForm: true,
+        RefScheduleForm: true,
+        TheoryForm: true,
+    }
+}> & { isBasicDetailCompleted: boolean }
+
 export type UpdateCourseType = Prisma.CourseUpdateInput
 
 export type CourseDetailModifyType = Prisma.CourseGetPayload<{

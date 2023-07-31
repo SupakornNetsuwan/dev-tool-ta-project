@@ -1,6 +1,7 @@
 import { prisma } from "@/core/libs/prisma/connector";
-import type { FetchCourseType } from "../CourseTypes";
+import type { FetchCourseType, FetchCourseTypeWithApprovementType } from "../CourseTypes";
 import { ZodError, z } from "zod";
+import { Prisma } from "@prisma/client";
 
 export const schema = z.object({
   title: z.string().nonempty({ message: "ขาดคำนำหน้า" }),
@@ -11,7 +12,10 @@ export const schema = z.object({
   secretCode: z.string().nullish(),
 });
 
-const getCourse = async (subjectId: string): Promise<FetchCourseType> => {
+const getCourse = async (
+  subjectId: string,
+  includeOpt: Prisma.CourseInclude = {}
+): Promise<FetchCourseType | FetchCourseTypeWithApprovementType> => {
   let isBasicDetailCompleted = false;
 
   const course = await prisma.course.findFirstOrThrow({
@@ -19,6 +23,7 @@ const getCourse = async (subjectId: string): Promise<FetchCourseType> => {
       subjectId: subjectId,
     },
     include: {
+      ...includeOpt,
       professor: true,
     },
   });

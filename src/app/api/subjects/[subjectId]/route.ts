@@ -13,16 +13,32 @@ type ParamsType = {
 }
 
 /**
- * @description สำหรับการร้องขอข้อมูลรายวิชา [subjectId]
+ * @description สำหรับการร้องขอข้อมูลรายวิชา [subjectId] และ สามารถร้องขอข้อมูลฟอร์มอนุมัติผู้ช่วยสอนได้
+ * @param isGetApprovalForm ต้องการข้อมูลฟอร์มอนุมัติหรือไม่
  */
 
 export const GET = async (request: NextRequest, { params: { subjectId } }: ParamsType) => {
     const { hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN", "STUDENT", "PROFESSOR"]);
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
+    const url = new URL(request.url)
+
+    const isGetApprovalData = url.searchParams.get("isGetApprovalForm") || false
+    console.log(`---------- ทำการดึงขอมูลคอร์ส : ${subjectId} ----------`)
+    isGetApprovalData && console.log("- มีการขอข้อมูลฟอร์มอนุมัติด้วย ✨")
 
     try {
         if (subjectId !== undefined) {
-            const course = await getCourse(subjectId)
+            const course = await getCourse(subjectId, {
+                ...(isGetApprovalData && {
+                    GTEForm: true,
+                    LTForm: true,
+                    RefScheduleForm: true,
+                    TheoryForm: true,
+                    ProjectBaseForm: true,
+                    OtherForm: true,
+                })
+            })
+
             return NextResponse.json({ message: "ร้องขอข้อมูลรายวิชาสำเร็จ", data: course })
         }
     } catch (error) {
