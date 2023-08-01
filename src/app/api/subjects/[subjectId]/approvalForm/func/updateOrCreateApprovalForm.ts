@@ -2,6 +2,7 @@ import type { ApprovalFormPayloadType } from "./types"
 import GTE_EIGHT_updateOrCreate from "./GTE_EIGHT/GTE_EIGHT_updateOrCreate"
 import LT_EIGHT_updateOrCreate from "./LT_EIGHT/LT_EIGHT_updateOrCreate"
 import REF_SCHEDULE_updateOrCreate from "./REF_SCHEDULE/REF_SCHEDULE_updateOrCreate"
+import THEORY_updateOrCreate from "./THEORY/THEORY_updateOrCreate"
 
 const updateOrCreateApprovalForm = async (subjectId: string, payload: ApprovalFormPayloadType) => {
     const approvalFormType = payload.approvalFormType
@@ -18,6 +19,9 @@ const updateOrCreateApprovalForm = async (subjectId: string, payload: ApprovalFo
             case "REF_SCHEDULE":
                 const REF_SCHEDULE_result = await REF_SCHEDULE_updateOrCreate(subjectId, payload)
                 return REF_SCHEDULE_result
+            case "THEORY":
+                const THEORY_result = await THEORY_updateOrCreate(subjectId, payload)
+                return THEORY_result
             default:
                 console.log("None of them")
                 throw new Error("ไม่พบประเภทของแบบฟอร์มขออนุมัติผู้ช่วยสอนดังกล่าว")

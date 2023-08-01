@@ -144,9 +144,12 @@ model RefScheduleForm {
 // เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษา รายวิชาทฤษฎี
 // ใช้กับ ApprovalFromType = THEORY
 model TheoryForm {
-  subjectId   String
-  groupNumber Int
-  course      Course @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
+  subjectId       String
+  groupNumber     Int
+  course          Course @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
+  studentAmount   Int
+  otherTaTeachDay String
+  otherTaWorkDay  String
 
   @@id([subjectId, groupNumber])
 }
@@ -154,9 +157,12 @@ model TheoryForm {
 // เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษา รายวิชาทฤษฎีที่สอนแบบ Project base
 // ใช้กับ ApprovalFromType = PROJECTBASE
 model ProjectBaseForm {
-  subjectId   String
-  groupNumber Int
-  course      Course @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
+  subjectId       String
+  groupNumber     Int
+  course          Course @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
+  studentAmount   Int
+  otherTaTeachDay String
+  otherTaWorkDay  String
 
   @@id([subjectId, groupNumber])
 }

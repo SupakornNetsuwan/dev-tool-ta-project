@@ -1,8 +1,7 @@
 "use client";
-import React, { useMemo } from "react";
+import React from "react";
 import EachTaForm from "./EachTaForm";
 import { useFormContext, useFieldArray } from "react-hook-form";
-import { HiOutlinePlus } from "react-icons/hi2";
 import * as Separator from "@radix-ui/react-separator";
 import { LTFormType } from "@/app/api/subjects/[subjectId]/approvalForm/func/LT_EIGHT/LT_EIGHT";
 import { useParams } from "next/navigation";
