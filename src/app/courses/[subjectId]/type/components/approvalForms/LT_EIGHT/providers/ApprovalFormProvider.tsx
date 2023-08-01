@@ -2,19 +2,19 @@
 import React, { useEffect } from "react";
 import { FormProvider, useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { GTE_EIGHT_formSchema } from "@/app/api/subjects/[subjectId]/approvalForm/func/GTE_EIGHT/GTE_EIGHT_formSchema";
+import { LT_EIGHT_formSchema } from "@/app/api/subjects/[subjectId]/approvalForm/func/LT_EIGHT/LT_EIGHT_formSchema";
 import type { AxiosResponse } from "axios";
 import type { FetchCourseTypeWithApprovementType } from "@/app/api/subjects/[subjectId]/CourseTypes";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import { GTEFormType } from "@/app/api/subjects/[subjectId]/approvalForm/func/GTE_EIGHT/GTE_EIGHT";
+import { LTFormType } from "@/app/api/subjects/[subjectId]/approvalForm/func/LT_EIGHT/LT_EIGHT";
 import useUpdateOrCreateApprovalForm from "@/core/hooks/courses/approvalForm/useUpdateOrCreateApprovalForm";
 import stringifiedObj from "@/core/func/stringifiedObj ";
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
 import { HiOutlineXMark } from "react-icons/hi2";
 
 /**
- * @description สำหรับฟอร์มขออนุมัติ TA ประเภท GTE_EIGHT
+ * @description สำหรับฟอร์มขออนุมัติ TA ประเภท LT_EIGHT
  */
 
 const ApprovalFormProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -28,10 +28,10 @@ const ApprovalFormProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     subjectId,
   ]); // ทำการเข้าถึง cache จากการ fetch ที่ \type\components\CourseType.tsx ซึ่งยังไงมันก็มีการ fetch อยู่แล้ว จึงไม่มีทางที่จะเป็น null
 
-  const methods = useForm<GTEFormType>({
-    resolver: zodResolver(GTE_EIGHT_formSchema),
+  const methods = useForm<LTFormType>({
+    resolver: zodResolver(LT_EIGHT_formSchema),
     values: {
-      TaForms: data?.data.data?.GTEForm.map((item) => stringifiedObj(item)) || [],
+      TaForms: data?.data.data?.LTForm.map((item) => stringifiedObj(item)) || [],
     },
     defaultValues: {
       TaForms: [],
@@ -46,9 +46,10 @@ const ApprovalFormProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   }, [methods.formState.errors]);
 
-  const onSubmit: SubmitHandler<GTEFormType> = (payload) => {
+  const onSubmit: SubmitHandler<LTFormType> = (payload) => {
+    // console.log(payload)
     updateOrCreate.mutate(
-      { ...payload, approvalFormType: "GTE_EIGHT" },
+      { ...payload, approvalFormType: "LT_EIGHT" },
       {
         onSuccess(data, variables, context) {
           queryClient.invalidateQueries(["getCoursesWithapprovalForm", subjectId]);

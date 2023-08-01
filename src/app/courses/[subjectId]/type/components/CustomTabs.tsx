@@ -53,10 +53,11 @@ const ContentContainer: React.FC<{ children: React.ReactNode } & React.Component
   );
 };
 
-const Content: React.FC<React.ComponentPropsWithoutRef<typeof Tabs.Content>> = ({
+const Content: React.FC<React.ComponentPropsWithoutRef<typeof Tabs.Content> & { description?: React.ReactNode }> = ({
   className,
   children,
   title,
+  description,
   ...props
 }) => {
   const queryClient = useQueryClient();
@@ -130,7 +131,10 @@ const Content: React.FC<React.ComponentPropsWithoutRef<typeof Tabs.Content>> = (
           </button>
         </CustomTooltip.tooltip>
       )}
-      <h2 className="my-4 text-xl font-semibold text-blue-500">{title}</h2>
+      <div className="my-4 ">
+        <h2 className="text-xl font-semibold text-blue-500">{title}</h2>
+        {description && <p className="text-gray-500">{description}</p>}
+      </div>
       {children}
     </Tabs.Content>
   );

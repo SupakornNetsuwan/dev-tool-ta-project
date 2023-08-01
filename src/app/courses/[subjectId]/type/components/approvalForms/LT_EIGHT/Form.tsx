@@ -1,10 +1,10 @@
 "use client";
-import React from "react";
+import React, { useMemo } from "react";
 import EachTaForm from "./EachTaForm";
 import { useFormContext, useFieldArray } from "react-hook-form";
 import { HiOutlinePlus } from "react-icons/hi2";
 import * as Separator from "@radix-ui/react-separator";
-import { GTEFormType } from "@/app/api/subjects/[subjectId]/approvalForm/func/GTE_EIGHT/GTE_EIGHT";
+import { LTFormType } from "@/app/api/subjects/[subjectId]/approvalForm/func/LT_EIGHT/LT_EIGHT";
 import { useParams } from "next/navigation";
 import ShowCreationAdvice from "../core/ShowCreationAdvice";
 import CreateGroupBtn from "../core/CreateGroupBtn";
@@ -15,7 +15,7 @@ const Form = () => {
     control,
     getValues,
     formState: { isDirty },
-  } = useFormContext<GTEFormType>();
+  } = useFormContext<LTFormType>();
   const { fields, append, remove } = useFieldArray({
     name: "TaForms",
     control: control,
@@ -48,6 +48,7 @@ const Form = () => {
               taWorkDay: "",
               taHireDuration: "",
               subjectId,
+              otherTaWorkDay: "",
             })
           }
         />

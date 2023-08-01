@@ -3,9 +3,8 @@ import FieldWrapper from "@/core/components/form/FieldWrapper";
 import ShowInputError from "@/core/components/form/ShowInputError";
 import * as Label from "@radix-ui/react-label";
 import { useFormContext } from "react-hook-form";
-import { Prisma } from "@prisma/client";
 // Form type
-import { GTEFormType } from "@/app/api/subjects/[subjectId]/approvalForm/func/GTE_EIGHT/GTE_EIGHT";
+import { LTFormType } from "@/app/api/subjects/[subjectId]/approvalForm/func/LT_EIGHT/LT_EIGHT";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { twMerge } from "tailwind-merge";
 import useCustomDialog from "@/core/components/CustomDialog/hooks/useCustomDialog";
@@ -52,7 +51,7 @@ const Wrapper: React.FC<{ children: React.ReactNode } & React.ComponentPropsWith
 };
 
 const Content: React.FC<{ index: number }> = ({ index }) => {
-  const { register } = useFormContext<GTEFormType>();
+  const { register } = useFormContext<LTFormType>();
 
   return (
     <div className="flex-1 border border-l-0 p-4">
@@ -106,6 +105,16 @@ const Content: React.FC<{ index: number }> = ({ index }) => {
           <input
             type="text"
             {...register(`TaForms.${index}.taHireDuration`)}
+            className="w-full justify-self-end rounded border p-2 text-gray-500 outline-none disabled:opacity-50"
+          />
+        </FieldWrapper>
+        <FieldWrapper
+          label={<Label.Root>วันปฏิบัติงานอื่น (วันละ 200 บาท)</Label.Root>}
+          errorComponent={<ShowInputError inputName={`TaForms.${index}.otherTaWorkDay`} />}
+        >
+          <input
+            type="text"
+            {...register(`TaForms.${index}.otherTaWorkDay`)}
             className="w-full justify-self-end rounded border p-2 text-gray-500 outline-none disabled:opacity-50"
           />
         </FieldWrapper>

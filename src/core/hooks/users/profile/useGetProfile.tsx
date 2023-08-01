@@ -8,8 +8,7 @@ const useGetProfile = (id: string) => {
     queryKey: ["getProfile"],
     queryFn: async () => {
       return axios.get(`/api/users/${id}/profile`);
-    },
-    staleTime: 10 * 1000,
+    }
   });
 };
 

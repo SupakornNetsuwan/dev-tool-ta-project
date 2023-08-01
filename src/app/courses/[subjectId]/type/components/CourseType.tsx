@@ -12,7 +12,7 @@ const CourseTypeChoosing: React.FC<{ subjectId: string }> = ({ subjectId }) => {
   const [isSidebarToggle, setIsSidebarToggle] = useState(false);
   const approvalForm = data?.data.data.approvalForm;
   const isHasAproovalForm = Boolean(approvalForm);
-
+  
   const closeSidebae = () => setIsSidebarToggle(false);
   const toggleSidebar = () => setIsSidebarToggle(!isSidebarToggle);
 
@@ -63,13 +63,13 @@ const CourseTypeChoosing: React.FC<{ subjectId: string }> = ({ subjectId }) => {
             isHasAproovalForm && "sm:col-span-12 md:col-span-12"
           )}
         >
-          <CustomTabs.Content title="รายวิชาปฏิบัติการ (ไม่น้อยกว่า 8 ชม./สัปดาห์)" value="GTE_EIGHT">
+          <CustomTabs.Content description="สำหรับรายรูปแบบที่ไม่น้อยกว่า 8 ชม./สัปดาห์" title="รายวิชาปฏิบัติการ" value="GTE_EIGHT">
             <GTE_EIGHT />
           </CustomTabs.Content>
-          <CustomTabs.Content title="รายวิชาปฏิบัติการ (น้อยกว่า 8 ชม./สัปดาห์)" value="LT_EIGHT">
+          <CustomTabs.Content description="สำหรับรายรูปแบบที่น้อยกว่า 8 ชม./สัปดาห์" title="รายวิชาปฏิบัติการ" value="LT_EIGHT">
             <LT_EIGHT />
           </CustomTabs.Content>
-          <CustomTabs.Content title="รายวิชาปฏิบัติการ (ตามหน้าตารางจริง)" value="REF_SCHEDULE">
+          <CustomTabs.Content description="สำหรับรายรูปแบบที่อิงตามหน้าตารางจริง" title="รายวิชาปฏิบัติการ" value="REF_SCHEDULE">
             <REF_SCHEDULE />
           </CustomTabs.Content>
           <CustomTabs.Content title="รายวิชาทฤษฎี" value="THEORY">

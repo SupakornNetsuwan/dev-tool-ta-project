@@ -61,6 +61,7 @@ const updateProfile = async (toUpdatePayload: Omit<ProfileFormType, "email">): P
         create: {
             id,
             address,
+            email: "ไม่สามารถระบุ",
             title,
             firstname,
             lastname,

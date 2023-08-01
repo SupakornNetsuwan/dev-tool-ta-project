@@ -114,9 +114,14 @@ model GTEForm {
 // เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษา < 8 คน
 // ใช้กับ ApprovalFromType = LT_EIGHT
 model LTForm {
-  subjectId   String
-  groupNumber Int
-  course      Course @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
+  subjectId      String
+  groupNumber    Int
+  course         Course @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
+  studentAmount  Int
+  taAmount       Int
+  taWorkDay      String
+  taHireDuration String
+  otherTaWorkDay String
 
   @@id([subjectId, groupNumber])
 }
@@ -124,9 +129,14 @@ model LTForm {
 // เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษา ตามหน้าตารางจริง
 // ใช้กับ ApprovalFromType = REF_SCHEDULE
 model RefScheduleForm {
-  subjectId   String
-  groupNumber Int
-  course      Course @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
+  subjectId      String
+  groupNumber    Int
+  course         Course @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
+  studentAmount  Int
+  taAmount       Int
+  taWorkDay      String
+  taHireDuration String
+  otherTaWorkDay String
 
   @@id([subjectId, groupNumber])
 }
