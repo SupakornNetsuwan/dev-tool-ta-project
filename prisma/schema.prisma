@@ -63,7 +63,7 @@ enum Role {
 model Course {
   subjectId       String                @id
   professorId     String?
-  professor       User?                 @relation(fields: [professorId], references: [id], onDelete: SetNull)
+  professor       User ?                 @relation(fields: [professorId], references: [id], onDelete: SetNull)
   nameEng         String
   nameThai        String
   credit          String
