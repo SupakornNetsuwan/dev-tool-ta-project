@@ -1,7 +1,7 @@
 import { prisma } from "@/core/libs/prisma/connector"
 import { ZodError } from "zod"
 import type { ApprovalFormPayloadType } from "../types"
-import { REF_SCHEDULE_formSchema } from "./REF_SCHEDULE_formSchema"
+import { PROJECTBASE_formSchema } from "./PROJECTBASE_formSchema"
 import { Prisma } from "@prisma/client"
 import { getServerSession } from "next-auth"
 import authOptions from "@/core/auth/nextAuth/authOptions"
@@ -10,16 +10,16 @@ const updateOrCreate = async (subjectId: string, payload: ApprovalFormPayloadTyp
     const user = await getServerSession(authOptions)
 
     try {
-        const parsedPayload = REF_SCHEDULE_formSchema.parse(payload) // สิ่งที่ได้มาจาก Form ของผู้ใช้ จะถูก validate ก่อนที่จะไปใช้งานต่อ ถ้าผ่านแสดงว่าถูกต้อง ✨
+        const parsedPayload = PROJECTBASE_formSchema.parse(payload) // สิ่งที่ได้มาจาก Form ของผู้ใช้ จะถูก validate ก่อนที่จะไปใช้งานต่อ ถ้าผ่านแสดงว่าถูกต้อง ✨
         const data = parsedPayload.TaForms
-        console.log("ผู้ใช้ต้องการสร้าง หรือ อัปเดตฟอร์มประเภท REF_SCHEDULE 📃");
+        console.log("ผู้ใช้ต้องการสร้าง หรือ อัปเดตฟอร์มประเภท PROJECTBASE 📃");
 
         const targetCourse = await prisma.course.findUnique({
             where: {
                 subjectId
             },
             select: {
-                RefScheduleForm: true,
+                ProjectBaseForm: true,
                 professorId: true
             },
         })
@@ -37,16 +37,15 @@ const updateOrCreate = async (subjectId: string, payload: ApprovalFormPayloadTyp
         // เช็คว่ามี groupNumber ซ้ำมั้ย
         if (new Set(data.map(ta => ta.groupNumber)).size !== data.length) throw new Error("มีหมายเลขกลุ่มที่ซ้ำกัน")
 
-
         // ข้อมูลที่ต้องลบออกหาได้จากการเปรียบเทียบกับข้อมูลเก่า
-        const dataToDelete = targetCourse?.RefScheduleForm.filter((oldData) => {
+        const dataToDelete = targetCourse?.ProjectBaseForm.filter((oldData) => {
             return !data.some((newData) => oldData.groupNumber == parseInt(newData.groupNumber))
         })
 
         return await prisma.$transaction(async () => {
 
             // ทำการลบข้อมูลที่ผู้ใช้ต้องการลบออก ซึ่งเราใช้ข้อมูลที่ได้มาจากการเปรียบเทียบกับข้อมูลเก่า
-            dataToDelete?.length && await prisma.refScheduleForm.deleteMany({
+            dataToDelete?.length && await prisma.projectBaseForm.deleteMany({
                 where: {
                     subjectId: subjectId,
                     groupNumber: {
@@ -57,7 +56,7 @@ const updateOrCreate = async (subjectId: string, payload: ApprovalFormPayloadTyp
 
             await prisma.$transaction(
                 [...data.map(ta => {
-                    return prisma.refScheduleForm.upsert({
+                    return prisma.projectBaseForm.upsert({
                         where: {
                             subjectId_groupNumber: {
                                 groupNumber: parseInt(ta.groupNumber),
@@ -68,31 +67,27 @@ const updateOrCreate = async (subjectId: string, payload: ApprovalFormPayloadTyp
                             groupNumber: parseInt(ta.groupNumber),
                             subjectId: ta.subjectId,
                             studentAmount: parseInt(ta.studentAmount),
-                            taAmount: parseInt(ta.taAmount),
-                            taHireDuration: ta.taHireDuration,
-                            taWorkDay: ta.taWorkDay,
+                            otherTaTeachDay: ta.otherTaTeachDay,
                             otherTaWorkDay: ta.otherTaWorkDay
                         },
                         update: {
                             groupNumber: parseInt(ta.groupNumber),
                             subjectId: ta.subjectId,
                             studentAmount: parseInt(ta.studentAmount),
-                            taAmount: parseInt(ta.taAmount),
-                            taHireDuration: ta.taHireDuration,
-                            taWorkDay: ta.taWorkDay,
+                            otherTaTeachDay: ta.otherTaTeachDay,
                             otherTaWorkDay: ta.otherTaWorkDay
                         }
                     })
                 }),
                 prisma.course.update({
                     where: { subjectId },
-                    data: { approvalForm: "REF_SCHEDULE" }
+                    data: { approvalForm: "PROJECTBASE" }
                 })
                 ])
         })
 
     } catch (error) {
-        console.log(error, "เกิดปัญหาในการแก้ไข REF_SCHEDULE 😭")
+        console.log(error, "เกิดปัญหาในการแก้ไข PROJECTBASE 😭")
         if (error instanceof ZodError) console.log(error.issues.map((issue) => issue.message).join(" . "));
 
         if (error instanceof Prisma.PrismaClientKnownRequestError) {

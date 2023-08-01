@@ -31,12 +31,11 @@ const updateOrCreate = async (subjectId: string, payload: ApprovalFormPayloadTyp
             }
         }
 
+        // ต้องมีสมาชิกอย่างน้อย 1 ตัวใน array
         if (data.length == 0) throw new Error("โปรดระบุกลุ่มการสอนมากกว่าหรือเท่ากับ 1 กลุ่ม")
 
         // เช็คว่ามี groupNumber ซ้ำมั้ย
-        if (new Set(data.map(ta => ta.groupNumber)).size !== data.length) {
-            throw new Error("มีหมายเลขกลุ่มที่ซ้ำกัน")
-        }
+        if (new Set(data.map(ta => ta.groupNumber)).size !== data.length) throw new Error("มีหมายเลขกลุ่มที่ซ้ำกัน")
 
 
         // ข้อมูลที่ต้องลบออกหาได้จากการเปรียบเทียบกับข้อมูลเก่า

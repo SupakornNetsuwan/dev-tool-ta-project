@@ -15,7 +15,8 @@ type FetchCourseTypeWithApprovementType = Prisma.CourseGetPayload<{
         LTForm: true,
         RefScheduleForm: true,
         TheoryForm: true,
-        OtherForm:true
+        ProjectBaseForm: true,
+        OtherForm: true,
     }
 }> & { isBasicDetailCompleted: boolean }
 

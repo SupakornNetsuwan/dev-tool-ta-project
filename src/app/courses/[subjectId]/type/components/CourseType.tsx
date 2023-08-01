@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import CustomTabs from "./CustomTabs";
 import SidebarToggler from "./SidebarToggler";
-import { GTE_EIGHT, LT_EIGHT, REF_SCHEDULE, THEORY } from "./approvalForms";
+import { GTE_EIGHT, LT_EIGHT, REF_SCHEDULE, THEORY, PROJECTBASE } from "./approvalForms";
 import useGetCourseWithApproval from "@/core/hooks/courses/useGetCourseWithApproval";
 import LoadingSekeleton from "./LoadingSekeleton";
 import { twMerge } from "tailwind-merge";
@@ -12,7 +12,7 @@ const CourseTypeChoosing: React.FC<{ subjectId: string }> = ({ subjectId }) => {
   const [isSidebarToggle, setIsSidebarToggle] = useState(false);
   const approvalForm = data?.data.data.approvalForm;
   const isHasAproovalForm = Boolean(approvalForm);
-  
+
   const closeSidebae = () => setIsSidebarToggle(false);
   const toggleSidebar = () => setIsSidebarToggle(!isSidebarToggle);
 
@@ -63,22 +63,33 @@ const CourseTypeChoosing: React.FC<{ subjectId: string }> = ({ subjectId }) => {
             isHasAproovalForm && "sm:col-span-12 md:col-span-12"
           )}
         >
-          <CustomTabs.Content description="สำหรับรายรูปแบบที่ไม่น้อยกว่า 8 ชม./สัปดาห์" title="รายวิชาปฏิบัติการ" value="GTE_EIGHT">
+          <CustomTabs.Content
+            description="สำหรับรายรูปแบบที่ไม่น้อยกว่า 8 ชม./สัปดาห์"
+            title="รายวิชาปฏิบัติการ"
+            value="GTE_EIGHT"
+          >
             <GTE_EIGHT />
           </CustomTabs.Content>
-          <CustomTabs.Content description="สำหรับรายรูปแบบที่น้อยกว่า 8 ชม./สัปดาห์" title="รายวิชาปฏิบัติการ" value="LT_EIGHT">
+          <CustomTabs.Content
+            description="สำหรับรายรูปแบบที่น้อยกว่า 8 ชม./สัปดาห์"
+            title="รายวิชาปฏิบัติการ"
+            value="LT_EIGHT"
+          >
             <LT_EIGHT />
           </CustomTabs.Content>
-          <CustomTabs.Content description="สำหรับรายรูปแบบที่อิงตามหน้าตารางจริง" title="รายวิชาปฏิบัติการ" value="REF_SCHEDULE">
+          <CustomTabs.Content
+            description="สำหรับรายรูปแบบที่อิงตามหน้าตารางจริง"
+            title="รายวิชาปฏิบัติการ"
+            value="REF_SCHEDULE"
+          >
             <REF_SCHEDULE />
           </CustomTabs.Content>
           <CustomTabs.Content title="รายวิชาทฤษฎี" value="THEORY">
             <THEORY />
           </CustomTabs.Content>
           <CustomTabs.Content title="วิชาทฤษฎีที่สอนแบบ Project base" value="PROJECTBASE">
-            x
+            <PROJECTBASE />
           </CustomTabs.Content>
-
           <CustomTabs.Content title="ปฏิบัติงานอื่น" value="OTHERS">
             z
           </CustomTabs.Content>
