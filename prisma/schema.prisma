@@ -94,7 +94,7 @@ enum ApprovalFormType {
   REF_SCHEDULE
   THEORY
   PROJECTBASE
-  OTHERS
+  OTHER
 }
 
 // เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษา >= 8 คน
@@ -170,15 +170,15 @@ model ProjectBaseForm {
 // เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษา ประเภทปฏิบัติงานอื่น
 // ใช้กับ ApprovalFromType = OTHERS
 model OtherForm {
-  subjectId    String
-  personId     Int
-  course       Course @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
-  certificate  String // คุณวุฒิ
-  workDay      String
-  hireDuration String
-  task         String // งานที่มอบหมาย
+  subjectId      String
+  groupNumber    Int
+  course         Course @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
+  taCertificate  String // คุณวุฒิ
+  taWorkDay      String
+  taHireDuration String
+  taTask         String // งานที่มอบหมาย
 
-  @@id([subjectId, personId])
+  @@id([subjectId, groupNumber])
 }
 
 enum CourseCreationStatus {

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import CustomTabs from "./CustomTabs";
 import SidebarToggler from "./SidebarToggler";
-import { GTE_EIGHT, LT_EIGHT, REF_SCHEDULE, THEORY, PROJECTBASE } from "./approvalForms";
+import { GTE_EIGHT, LT_EIGHT, REF_SCHEDULE, THEORY, PROJECTBASE, OTHER } from "./approvalForms";
 import useGetCourseWithApproval from "@/core/hooks/courses/useGetCourseWithApproval";
 import LoadingSekeleton from "./LoadingSekeleton";
 import { twMerge } from "tailwind-merge";
@@ -54,7 +54,7 @@ const CourseTypeChoosing: React.FC<{ subjectId: string }> = ({ subjectId }) => {
           </CustomTabs.Trigger>
           <CustomTabs.Trigger value="THEORY">รายวิชาทฤษฎี</CustomTabs.Trigger>
           <CustomTabs.Trigger value="PROJECTBASE">วิชาทฤษฎีที่สอนแบบ Project base</CustomTabs.Trigger>
-          <CustomTabs.Trigger value="OTHERS">ปฏิบัติงานอื่น</CustomTabs.Trigger>
+          <CustomTabs.Trigger value="OTHER">ปฏิบัติงานอื่น</CustomTabs.Trigger>
         </CustomTabs.List>
         <CustomTabs.ContentContainer
           className={twMerge(
@@ -90,8 +90,8 @@ const CourseTypeChoosing: React.FC<{ subjectId: string }> = ({ subjectId }) => {
           <CustomTabs.Content title="วิชาทฤษฎีที่สอนแบบ Project base" value="PROJECTBASE">
             <PROJECTBASE />
           </CustomTabs.Content>
-          <CustomTabs.Content title="ปฏิบัติงานอื่น" value="OTHERS">
-            z
+          <CustomTabs.Content title="ปฏิบัติงานอื่น" value="OTHER">
+            <OTHER />
           </CustomTabs.Content>
         </CustomTabs.ContentContainer>
       </CustomTabs.Root>
