@@ -2,44 +2,42 @@
 // change structure of object to foramt csv and can do rows span in table
 import type { ResponseGetEnrollsType , ResponseGetEnrollType} from "@/app/api/enrolls/[subjectId]/EnrollType"
 
-type ConseData = {
-    subjectId: string | undefined;
-    courseNameEng:string | undefined;
-    professor : string | undefined;
-    enrolledStudents:StudentData[]
-    
+type FormatEnrolledData = {
+    courseNameEng: string|undefined
+    subjectId:string|undefined
+    courseProfessor:string|undefined
+    studentData:StudentData[]
 }
 type StudentData = {
     id: string | undefined;
     fullname:string | undefined;
 }
-const useFormatEnrolledData = (data:ResponseGetEnrollsType)=>{
-    const ApprovalForm:ConseData[] =[]
-    const enrolledStudents:StudentData[] = []
+const useFormatEnrolledData = (enrolledStudent:ResponseGetEnrollsType)=>{
+    const formattedData:FormatEnrolledData[] = []
 
-  
-    const courseData = {
-        subjectId: '',
-        courseNameEng: '',
-        professor: '',
-        enrolledStudents
-    }
-    data.forEach((item : ResponseGetEnrollType)=>{
-        courseData.subjectId = item.course?.subjectId as string;
-        courseData.courseNameEng = item.course?.nameEng as string;
-        courseData.professor = item.course?.professor?.fullname as string;
-        const studentData = {
-            id: item.student?.id,
-            fullname: item.student?.fullname,
+
+    enrolledStudent.forEach((enrolDetail : ResponseGetEnrollType)=>{
+        const courseNameEng = enrolDetail.course?.nameEng as string;
+        const subjectId = enrolDetail.course?.subjectId as string;
+        const courseProfessor = enrolDetail.course?.professor?.fullname as string;
+        const student:StudentData = {
+                id: enrolDetail.student?.id,
+                fullname:enrolDetail.student?.fullname,
         };
-        courseData.enrolledStudents.push(studentData);
-
+        const existingDataIndex = formattedData.findIndex((data) => data?.subjectId === subjectId);
+        if (existingDataIndex !== -1) {
+            formattedData[existingDataIndex].studentData.push(student);
+          } else {
+            const newFormattedData: FormatEnrolledData = {
+              courseNameEng,
+              subjectId,
+              courseProfessor,
+              studentData: [student],
+            };
+            formattedData.push(newFormattedData);
+          }
     })
-    ApprovalForm.push(Object.assign({}, courseData));
-    const formatEnrolledData = {
-        ApprovalForm : ApprovalForm
-    }
-    return formatEnrolledData
 
+    return {"ApprovalForm" : formattedData}
 }
 export default useFormatEnrolledData
