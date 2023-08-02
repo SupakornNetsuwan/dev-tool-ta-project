@@ -25,11 +25,11 @@ TooltipContent.displayName = "tootltipContent";
 
 const tooltip: React.FC<
   { children: React.ReactNode; renderContent: React.ReactElement } & React.ComponentPropsWithoutRef<typeof Tooltip.Root>
-> = ({ children, renderContent: RenderContent, ...props }) => {
+> = ({ children, renderContent, ...props }) => {
   return (
     <Tooltip.Root {...props}>
       <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
-      <Tooltip.Portal>{RenderContent}</Tooltip.Portal>
+      <Tooltip.Portal>{renderContent}</Tooltip.Portal>
     </Tooltip.Root>
   );
 };
