@@ -9,38 +9,40 @@ const ProfileFormHeader: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
   const scrollBarRef = useRef<HTMLDivElement>(null);
   const [scrollAmount, setScrollAmount] = useState<number>(0);
 
-  useLayoutEffect(() => {
-    scroll(
-      animate(
-        headerRef.current!,
-        {
-          y: [null, 70],
-          opacity: [1, 0],
-        },
-        {
-          easing: "ease-in-out",
-        }
-      ),
-      { offset: [0, 0.15] }
-    );
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      scroll(
+        animate(
+          headerRef.current!,
+          {
+            y: [null, 70],
+            opacity: [1, 0],
+          },
+          {
+            easing: "ease-in-out",
+          }
+        ),
+        { offset: [0, 0.15] }
+      );
 
-    scroll(
-      animate(
-        descriptionRef.current!,
-        {
-          y: [null, 70],
-          opacity: [1, 0],
-        },
-        {
-          easing: "ease-in-out",
-        }
-      ),
-      { offset: [0, 0.19] }
-    );
+      scroll(
+        animate(
+          descriptionRef.current!,
+          {
+            y: [null, 70],
+            opacity: [1, 0],
+          },
+          {
+            easing: "ease-in-out",
+          }
+        ),
+        { offset: [0, 0.19] }
+      );
 
-    scroll((info) => {
-      setScrollAmount(info.y.progress);
-    });
+      scroll((info) => setScrollAmount(info.y.progress));
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   return (

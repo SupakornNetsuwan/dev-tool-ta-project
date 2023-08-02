@@ -14,8 +14,8 @@ const page = async () => {
 
   return (
     <PageWrapper>
-      <ProfileFormProvider>
-        <Main session={session!} />
+      <ProfileFormProvider session={session!}>
+        <Main />
       </ProfileFormProvider>
     </PageWrapper>
   );
