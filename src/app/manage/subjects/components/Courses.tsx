@@ -5,6 +5,7 @@ import UplaodCourseCard from "./UploadCourseCard";
 import CourseListWrapper from "@/core/components/course/CourseListWrapper";
 import CourseCard from "@/core/components/course/CourseCard";
 import LoadingSkeleton from "./LoadingSkeleton";
+import * as Seperator from "@radix-ui/react-separator";
 // Hooks
 import useGetCourses from "@/core/hooks/courses/useGetCourses";
 import useCoursesToolbar from "../hooks/useCoursesToolbar";
@@ -23,37 +24,47 @@ const Courses = () => {
   return (
     <>
       <CourseListWrapper>
-        {courses
-          ?.filter((course) => {
-            if (option === "all") return true;
-            else if (option === "undone") return course.creationStatus !== "ENROLLABLE";
-            else return course.creationStatus === "ENROLLABLE";
-          })
-          ?.map((course: FetchCourseType, index) => (
-            <CourseCard
-              key={index}
-              course={course}
-              href={`/manage/subjects/${course.subjectId}`}
-              basicDataDisplay={[
-                {
-                  key: "ชื่อวิชา",
-                  value: (
-                    <span className="font-semibold text-gray-800">
-                      {course.nameEng} <br />({course.nameThai})
-                    </span>
-                  ),
-                },
-                {
-                  key: "รหัสวิชา",
-                  value: <span className="text-gray-500">{course.subjectId}</span>,
-                },
-                {
-                  key: "ผู้สอน",
-                  value: <span className="text-blue-500">{course.professor?.fullname}</span>,
-                },
-              ]}
-            />
-          ))}
+        {courses?.length == 0 ? (
+          <div className="col-span-12 flex h-[30vh] w-full items-center justify-center bg-white">
+            <p className="text-gray-500">ไม่มีรายการวิชาใด 🍃</p>
+          </div>
+        ) : (
+          courses
+            ?.filter((course) => {
+              if (option === "all") return true;
+              else if (option === "undone") return course.creationStatus !== "ENROLLABLE";
+              else return course.creationStatus === "ENROLLABLE";
+            })
+            ?.map((course: FetchCourseType, index) => (
+              <CourseCard
+                key={index}
+                course={course}
+                href={`/manage/subjects/${course.subjectId}`}
+                basicDataDisplay={[
+                  {
+                    key: "ชื่อวิชา",
+                    value: (
+                      <span className="font-semibold text-gray-800">
+                        {course.nameEng} <br />({course.nameThai})
+                      </span>
+                    ),
+                  },
+                  {
+                    key: "รหัสวิชา",
+                    value: <span className="text-gray-500">{course.subjectId}</span>,
+                  },
+                  {
+                    key: "ผู้สอน",
+                    value: <span className="text-blue-500">{course.professor?.fullname}</span>,
+                  },
+                ]}
+              />
+            ))
+        )}
+      </CourseListWrapper>
+      <Seperator.Root className="my-2 h-px w-full bg-gray-300" />
+      <h2 className="text-gray-500 mb-2">สร้างรายการวิชาใหม่</h2>
+      <CourseListWrapper>
         <UplaodCourseCard />
       </CourseListWrapper>
     </>
