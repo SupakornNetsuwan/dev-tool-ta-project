@@ -1,7 +1,8 @@
 import { prisma } from "@/core/libs/prisma/connector";
 import type { ResponseGetEnrollsType } from "../EnrollType";
 
-const getEnroll = async (subjectId: string): Promise<ResponseGetEnrollsType> => {
+const getEnroll = async (subjectId: string) => {
+  
   const Enroll = await prisma.enroll.findMany({
     where: {
       course: {
@@ -9,8 +10,14 @@ const getEnroll = async (subjectId: string): Promise<ResponseGetEnrollsType> => 
       },
     },
     select: {
-      enrollStatus: true,
+      passedInBenchelor:true,
+      passedCourseId:true,
+      passedCourseName:true,
+      degree:true,
+      courseBenchelor:true,
+      grade:true,
       enrollId: true,
+      enrollStatus:true,
       student: {
         select: {
           id: true,

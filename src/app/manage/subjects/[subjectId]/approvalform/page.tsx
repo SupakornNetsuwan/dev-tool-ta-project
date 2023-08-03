@@ -11,7 +11,7 @@ const page: React.FC<{ params: { subjectId: string } }> = ({ params: { subjectId
   const enrolledStudents:ResponseGetEnrollsType = useMemo(() => getEnroll.data?.data.data || [], [getEnroll.data]);
   return (
     <>
-      <p className="text-sx m-6 text-center">สรุปข้อมูลขออนุมัตินักศึกษาช่วยงาน(รายวิชา)</p>
+      <p className="text-sx m-4 text-center">สรุปข้อมูลขออนุมัตินักศึกษาช่วยงาน(รายวิชา)</p>
       <TableApprovalform enrolledStudents={enrolledStudents}></TableApprovalform>
     </>
   );

@@ -4,8 +4,8 @@ import { DataGrid ,GridToolbarContainer, GridToolbarExport} from "@mui/x-data-gr
 import type { ResponseGetEnrollsType, ResponseGetEnrollType } from "@/app/api/enrolls/[subjectId]/EnrollType";
 import React from "react";
 // custom hook
-import useCountStudentsEnrolledBySubject from "../hooks/useCountStudentEnrolledEachSubject";
 import useFormatEnrolledData from "../hooks/useFormatEnrolledData";
+import useCreateCSVFile from "../hooks/useCreateCSVFile";
 
 const TdComponent: React.FC<{
   text:React.ReactElement
@@ -26,59 +26,78 @@ const ThComponent: React.FC<{
     </>
   )
 }
-// const testData:ResponseGetEnrollsType = [
-//     {
-//       "course": {
-//         "nameThai":"test",
-//         "nameEng": "INFORMATION SYSTEM SECURITY AND IT LAWS",
-//         "professor": {
-//           "fullname": "Gear vorawee"
-//         },
-//         "subjectId": "6016309"
-//       },
-//       "enrollId": 1,
-//       "enrollStatus": "PENDING",
-//       "student": {
-//         "fullname": "pure",
-//         "id": "test1"
-//       }
-//     },
-//     {
-//       "course": {
-//         "nameThai": "test",
-//         "nameEng": "INFORMATION SYSTEM SECURITY AND IT LAWS",
-//         "professor": {
-//           "fullname": "Gear vorawee"
-//         },
-//         "subjectId": "6016309"
-//       },
-//       "enrollId": 1,
-//       "enrollStatus": "PENDING",
-//       "student": {
-//         "fullname": "vorawee wirawan",
-//         "id": "64070228"
-//       }
-//     },
-//   {
-//       "course": {
-//         "nameThai":"test",
-//         "nameEng": "HUMAN INTERFACE DESIGN",
-//         "professor": {
-//           "fullname": "Gear vorawee"
-//         },
-//         "subjectId": "6016310"
-//       },
-//       "enrollId": 100,
-//       "enrollStatus": "PENDING",
-//       "student": {
-//         "fullname": "geargear",
-//         "id": "64070228"
-//       }
-//     }
-
-// ]
+const testData = {
+  
+    "ApprovalForm": [
+      {
+        "courseNameEng": "INFORMATION SYSTEM SECURITY AND IT LAWS",
+        "courseProfessor": "Gear vorawee",
+        "subjectId":"6016309",
+        "totalStudent":"3",
+        "studentData": [
+          {
+            "courseBenchelor": "INFORMATION_TECHNOLOGY",
+            "degree": "BANCHELOR_DEGREE",
+            "fullname": "vorawee wirawan",
+            "grade": "A",
+            "id": "64070228",
+            "passedCourseId": "6016309",
+            "passedCourseName": "INFORMATION SYSTEM SECURITY AND IT LAWS",
+            "passedInBenchelor": "INFORMATION_TECHNOLOGY"
+          },
+          {
+            "courseBenchelor": "DATA_SCIENCE_AND_BUSINESS_ANALYTICS",
+            "degree": "MASTER_DEGREE",
+            "fullname": "Gear vorawee",
+            "grade": "B_PLUS",
+            "id": "64070211",
+            "passedCourseId": "6016309",
+            "passedCourseName": "INFORMATION SYSTEM SECURITY AND IT LAWS",
+            "passedInBenchelor": "DATA_SCIENCE_AND_BUSINESS_ANALYTICS"
+          }
+        ],
+      },
+      {
+        "courseNameEng": "HUMAN INTERFACE",
+        "courseProfessor": "PHD GEAR",
+        "subjectId":"6016309",
+        "totalStudent":"3",
+        "studentData": [
+          {
+            "courseBenchelor": "INFORMATION_TECHNOLOGY",
+            "degree": "BANCHELOR_DEGREE",
+            "fullname": "gear",
+            "grade": "A",
+            "id": "64070229",
+            "passedCourseId": "6016309",
+            "passedCourseName": "HUMAN INTERFACE",
+            "passedInBenchelor": "INFORMATION_TECHNOLOGY"
+          },
+          {
+            "courseBenchelor": "DATA_SCIENCE_AND_BUSINESS_ANALYTICS",
+            "degree": "MASTER_DEGREE",
+            "fullname": " vorawee",
+            "grade": "B_PLUS",
+            "id": "64070230",
+            "passedCourseId": "6016309",
+            "passedCourseName": "HUMAN INTERFACE",
+            "passedInBenchelor": "DATA_SCIENCE_AND_BUSINESS_ANALYTICS"
+          },
+          {
+            "courseBenchelor": "DATA_SCIENCE_AND_BUSINESS_ANALYTICS",
+            "degree": "MASTER_DEGREE",
+            "fullname": " vorawee",
+            "grade": "B_PLUS",
+            "id": "64070231",
+            "passedCourseId": "6016309",
+            "passedCourseName": "HUMAN INTERFACE",
+            "passedInBenchelor": "DATA_SCIENCE_AND_BUSINESS_ANALYTICS"
+          }
+        ],
+      }
+    ] 
+}
 const TableApprovalform : React.FC<{ enrolledStudents: ResponseGetEnrollsType }> = ({ enrolledStudents }) => {
-  console.log("Res Data", enrolledStudents)
   const professorGroupedRows: Record<string, ResponseGetEnrollsType> = {};
     enrolledStudents.forEach((row) => {
       const professorName = row.course?.professor?.fullname || 'Unknown Professor';
@@ -88,10 +107,19 @@ const TableApprovalform : React.FC<{ enrolledStudents: ResponseGetEnrollsType }>
       professorGroupedRows[professorName].push(row);
   });
   const enrolledStudentsFormatted = useFormatEnrolledData(enrolledStudents)
-  console.log("formatData",enrolledStudentsFormatted);
+  const csv = useCreateCSVFile(testData)
+  console.log(csv)
+  console.log(enrolledStudentsFormatted)
   return(
     <>
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <div className="flex items-end justify-end p-4 bg-white dark:bg-gray-700 ">
+            <div className="">
+                <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction" className="inline-flex items-center text-whute bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
+                    Export
+                </button>
+            </div>
+        </div>
         <table  className=" w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -111,21 +139,16 @@ const TableApprovalform : React.FC<{ enrolledStudents: ResponseGetEnrollsType }>
             </tr>
           </thead>
         <tbody>
-          {enrolledStudents && enrolledStudentsFormatted.ApprovalForm.map((row, index) => (
+          {enrolledStudents.length>0 && enrolledStudentsFormatted.ApprovalForm.map((row, index) => (
             <React.Fragment key={index}>
                 {row.studentData.map((student, studentIndex) =>(
                   <tr key={`${index}-${studentIndex}` } className="bg-white border-b  dark:border-gray-700">
                     
                       <TdComponent rowSpan={undefined} text={<>{studentIndex+1}</>} />
+                      <TdComponent  rowSpan={undefined} text={<>{row.subjectId}</>} />
+                      <TdComponent  rowSpan={undefined} text={<>{row.courseNameEng}</>} />
                       {studentIndex===0 && (
-                        <TdComponent  rowSpan={row.studentData?.length} text={<>{row.subjectId}</>} />
-                      )}
-                      {studentIndex===0 && (
-                        <TdComponent  rowSpan={row.studentData?.length} text={<>{row.courseNameEng}</>} />
-                        // <td rowSpan={row.enrolledStudents?.length}>{row.professor}</td>
-                      )}
-                      {studentIndex===0 && (
-                        <TdComponent rowSpan={row.studentData?.length} text={<>{row.studentData.length}</>} />
+                        <TdComponent rowSpan={row.studentData?.length} text={<>{row.totalStudent}</>} />
                         // <td rowSpan={row.enrolledStudents?.length}>{row.professor}</td>
                       )}
                       
@@ -135,19 +158,25 @@ const TableApprovalform : React.FC<{ enrolledStudents: ResponseGetEnrollsType }>
                       )}
                       <TdComponent rowSpan={undefined} text={<>{student.id}</>} />
                       <TdComponent rowSpan={undefined} text={<>{student.fullname}</>} />
+                      <TdComponent rowSpan={undefined} text={<>{student.degree}</>} />
+                      <TdComponent rowSpan={undefined} text={<>{student.courseBenchelor}</>} />
+                      <TdComponent rowSpan={undefined} text={<>{student.passedInBenchelor}</>} />
+                      <TdComponent rowSpan={undefined} text={<>{student.passedCourseId as string +" " +student.passedCourseName}</>} />
+                      <TdComponent rowSpan={undefined} text={<>{student.grade}</>} />
                       <TdComponent rowSpan={undefined} text={<></>} />
-                      <TdComponent rowSpan={undefined} text={<></>} />
-                      <TdComponent rowSpan={undefined} text={<></>} />
-                      <TdComponent rowSpan={undefined} text={<></>} />
-                      <TdComponent rowSpan={undefined} text={<></>} />
-                      <TdComponent rowSpan={undefined} text={<></>} />
-                      
+
                   </tr>  
                 ))}
             </React.Fragment>
           ))}
         </tbody>
       </table>
+      {enrolledStudents.length === 0 &&  
+            <div className="flex w-full animate-pulse flex-col space-y-4 rounded bg-white p-4 [&>div:nth-child(1)]:bg-blue-100 [&>div]:h-8 [&>div]:rounded-md [&>div]:bg-blue-50">
+                {[...new Array(7)].map((_, index) => (
+                  <div key={index} />
+                ))}
+      </div>}
     </div>
     </>
   )

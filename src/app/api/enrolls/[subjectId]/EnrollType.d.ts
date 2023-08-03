@@ -2,8 +2,14 @@
 
 export type ResponseGetEnrollType = Prisma.EnrollGetPayload<{
         select: {
+            PassedInBenchelor:true,
+            passedCourseId:true,
+            passedCourseName
+            Degree:true
+            courseBenchelor:true
             enrollStatus: true,
             enrollId: true,
+            grade:true
             student: {
                 select: {
                     id: true,
@@ -14,7 +20,6 @@ export type ResponseGetEnrollType = Prisma.EnrollGetPayload<{
                 select: {
                     subjectId: true,
                     nameEng: true,
-                    nameThai:true
                     professor:{
                         select: {
                             fullname: true
