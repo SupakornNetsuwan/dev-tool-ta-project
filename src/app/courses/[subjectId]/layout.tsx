@@ -1,5 +1,6 @@
 import React from "react";
 import { Metadata, ResolvingMetadata } from "next";
+import CourseRouteGuard from "./layouts/CourseRouteGuard";
 
 type Props = {
   params: { subjectId: string };
@@ -16,7 +17,7 @@ export const generateMetadata = async (
 };
 
 const layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  return <>{children}</>;
+  return <CourseRouteGuard>{children}</CourseRouteGuard>;
 };
 
 export default layout;

@@ -20,7 +20,7 @@ type FetchCourseTypeWithApprovementType = Prisma.CourseGetPayload<{
     }
 }> & { isBasicDetailCompleted: boolean }
 
-export type UpdateCourseType = Prisma.CourseUpdateInput
+export type UpdateCourseType = Prisma.CourseUpdateInput & { subjectId: string }
 
 // สำหรับอัปเดตข้อมูล Course detail ทั่วไป
 export type CourseDetailModifyType = Prisma.CourseGetPayload<{

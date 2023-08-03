@@ -17,7 +17,7 @@ const CourseDetailForm: React.FC = () => {
   return (
     <>
       <div className="grid grid-cols-1 gap-2">
-        <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-2 md:grid-cols-3 items-start">
           <FieldWrapper errorComponent={<ShowInputError inputName="title" />} label={<Label.Root>คำนำหน้า</Label.Root>}>
             <TitleSelector />
           </FieldWrapper>

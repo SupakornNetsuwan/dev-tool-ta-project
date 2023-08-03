@@ -1,10 +1,27 @@
 import { prisma } from "@/core/libs/prisma/connector";
-import { Prisma, type Course } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import type { FetchCourseType } from "../CourseTypes";
 import { schema } from "./getCourse";
 import { ZodError } from "zod";
+import { getServerSession } from "next-auth";
+import authOptions from "@/core/auth/nextAuth/authOptions";
+import type { UpdateCourseType } from "../CourseTypes";
 
-const updateCourse = async (payload: Prisma.CourseUpdateInput, subjectId: string): Promise<FetchCourseType> => {
+const updateCourse = async (payload: UpdateCourseType, subjectId: string): Promise<FetchCourseType> => {
+  const session = await getServerSession(authOptions);
+
+  const target = await prisma.course.findUnique({
+    where: { subjectId: subjectId },
+    select: { professorId: true },
+  });
+
+  // ตรวจสอบว่าเป็นผู้สร้างคอร์สหรือไม่
+  if (session?.user.role === "PROFESSOR") {
+    if (target?.professorId !== session?.user.id) {
+      throw new Error("คุณไม่มีสิทธิ์ในการแก้ไขคอร์สนี้");
+    }
+  }
+
   const response = await prisma.course.update({
     where: {
       subjectId: subjectId,
@@ -16,6 +33,7 @@ const updateCourse = async (payload: Prisma.CourseUpdateInput, subjectId: string
   });
 
   let isBasicDetailCompleted = false;
+  
   try {
     console.log("กำลังตรวจสอบความครบถ้วนของข้อมูล...");
     schema.parse({
@@ -31,10 +49,9 @@ const updateCourse = async (payload: Prisma.CourseUpdateInput, subjectId: string
   } catch (error) {
     if (error instanceof ZodError) {
       console.log(error.issues.map((issue) => issue.message).join(" . "));
+      console.log("ข้อมูลของคอร์สไม่ครบถ้วน แต่ไม่เป็นไรได้กำหนดสถานะเข้าตัวแปรแล้ว ❌");
     }
-    console.log("ข้อมูลของคอร์ส ไม่ครบถ้วน ❌");
   }
-
   return { ...response, isBasicDetailCompleted };
 };
 

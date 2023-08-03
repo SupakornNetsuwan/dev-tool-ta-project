@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { Prisma } from "@prisma/client";
 import { FormProvider, SubmitHandler } from "react-hook-form";
 // zod
@@ -35,8 +35,8 @@ const ProfileFormProvider = ({ children, subjectId }: { children: React.ReactNod
   const [courseDetail, systemStatus] = [getCourseDetailQuery.data?.data.data, getSystemStatus.data?.data.data];
   const isLoading = getCourseDetailQuery.status == "loading" || getSystemStatus.status == "loading";
 
-  if (getCourseDetailQuery.isError) throw getCourseDetailQuery.error;
-  if (getSystemStatus.isError) throw getSystemStatus.error;
+  if (getCourseDetailQuery.isError) throw getCourseDetailQuery.error.response?.data.message;
+  if (getSystemStatus.isError) throw getSystemStatus.error.response?.data.message;
 
   const methods = useForm<CourseDetailModifyType>({
     resolver: zodResolver(schema),
@@ -66,6 +66,12 @@ const ProfileFormProvider = ({ children, subjectId }: { children: React.ReactNod
     },
   });
 
+  useEffect(() => {
+    if (Object.values(methods.formState.errors).length > 0) {
+      console.log(methods.formState.errors);
+    }
+  }, [methods.formState.errors]);
+  
   const onSubmit: SubmitHandler<CourseDetailModifyType> = (data) => {
     // type สำหรับส่วนของ course อย่างเดียวเราตัดส่วนที่เป็นของ system status ออกไป สำหรับการอัปเดต course
     const courseUpdateData: Omit<CourseDetailModifyType, keyof Prisma.SystemStatusGetPayload<{}>> = {
@@ -90,9 +96,10 @@ const ProfileFormProvider = ({ children, subjectId }: { children: React.ReactNod
         });
       },
       onError(error, variables, context) {
+        
         openToast({
           title: <p className="text-red-500">ไม่สามารถแก้ไขข้อมูลได้</p>,
-          description: <p>{error.message}</p>,
+          description: <p>{error.response?.data.message}</p>,
           actionButton: <HiOutlineXMark className="text-2xl text-gray-900" />,
         });
       },
@@ -101,7 +108,7 @@ const ProfileFormProvider = ({ children, subjectId }: { children: React.ReactNod
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className={`${isLoading && "animate-pulse opacity-50"}`}>
+      <form onSubmit={methods.handleSubmit(onSubmit)} className={`${isLoading && "animate-pulse pointer-events-none opacity-50"}`}>
         {children}
       </form>
     </FormProvider>

@@ -5,6 +5,7 @@ import { Course, Prisma } from "@prisma/client";
 // function
 import getCourse from "./func/getCourse";
 import updateCourse from "./func/updateCourse";
+import type { UpdateCourseType } from "./CourseTypes";
 
 type ParamsType = {
     params: {
@@ -56,13 +57,12 @@ export const GET = async (request: NextRequest, { params: { subjectId } }: Param
  * @description สำหรับการแก้ไขข้อมูลรายวิชา [subjectId]
  */
 
-
 export const PATCH = async (request: NextRequest, { params: { subjectId } }: ParamsType) => {
     const { hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN", "PROFESSOR"]);
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
 
     try {
-        const payload: Partial<Course> = await request.json()
+        const payload: UpdateCourseType = await request.json()
         const updateCourseResult = await updateCourse(payload, subjectId)
         return NextResponse.json({ message: "ทำการอัพเดทข้อมูลรายวิชาสำเร็จ", data: updateCourseResult })
     } catch (error) {

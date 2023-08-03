@@ -14,7 +14,7 @@ import CustomDialog from "@/core/components/CustomDialog";
 const DeleteGroupButton: React.FC<React.ComponentPropsWithoutRef<"button">> = ({ onClick, className }) => {
   const { dialogState, setShowDialog, openDialog } = useCustomDialog();
 
-  const deleteHandler = (e: React.MouseEvent) => {
+  const confirmDelete = (e: React.MouseEvent) => {
     openDialog({
       title: <p className="text-red-500">คำเตือน ⚠️</p>,
       description: <p className="text-gray-500">ยืนยันที่จะลบกลุ่ม / ลำดับหรือไม่</p>,
@@ -35,7 +35,7 @@ const DeleteGroupButton: React.FC<React.ComponentPropsWithoutRef<"button">> = ({
           "btn click-animation rounded rounded-br-none rounded-tr-none border border-r-0 border-red-300 bg-red-50 text-red-500 hover:border-red-500",
           className
         )}
-        onClick={deleteHandler}
+        onClick={confirmDelete}
       >
         <HiOutlineTrash />
       </button>

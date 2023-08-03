@@ -1,25 +1,33 @@
 "use client";
 import { useMemo } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useParams } from "next/navigation";
+import { HiMiniAdjustmentsHorizontal } from "react-icons/hi2";
 // Components
+import CourseDropdown from "./CourseDropdown";
 import LoadingSkeleton from "./LoadingSkeleton";
 import List from "@/core/components/List";
 import NavigateAction from "./NavigateAction";
 // hook
 import useGetCourse from "@/core/hooks/courses/useGetCourse";
 
-const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
-  const { data, isLoading, isError, error } = useGetCourse(subjectId);
+const Course: React.FC = () => {
+  const { subjectId } = useParams();
+  const { data, isLoading } = useGetCourse(subjectId);
   const pathname = usePathname();
   const courseDetail = useMemo(() => data?.data.data, [data]);
   const isBasicDetailCompleted = courseDetail?.isBasicDetailCompleted;
   const isApprovalFormCompleted = Boolean(courseDetail?.approvalForm);
 
   if (isLoading) return <LoadingSkeleton />;
-  if (isError) throw error.response?.data.message;
 
   return (
     <>
+      <CourseDropdown>
+        <button className="ml-auto flex items-center space-x-1 rounded border bg-white px-3  py-1 text-gray-500 outline-none hover:bg-gray-50">
+          <span>จัดการ</span>
+          <HiMiniAdjustmentsHorizontal className="" />
+        </button>
+      </CourseDropdown>
       <div className="mt-4 bg-white p-4">
         <p className="pb-2 text-lg font-medium text-blue-500">กำหนดข้อมูลรายวิชา</p>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:h-24 md:grid-cols-3">
