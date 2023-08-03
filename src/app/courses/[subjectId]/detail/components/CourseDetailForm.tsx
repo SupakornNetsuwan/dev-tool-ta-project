@@ -142,7 +142,7 @@ const CourseDetailForm: React.FC = () => {
         type="submit"
         className="btn click-animation mt-4 self-start rounded border border-blue-500 bg-blue-50 px-12 text-blue-500"
       >
-        แก้ไข
+        บันทึก
       </button>
     </>
   );

@@ -20,7 +20,7 @@ const CourseCard: React.FC<{
       </div>
       <div className="mb-2 grid w-full grid-cols-1 gap-2 bg-gray-50 p-2">
         <SuccessStepper isCompleted={course.isBasicDetailCompleted}>กรอกรายละเอียดเบื้องต้นแล้ว</SuccessStepper>
-        <SuccessStepper isCompleted={Boolean(course.approvalForm)}>เลือกประเภทวิชาที่แล้ว</SuccessStepper>
+        <SuccessStepper isCompleted={Boolean(course.approvalForm)}>เลือกประเภทวิชาแล้ว</SuccessStepper>
         <SuccessStepper isCompleted={false}>ตรวจสอบ และ ยืนยันแล้ว</SuccessStepper>
       </div>
       {children}
