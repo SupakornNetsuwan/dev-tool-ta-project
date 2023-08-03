@@ -2,7 +2,7 @@
 // change structure of object to foramt csv and can do rows span in table
 import type { ResponseGetEnrollsType , ResponseGetEnrollType} from "@/app/api/enrolls/[subjectId]/EnrollType"
 
-export type AprovalForm ={
+export type AprovalFormFormattedType ={
   ApprovalForm:FormatEnrolledData[]
 }
 
