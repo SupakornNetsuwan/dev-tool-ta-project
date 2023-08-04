@@ -28,7 +28,7 @@ const ProfileForm = () => {
   const queryCleint = useQueryClient();
   const getProfile = queryCleint.getQueryState(["getProfile"]);
 
-  console.log("Form state มีการเปลี่ยนแปลง 🏗️", watch());
+  // console.log("Form state มีการเปลี่ยนแปลง 🏗️", watch());
 
   return (
     <>

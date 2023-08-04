@@ -28,9 +28,9 @@ const storeUser: StoreUserFunctionType = async ({ LDAPemail, LDAPid, LDAPfullnam
                 password: hashedPassword
             },
             create: {
-                email: LDAPemail.toLowerCase(),
-                id: LDAPid.toLowerCase(),
-                fullname: LDAPfullname.toLowerCase(),
+                email: LDAPemail,
+                id: LDAPid,
+                fullname: LDAPfullname,
                 password: hashedPassword,
                 department: LDAPdepartment,
                 Profile: {

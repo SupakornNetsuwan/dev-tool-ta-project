@@ -16,7 +16,7 @@ const storeFakeUser = async (username: string, password: string, fullname?: stri
             fullname: fullname || "John Doe",
             password: hashedPassword,
             role: role || "STUDENT",
-            department: "it",
+            department: "it_inf",
             Profile: {
                 connectOrCreate: {
                     where: {
