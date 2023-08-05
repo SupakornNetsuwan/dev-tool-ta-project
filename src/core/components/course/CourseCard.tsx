@@ -28,7 +28,7 @@ const CourseCard: React.FC<{
           <div key={data.key}>
             <p className="text-xs text-gray-500">{data.key}</p>
             <div className="text-sm font-medium ">
-              {data.value || <span className="text-red-500">ยังไม่มีข้อมูล</span>}
+              {data.value}
             </div>
           </div>
         ))}

@@ -1,10 +1,9 @@
 import { prisma } from "@/core/libs/prisma/connector";
 import type { FetchCourseType } from "../CourseTypes";
-import { schema } from "./getCourse";
-import { ZodError } from "zod";
 import { getServerSession } from "next-auth";
 import authOptions from "@/core/auth/nextAuth/authOptions";
 import type { UpdateCourseType } from "../CourseTypes";
+import checkIsBasicDetailCompleted from "../helpers/checkIsBasicDetailCompleted";
 
 const updateCourse = async (payload: UpdateCourseType, subjectId: string): Promise<FetchCourseType> => {
   const session = await getServerSession(authOptions);
@@ -21,7 +20,7 @@ const updateCourse = async (payload: UpdateCourseType, subjectId: string): Promi
     }
   }
 
-  const response = await prisma.course.update({
+  const updatedCourse = await prisma.course.update({
     where: {
       subjectId: subjectId,
     },
@@ -31,29 +30,11 @@ const updateCourse = async (payload: UpdateCourseType, subjectId: string): Promi
     },
   });
 
-  let isBasicDetailCompleted = false;
 
-  try {
-    console.log("กำลังตรวจสอบความครบถ้วนของข้อมูล...");
-    schema.parse({
-      contact: response.contact,
-      enrollCondition: response.enrollCondition,
-      firstname: response.firstname,
-      lastname: response.lastname,
-      title: response.title,
-      secretCode: response.secretCode,
-    });
-    console.log("ข้อมูลของคอร์ส ครบถ้วน ✅");
-    isBasicDetailCompleted = true;
-  } catch (error) {
-    if (error instanceof ZodError) {
-      console.log(error.issues.map((issue) => issue.message).join(" . "));
-      console.log("ข้อมูลของคอร์สไม่ครบถ้วน แต่ไม่เป็นไรได้กำหนดสถานะเข้าตัวแปรแล้ว ❌");
-    } else {
-      throw error
-    }
-  }
-  return { ...response, isBasicDetailCompleted };
+  // ตรวจสอบความครบถ้วนของข้อมูล
+  const isBasicDetailCompleted = checkIsBasicDetailCompleted(updatedCourse)
+  
+  return { ...updatedCourse, isBasicDetailCompleted };
 };
 
 export default updateCourse;

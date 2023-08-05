@@ -12,7 +12,8 @@ export const GET = async (request: NextRequest) => {
     const { hasPermission, session } = await checkAuth(["ADMIN", "SUPERADMIN", "PROFESSOR"]);
     if (!session) return NextResponse.json({ message: "โปรดเข้าสู่ระบบ" }, { status: 401 })
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
-
+    console.log(`---------- ทำการดึงข้อมูลคอร์สจำนวนมาก 📖📖 ---------`)
+    
     const url = new URL(request.nextUrl)
     const professorId = url.searchParams.get("professorId")
 
@@ -30,8 +31,10 @@ export const GET = async (request: NextRequest) => {
 
 
     } catch (error) {
+        console.log(error);
+        
         let message = "เกิดปัญหาที่ไม่ทราบสาเหตุ"
-        if (error instanceof Object && !(error instanceof Error)) message = JSON.stringify(error)
+        if (error instanceof Object && !(error instanceof Error)) message = JSON.stringify(error);
         if (error instanceof Error) message = error.message
         if (typeof error == "string") message = error
         return NextResponse.json({ message }, { status: 400 })
@@ -46,6 +49,7 @@ export const POST = async (request: NextRequest) => {
     const { hasPermission, session } = await checkAuth(["ADMIN", "SUPERADMIN"]);
     if (!session) return NextResponse.json({ message: "โปรดเข้าสู่ระบบ" }, { status: 401 })
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
+    console.log(`---------- แอดมินต้องการที่จะสร้างคอร์ส 🔨 ---------`)
 
     try {
         const body = await request.json();

@@ -1,11 +1,9 @@
 "use client";
 import { useMemo } from "react";
 // Components
-import UplaodCourseCard from "./UploadCourseCard";
 import CourseListWrapper from "@/core/components/course/CourseListWrapper";
 import CourseCard from "@/core/components/course/CourseCard";
 import LoadingSkeleton from "./LoadingSkeleton";
-import * as Seperator from "@radix-ui/react-separator";
 // Hooks
 import useGetCourses from "@/core/hooks/courses/useGetCourses";
 import useCoursesToolbar from "../hooks/useCoursesToolbar";
@@ -58,7 +56,11 @@ const Courses = () => {
                   },
                   {
                     key: "ผู้สอน",
-                    value: <span className="text-blue-500">{course.professor?.fullname}</span>,
+                    value: course.professor?.fullname ? (
+                      <span className="text-blue-500">{course.professor.fullname}</span>
+                    ) : (
+                      <span className="text-red-500">ยังไม่กำหนดผู้สอน</span>
+                    ),
                   },
                 ]}
               />
