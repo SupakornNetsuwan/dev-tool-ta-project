@@ -17,8 +17,11 @@ const Course: React.FC = () => {
   const courseDetail = useMemo(() => data?.data.data, [data]);
   const isBasicDetailCompleted = courseDetail?.isBasicDetailCompleted;
   const isApprovalFormCompleted = Boolean(courseDetail?.approvalForm);
+  const isVerifyCompleted = courseDetail?.creationStatus === "ENROLLABLE";
 
   if (isLoading) return <LoadingSkeleton />;
+
+  const isCourseCompleted = isBasicDetailCompleted && isApprovalFormCompleted && isVerifyCompleted;
 
   return (
     <>
@@ -31,15 +34,19 @@ const Course: React.FC = () => {
       <div className="mt-4 bg-white p-4">
         <p className="pb-2 text-lg font-medium text-blue-500">กำหนดข้อมูลรายวิชา</p>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:h-24 md:grid-cols-3">
-          <NavigateAction isCompleted={isBasicDetailCompleted} href={`${pathname}/detail`}>
-            <span>รายละเอียดวิชาเบื้องต้น</span>
-          </NavigateAction>
-          <NavigateAction isCompleted={isApprovalFormCompleted} href={`${pathname}/type`}>
-            <span>ประเภทวิชาที่เปิดรับสมัคร </span>
-          </NavigateAction>
+          {!isCourseCompleted && (
+            <>
+              <NavigateAction isCompleted={isBasicDetailCompleted} href={`${pathname}/detail`}>
+                <span>รายละเอียดวิชาเบื้องต้น</span>
+              </NavigateAction>
+              <NavigateAction isCompleted={isApprovalFormCompleted} href={`${pathname}/type`}>
+                <span>ประเภทวิชาที่เปิดรับสมัคร </span>
+              </NavigateAction>
+            </>
+          )}
           <NavigateAction
             disabled={!isBasicDetailCompleted || !isApprovalFormCompleted}
-            isCompleted={false}
+            isCompleted={isVerifyCompleted}
             href={`${pathname}/verify`}
           >
             <span>ตรวจสอบ และ ยืนยัน</span>

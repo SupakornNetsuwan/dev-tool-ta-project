@@ -1,36 +1,30 @@
 "use client";
 import List from "@/core/components/List";
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import useGetCourseWithApproval from "@/core/hooks/courses/useGetCourseWithApproval";
 import { useParams } from "next/navigation";
 import useGetSystemStatus from "@/core/hooks/systemStatus/useGetSystemStatus";
-import { HiOutlineCheck, HiOutlineArrowSmallLeft } from "react-icons/hi2";
 import { useRouter } from "next/navigation";
 import LoadingSkeleton from "./LoadingSkeleton";
+
+import UnSubmit from "./UnSubmit";
+import Submit from "./Submit";
 
 const Verify = () => {
   const { subjectId } = useParams();
   const router = useRouter();
   const fetchedCourseDetail = useGetCourseWithApproval(subjectId);
   const fetchedSystemStatus = useGetSystemStatus();
-
-  const courseDetail = fetchedCourseDetail.data?.data.data;
-  const systemStatus = fetchedSystemStatus.data?.data.data;
+  const [courseDetail, systemStatus] = [fetchedCourseDetail.data?.data.data, fetchedSystemStatus.data?.data.data];
+  const isVerifyCompleted = courseDetail?.creationStatus === "ENROLLABLE";
 
   useEffect(() => {
     if (fetchedCourseDetail.isSuccess && fetchedSystemStatus.isSuccess) {
-      if (
-        !fetchedCourseDetail.data.data.data.approvalForm ||
-        !fetchedCourseDetail.data.data.data.isBasicDetailCompleted
-      ) {
+      if (!courseDetail?.approvalForm || !courseDetail?.isBasicDetailCompleted) {
         router.back();
       }
     }
-  }, [fetchedCourseDetail, fetchedSystemStatus, router]);
-
-  const goBack = useCallback(() => {
-    router.back();
-  }, [router]);
+  }, [courseDetail, fetchedCourseDetail, fetchedSystemStatus, router]);
 
   if (fetchedCourseDetail.isLoading || fetchedSystemStatus.isLoading) return <LoadingSkeleton />;
 
@@ -68,19 +62,7 @@ const Verify = () => {
         <List.Item topic="xxxx">
           <p className="text-gray-500">xxxx</p>
         </List.Item>
-        <div className="flex justify-between pt-12">
-          <button
-            onClick={goBack}
-            className="btn click-animation  flex items-center space-x-1 rounded border border-gray-300 bg-gray-50 px-4 py-2 text-gray-500"
-          >
-            <HiOutlineArrowSmallLeft />
-            <span>กลับไปแก้ไข</span>
-          </button>
-          <button className="btn click-animation  flex items-center space-x-1 rounded border border-blue-500 bg-blue-50 px-4 py-2 text-blue-500">
-            <span>ยืนยัน</span>
-            <HiOutlineCheck />
-          </button>
-        </div>
+        <div className="flex justify-end pt-12">{isVerifyCompleted ? <UnSubmit /> : <Submit />}</div>
       </List.Wrapper>
     </>
   );

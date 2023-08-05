@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
-type OptionsType = "all" | "undone" | "done";
+export type OptionsType = "all" | "undone" | "done";
 export type CoursesToolbarContextType = {
   option: OptionsType;
   setOption: (option: OptionsType) => void;

@@ -1,5 +1,4 @@
 import { prisma } from "@/core/libs/prisma/connector";
-import { Prisma } from "@prisma/client";
 import type { FetchCourseType } from "../CourseTypes";
 import { schema } from "./getCourse";
 import { ZodError } from "zod";
@@ -33,7 +32,7 @@ const updateCourse = async (payload: UpdateCourseType, subjectId: string): Promi
   });
 
   let isBasicDetailCompleted = false;
-  
+
   try {
     console.log("กำลังตรวจสอบความครบถ้วนของข้อมูล...");
     schema.parse({
@@ -50,6 +49,8 @@ const updateCourse = async (payload: UpdateCourseType, subjectId: string): Promi
     if (error instanceof ZodError) {
       console.log(error.issues.map((issue) => issue.message).join(" . "));
       console.log("ข้อมูลของคอร์สไม่ครบถ้วน แต่ไม่เป็นไรได้กำหนดสถานะเข้าตัวแปรแล้ว ❌");
+    } else {
+      throw error
     }
   }
   return { ...response, isBasicDetailCompleted };

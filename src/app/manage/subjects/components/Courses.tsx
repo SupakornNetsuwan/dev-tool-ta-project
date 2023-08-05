@@ -44,9 +44,12 @@ const Courses = () => {
                   {
                     key: "ชื่อวิชา",
                     value: (
-                      <span className="font-semibold text-gray-800">
-                        {course.nameEng} <br />({course.nameThai})
-                      </span>
+                      <div className="line-clamp-2 font-semibold text-gray-800 [text-wrap:balance]">
+                        <p title={`${course.nameEng} (${course.nameThai})`}>
+                          {course.nameEng}
+                          <br />({course.nameThai})
+                        </p>
+                      </div>
                     ),
                   },
                   {
@@ -61,11 +64,6 @@ const Courses = () => {
               />
             ))
         )}
-      </CourseListWrapper>
-      <Seperator.Root className="my-2 h-px w-full bg-gray-300" />
-      <h2 className="text-gray-500 mb-2">สร้างรายการวิชาใหม่</h2>
-      <CourseListWrapper>
-        <UplaodCourseCard />
       </CourseListWrapper>
     </>
   );

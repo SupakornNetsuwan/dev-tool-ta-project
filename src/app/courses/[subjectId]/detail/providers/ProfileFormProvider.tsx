@@ -71,7 +71,7 @@ const ProfileFormProvider = ({ children, subjectId }: { children: React.ReactNod
       console.log(methods.formState.errors);
     }
   }, [methods.formState.errors]);
-  
+
   const onSubmit: SubmitHandler<CourseDetailModifyType> = (data) => {
     // type สำหรับส่วนของ course อย่างเดียวเราตัดส่วนที่เป็นของ system status ออกไป สำหรับการอัปเดต course
     const courseUpdateData: Omit<CourseDetailModifyType, keyof Prisma.SystemStatusGetPayload<{}>> = {
@@ -96,7 +96,6 @@ const ProfileFormProvider = ({ children, subjectId }: { children: React.ReactNod
         });
       },
       onError(error, variables, context) {
-        
         openToast({
           title: <p className="text-red-500">ไม่สามารถแก้ไขข้อมูลได้</p>,
           description: <p>{error.response?.data.message}</p>,
@@ -108,7 +107,10 @@ const ProfileFormProvider = ({ children, subjectId }: { children: React.ReactNod
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className={`${isLoading && "animate-pulse pointer-events-none opacity-50"}`}>
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        className={`${isLoading && "pointer-events-none animate-pulse opacity-50"}`}
+      >
         {children}
       </form>
     </FormProvider>

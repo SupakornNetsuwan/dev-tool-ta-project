@@ -21,7 +21,7 @@ const DisplayCourses: React.FC<{ professorId: string }> = ({ professorId }) => {
     <>
       <CourseListWrapper>
         {courses
-          ?.filter((course) => course.creationStatus === "CREATED")
+          ?.filter((course) => course.creationStatus === "CREATED" || course.creationStatus === "ENROLLABLE")
           ?.map((course: FetchCourseType, index) => (
             <CourseCard
               key={index}
@@ -30,7 +30,7 @@ const DisplayCourses: React.FC<{ professorId: string }> = ({ professorId }) => {
               basicDataDisplay={[
                 {
                   key: "ชื่อวิชา",
-                  value: <span className="text-gray-800 font-semibold ">{course.nameEng}</span>,
+                  value: <span className="font-semibold text-gray-800 ">{course.nameEng}</span>,
                 },
                 {
                   key: "รหัสวิชา",

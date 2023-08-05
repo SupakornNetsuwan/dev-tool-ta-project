@@ -43,8 +43,10 @@ const getCourse = async (
   } catch (error) {
     if (error instanceof ZodError) {
       console.log(error.issues.map((issue) => issue.message).join(" . "));
+      console.log("ข้อมูลของคอร์สไม่ครบถ้วน แต่ไม่เป็นไรได้กำหนดสถานะเข้าตัวแปรแล้ว ❌");
+    } else {
+      throw error
     }
-    console.log("ข้อมูลของคอร์ส ไม่ครบถ้วน ❌");
   }
 
   return { ...course, isBasicDetailCompleted };

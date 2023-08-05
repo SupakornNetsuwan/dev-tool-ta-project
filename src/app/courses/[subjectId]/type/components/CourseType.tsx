@@ -1,17 +1,24 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CustomTabs from "./CustomTabs";
 import SidebarToggler from "./SidebarToggler";
 import { GTE_EIGHT, LT_EIGHT, REF_SCHEDULE, THEORY, PROJECTBASE, OTHER } from "./approvalForms";
 import useGetCourseWithApproval from "@/core/hooks/courses/useGetCourseWithApproval";
 import LoadingSekeleton from "./LoadingSekeleton";
 import { twMerge } from "tailwind-merge";
+import { useRouter } from "next/navigation";
 
 const CourseTypeChoosing: React.FC<{ subjectId: string }> = ({ subjectId }) => {
+  const router = useRouter();
   const { status, data } = useGetCourseWithApproval(subjectId); // ทำการ fetch ข้อมูลมา และ เผื่อสำหรับ approvalForm ด้วย
   const [isSidebarToggle, setIsSidebarToggle] = useState(false);
-  const approvalForm = data?.data.data.approvalForm;
-  const isHasAproovalForm = Boolean(approvalForm);
+  const courseDetail = data?.data.data;
+  const isHasAproovalForm = Boolean(courseDetail?.approvalForm);
+
+  // ถ้าเกิดอยู่ใน State ที่เปิดลงทะเบียน ให้ redirect ออกไป
+  useEffect(() => {
+    if (courseDetail?.creationStatus === "ENROLLABLE") router.back();
+  }, [courseDetail, router]);
 
   const closeSidebae = () => setIsSidebarToggle(false);
   const toggleSidebar = () => setIsSidebarToggle(!isSidebarToggle);
@@ -25,7 +32,10 @@ const CourseTypeChoosing: React.FC<{ subjectId: string }> = ({ subjectId }) => {
         onClick={toggleSidebar}
         isSidebarToggle={isSidebarToggle}
       />
-      <CustomTabs.Root defaultValue={approvalForm || "GTE_EIGHT"} className="relative grid-cols-12 overflow-hidden">
+      <CustomTabs.Root
+        defaultValue={courseDetail?.approvalForm || "GTE_EIGHT"}
+        className="relative grid-cols-12 overflow-hidden"
+      >
         <CustomTabs.List
           onClick={closeSidebae}
           className={twMerge(

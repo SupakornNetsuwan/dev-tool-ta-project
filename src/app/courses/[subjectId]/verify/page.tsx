@@ -3,7 +3,6 @@ import PageWrapper from "@/core/components/PageWrapper";
 import React from "react";
 import Verify from "./components/Verify";
 
-
 const page = () => {
   return (
     <>
