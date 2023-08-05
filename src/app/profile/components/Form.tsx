@@ -16,26 +16,32 @@ const FileSectionWrapper = dynamic(() => import("./FileSectionWrapper"), {
   loading: () => <div className="h-6 w-full animate-pulse rounded bg-gray-200" />,
 });
 const FormHeader = dynamic(() => import("./FormHeader"), { ssr: false });
+import Selector from "@/core/components/form/Selector";
 import * as Label from "@radix-ui/react-label";
 // React hook form
 import { useFormContext } from "react-hook-form";
 import type { ProfileFormType } from "../../api/users/[id]/profile/ProfileFormType";
-import TitleSelector from "../../../core/components/form/TitleSelector";
 import { useQueryClient } from "@tanstack/react-query";
 
 const ProfileForm = () => {
-  const { register, watch } = useFormContext<ProfileFormType>();
+  const { register } = useFormContext<ProfileFormType>();
   const queryCleint = useQueryClient();
   const getProfile = queryCleint.getQueryState(["getProfile"]);
-
-  // console.log("Form state มีการเปลี่ยนแปลง 🏗️", watch());
 
   return (
     <>
       <FormHeader isLoading={getProfile?.status === "loading"} />
       <div className="flex flex-col gap-3 sm:flex-row [&>div]:flex-1">
         <FieldWrapper errorComponent={<ShowInputError inputName="title" />} label={<Label.Root>คำนำหน้า</Label.Root>}>
-          <TitleSelector />
+          <Selector
+            name="title"
+            placeholder="เลือกคำนำหน้า"
+            options={[
+              { label: "นาย", value: "นาย" },
+              { label: "นาง", value: "นาง" },
+              { label: "นางสาว", value: "นางสาว" }
+            ]}
+          />
         </FieldWrapper>
         <FieldWrapper
           errorComponent={<ShowInputError inputName="firstname" />}
@@ -76,6 +82,20 @@ const ProfileForm = () => {
       </FieldWrapper>
       <div className="flex flex-col  gap-3 sm:flex-row [&>div]:flex-1">
         <FieldWrapper
+          errorComponent={<ShowInputError inputName="degree" />}
+          label={<Label.Root>ระดับการศึกษา</Label.Root>}
+        >
+          <Selector
+            name="degree"
+            placeholder="เลือกปริญญา"
+            options={[
+              { label: "ปริญญาตรี", value: "ปริญญาตรี" },
+              { label: "ปริญญาโท", value: "ปริญญาโท" },
+              { label: "ปริญญาเอก", value: "ปริญญาเอก" },
+            ]}
+          />
+        </FieldWrapper>
+        <FieldWrapper
           errorComponent={<ShowInputError inputName="phoneNumber" />}
           label={<Label.Root>เบอร์โทรศัพท์</Label.Root>}
         >
@@ -95,6 +115,18 @@ const ProfileForm = () => {
         </FieldWrapper>
       </div>
       <div className="flex flex-col gap-3 sm:flex-row [&>div]:flex-1">
+        <FieldWrapper errorComponent={<ShowInputError inputName="bankName" />} label={<Label.Root>ธนาคาร</Label.Root>}>
+          <Selector
+            name="bankName"
+            placeholder="เลือกธนาคาร"
+            options={[
+              { label: "ธนาคารกรุงไทย", value: "ธนาคารกรุงไทย" },
+              { label: "ธนาคารกรุงศรีอยุธยา", value: "ธนาคารกรุงศรีอยุธยา" },
+              { label: "ธนาคารกสิกรไทย", value: "ธนาคารกสิกรไทย" },
+              { label: "ธนาคารไทยพาณิชย์", value: "ธนาคารไทยพาณิชย์" },
+            ]}
+          />
+        </FieldWrapper>
         <FieldWrapper
           errorComponent={<ShowInputError inputName="bookBankNumber" />}
           label={<Label.Root>เลขบัญชีธนาคาร</Label.Root>}

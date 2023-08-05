@@ -34,7 +34,8 @@ model Profile {
   phoneNumber    String?
   email          String?
   bookBankNumber String?
-  // ต้องเพิ่ม field ชื่อธนาคาร
+  bankName       String?
+  degree         String?
 }
 
 model UserDocument {

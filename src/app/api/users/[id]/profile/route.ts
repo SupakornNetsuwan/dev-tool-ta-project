@@ -52,15 +52,14 @@ export const PATCH = async (request: NextRequest, { params }: ParamsType) => {
     if (!session) return NextResponse.json({ message: "โปรดเข้าสู่ระบบ" }, { status: 401 })
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
 
-    const allowedRoles: Role[] = ["ADMIN", "SUPERADMIN"]
-    if (!allowedRoles.includes(session.user.role)) {
+    if (!["ADMIN", "SUPERADMIN"].includes(session.user.role)) {
         // ทำการเช็คว่าถ้าไม่ใช่แอดมิน ก็จะไม่สามารถใช้ user id คนอื่นได้
         if (session.user.id != params.id) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูลของผู้อื่น" }, { status: 403 })
     }
 
     try {
         const formData = await request.formData();
-        const { firstname, lastname, title, address, phoneNumber, bookBankNumber } = (Object.fromEntries(formData)) as { [key: string]: string | null }
+        const { firstname, lastname, title, address, email, phoneNumber, bankName, degree, bookBankNumber } = (Object.fromEntries(formData)) as { [key: string]: string | null }
         const id = params.id; // เราไม่เชื่อในสิ่งที่ User ส่งมา จึงเช็คจาก session
         const [bookBankPath, classTablePath, transcriptPath, picturePath] = await Promise.all([
             fileUploadHandler(formData.get("UserDocument[bookBankPath]"), id, "สำเนาบัญชี"),
@@ -72,7 +71,7 @@ export const PATCH = async (request: NextRequest, { params }: ParamsType) => {
         await checkRemoveOldFiles({ bookBankPath, classTablePath, picturePath, transcriptPath }, id)
 
         const updatedProfile = await updateProfile({
-            title, firstname, lastname, address, phoneNumber, bookBankNumber, id, UserDocument: {
+            title, firstname, bankName, degree, email, lastname, address, phoneNumber, bookBankNumber, id, UserDocument: {
                 classTablePath, transcriptPath, picturePath, bookBankPath
             }
         });
