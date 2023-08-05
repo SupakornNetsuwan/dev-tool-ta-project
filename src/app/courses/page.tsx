@@ -1,6 +1,6 @@
 import React from "react";
 // Components
-import DisplayCourses from "./components/DisplayCourses";
+import DisplayCourses from "./components/Courses";
 import checkAuth from "@/core/func/checkAuth";
 
 const page = async () => {

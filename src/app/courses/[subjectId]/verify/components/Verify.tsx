@@ -1,0 +1,71 @@
+"use client";
+import List from "@/core/components/List";
+import React, { useEffect } from "react";
+import useGetCourseWithApproval from "@/core/hooks/courses/useGetCourseWithApproval";
+import { useParams } from "next/navigation";
+import useGetSystemStatus from "@/core/hooks/systemStatus/useGetSystemStatus";
+import { useRouter } from "next/navigation";
+import LoadingSkeleton from "./LoadingSkeleton";
+
+import UnSubmit from "./UnSubmit";
+import Submit from "./Submit";
+
+const Verify = () => {
+  const { subjectId } = useParams();
+  const router = useRouter();
+  const fetchedCourseDetail = useGetCourseWithApproval(subjectId);
+  const fetchedSystemStatus = useGetSystemStatus();
+  const [courseDetail, systemStatus] = [fetchedCourseDetail.data?.data.data, fetchedSystemStatus.data?.data.data];
+  const isVerifyCompleted = courseDetail?.creationStatus === "ENROLLABLE";
+
+  useEffect(() => {
+    if (fetchedCourseDetail.isSuccess && fetchedSystemStatus.isSuccess) {
+      if (!courseDetail?.approvalForm || !courseDetail?.isBasicDetailCompleted) {
+        router.back();
+      }
+    }
+  }, [courseDetail, fetchedCourseDetail, fetchedSystemStatus, router]);
+
+  if (fetchedCourseDetail.isLoading || fetchedSystemStatus.isLoading) return <LoadingSkeleton />;
+
+  return (
+    <>
+      <div className="mb-6">
+        <h3 className="text-lg font-medium text-blue-500">ยืนยันการส่งแบบฟอร์ม</h3>
+        <p className="text-gray-500">โปรดตรวจทานข้อมูลดังกล่าวต่อไปนี้เพื่อความถูกต้อง</p>
+      </div>
+      <List.Wrapper>
+        <p className="py-4 text-lg font-medium text-gray-800">ข้อมูลผู้ขอ</p>
+        <List.Item topic="ชื่อ-นามสกุล">
+          <p className="text-gray-500">{`${courseDetail?.title}${courseDetail?.firstname} ${courseDetail?.lastname}`}</p>
+        </List.Item>
+        <p className="py-4 text-lg font-medium text-gray-800">รายละเอียดวิชา</p>
+        <List.Item topic="รหัสวิชา">
+          <p className="text-gray-500">{courseDetail?.subjectId}</p>
+        </List.Item>
+        <List.Item topic="ชื่อวิชาภาษาอังกฤษ">
+          <p className="text-gray-500">{courseDetail?.nameEng}</p>
+        </List.Item>
+        <List.Item topic="ชื่อวิชาภาษาไทย">
+          <p className="text-gray-500">{courseDetail?.nameThai}</p>
+        </List.Item>
+        <List.Item topic="หน่วยกิต">
+          <p className="text-gray-500">{courseDetail?.credit}</p>
+        </List.Item>
+        <List.Item topic="ภาคการศึกษา">
+          <p className="text-gray-500">{systemStatus?.semester}</p>
+        </List.Item>
+        <List.Item topic="ปีการศึกษา">
+          <p className="text-gray-500">{systemStatus?.year}</p>
+        </List.Item>
+        <p className="py-4 text-lg font-medium text-gray-800">ขออนุมัติจ้างนักศึกษาเพื่อช่วยปฏิบัติงานดังนี้</p>
+        <List.Item topic="xxxx">
+          <p className="text-gray-500">xxxx</p>
+        </List.Item>
+        <div className="flex justify-end pt-12">{isVerifyCompleted ? <UnSubmit /> : <Submit />}</div>
+      </List.Wrapper>
+    </>
+  );
+};
+
+export default Verify;

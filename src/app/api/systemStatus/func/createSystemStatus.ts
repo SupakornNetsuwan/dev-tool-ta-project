@@ -20,6 +20,8 @@ const createSystemStatus = async (payload: SystemStatusPayloadType) => {
         if (gettedSystemStatus) throw new Error("ระบบได้กำหนดช่วงวันลงทะเบียนไปแล้ว") // ถ้ามีสร้างไว้อยู่แล้ว จะไม่สามารถสร้างได้
 
         const createdSystemStatys = await prisma.systemStatus.create({ data: { openDate: openDate.toISOString(), closeDate: closeDate.toISOString(), semester: payload.semester, year: payload.year } })
+        console.log(`ทำการสร้างช่วงเวลาเปิดปิด ${openDate.format("DD/MM/YYYY HH:mm")} - ${closeDate.format("DD/MM/YYYY HH:mm")} สำเร็จ`)
+        console.log(`โดยเวลาแบบ Vanilla คือ ${payload.openDate} - ${payload.closeDate}`)
 
         return createdSystemStatys
     })

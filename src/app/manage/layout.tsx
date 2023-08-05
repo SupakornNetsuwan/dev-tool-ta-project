@@ -1,17 +1,21 @@
 import React from "react";
 import * as SubNavbar from "../../core/components/SubNavbar";
-import { HiOutlineAcademicCap, HiOutlineUsers, HiOutlinePower } from "react-icons/hi2";
+import { HiOutlineAcademicCap, HiOutlineUsers, HiOutlinePower, HiOutlineHome } from "react-icons/hi2";
 import Seperator from "../../core/components/SubNavbar/Seperator";
 import checkAuth from "@/core/func/checkAuth";
 import { redirect } from "next/navigation";
 
 const layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => {
-  const { session, hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN"]);
+  const { hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN"]);
   if (!hasPermission) return redirect("/");
 
   return (
     <>
       <SubNavbar.Wrapper>
+        <SubNavbar.Item path="/manage" icon={<HiOutlineHome/>} >
+          หน้าหลัก
+        </SubNavbar.Item>
+        <Seperator orientation="vertical" />
         <SubNavbar.Item path="/manage/subjects" icon={<HiOutlineAcademicCap />}>
           จัดการวิชาเรียน
         </SubNavbar.Item>

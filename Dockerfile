@@ -11,6 +11,7 @@ RUN npm ci
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /usr/src/app
+
 COPY --from=deps /usr/src/app/node_modules ./node_modules
 COPY . .
 RUN npx prisma generate
@@ -30,6 +31,9 @@ COPY --from=builder /usr/src/app/.next/static ./.next/static
 # More environment variables can be added here!
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
+# กำหนด Timezone ให้กับ Container
+RUN apk add --no-cache tzdata
+ENV TZ=Asia/Bangkok
 ENV NODE_ENV production
 
 EXPOSE 3000

@@ -1,13 +1,28 @@
 import { Course, Prisma } from "@prisma/client";
 
+// สำหรับ getCourse ทั่วไป
 export type FetchCourseType = Prisma.CourseGetPayload<{
     include: {
         professor: true
     },
 }> & { isBasicDetailCompleted: boolean }
 
-export type UpdateCourseType = Prisma.CourseUpdateInput
+// สำหรับ getCourse + ข้อมูลฟอร์มอนุมัติ
+type FetchCourseTypeWithApprovementType = Prisma.CourseGetPayload<{
+    include: {
+        professor: true,
+        GTEForm: true,
+        LTForm: true,
+        RefScheduleForm: true,
+        TheoryForm: true,
+        ProjectBaseForm: true,
+        OtherForm: true,
+    }
+}> & { isBasicDetailCompleted: boolean }
 
+export type UpdateCourseType = Prisma.CourseUpdateInput & { subjectId: string }
+
+// สำหรับอัปเดตข้อมูล Course detail ทั่วไป
 export type CourseDetailModifyType = Prisma.CourseGetPayload<{
     select: {
         title: true,

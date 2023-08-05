@@ -1,14 +1,18 @@
 "use client";
 import React, { useEffect } from "react";
-import { FormProvider } from "react-hook-form";
+import { Prisma } from "@prisma/client";
+import { FormProvider, SubmitHandler } from "react-hook-form";
 // zod
 import * as z from "zod";
 // Hooks
 import { useForm } from "react-hook-form";
+import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
 import type { CourseDetailModifyType } from "@/app/api/subjects/[subjectId]/CourseTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useGetCourse from "@/core/hooks/courses/useGetCourse";
 import useGetSystemStatus from "@/core/hooks/systemStatus/useGetSystemStatus";
+import { HiOutlineXMark } from "react-icons/hi2";
+import useUpdateCourse from "@/core/hooks/courses/useUpdateCourse";
 
 const schema = z.object({
   contact: z.string().nonempty({ message: "กรุณากรอกช่องทางการติดต่อ" }),
@@ -24,10 +28,30 @@ const schema = z.object({
 });
 
 const ProfileFormProvider = ({ children, subjectId }: { children: React.ReactNode; subjectId: string }) => {
+  const updateCourse = useUpdateCourse();
+  const { openToast } = useCustomToast();
   const getCourseDetailQuery = useGetCourse(subjectId);
   const getSystemStatus = useGetSystemStatus();
+  const [courseDetail, systemStatus] = [getCourseDetailQuery.data?.data.data, getSystemStatus.data?.data.data];
+  const isLoading = getCourseDetailQuery.status == "loading" || getSystemStatus.status == "loading";
+
+  if (getCourseDetailQuery.isError) throw getCourseDetailQuery.error.response?.data.message;
+  if (getSystemStatus.isError) throw getSystemStatus.error.response?.data.message;
+
   const methods = useForm<CourseDetailModifyType>({
     resolver: zodResolver(schema),
+    values: {
+      contact: courseDetail?.contact || "",
+      enrollCondition: courseDetail?.enrollCondition || "",
+      firstname: courseDetail?.firstname || "",
+      lastname: courseDetail?.lastname || "",
+      nameThai: courseDetail?.nameThai || "",
+      secretCode: courseDetail?.secretCode || "",
+      subjectId: subjectId,
+      title: courseDetail?.title || "นาย",
+      semester: systemStatus?.semester || 0,
+      year: systemStatus?.year || 0,
+    },
     defaultValues: {
       contact: "",
       enrollCondition: "",
@@ -42,33 +66,55 @@ const ProfileFormProvider = ({ children, subjectId }: { children: React.ReactNod
     },
   });
 
-  if (getCourseDetailQuery.isError) throw getCourseDetailQuery.error;
-  if (getSystemStatus.isError) throw getSystemStatus.error;
-
   useEffect(() => {
-    // ทำการ Fetch ข้อมูลในส่วนของ​ Basic course detail ทั่ว ๆ ไป 🧠
-    if (getCourseDetailQuery.isSuccess) {
-      const courseDetail = getCourseDetailQuery.data.data.data;
-      methods.setValue("contact", courseDetail.contact);
-      methods.setValue("enrollCondition", courseDetail.enrollCondition);
-      methods.setValue("firstname", courseDetail.firstname);
-      methods.setValue("lastname", courseDetail.lastname);
-      methods.setValue("nameThai", courseDetail.nameThai);
-      methods.setValue("secretCode", courseDetail.secretCode);
-      methods.setValue("title", courseDetail.title);
+    if (Object.values(methods.formState.errors).length > 0) {
+      console.log(methods.formState.errors);
     }
-  }, [getCourseDetailQuery.isSuccess, methods, getCourseDetailQuery.data?.data.data]);
+  }, [methods.formState.errors]);
 
-  useEffect(() => {
-    // ทำการ Fetch ข้อมูลในส่วนของ​ System status 🧠
-    if (getSystemStatus.isSuccess) {
-      const systemStatus = getSystemStatus.data.data.data;
-      methods.setValue("semester", systemStatus?.semester || 0);
-      methods.setValue("year", systemStatus?.year || 0);
-    }
-  }, [getSystemStatus.isSuccess, methods, getSystemStatus.data?.data.data]);
+  const onSubmit: SubmitHandler<CourseDetailModifyType> = (data) => {
+    // type สำหรับส่วนของ course อย่างเดียวเราตัดส่วนที่เป็นของ system status ออกไป สำหรับการอัปเดต course
+    const courseUpdateData: Omit<CourseDetailModifyType, keyof Prisma.SystemStatusGetPayload<{}>> = {
+      contact: data.contact,
+      enrollCondition: data.enrollCondition,
+      firstname: data.firstname,
+      lastname: data.lastname,
+      secretCode: data.secretCode,
+      title: data.title,
+      nameThai: data.nameThai,
+      subjectId: data.subjectId,
+    };
 
-  return <FormProvider {...methods}>{children}</FormProvider>;
+    updateCourse.mutate(courseUpdateData, {
+      onSuccess(data, variables, context) {
+        getCourseDetailQuery.refetch();
+        getSystemStatus.refetch();
+        openToast({
+          title: <p className="text-blue-500">แก้ไขข้อมูลสำเร็จ 🎉</p>,
+          description: <p>ข้อมูลรายวิชาแก้ไขแล้ว</p>,
+          actionButton: <HiOutlineXMark className="text-2xl text-gray-900" />,
+        });
+      },
+      onError(error, variables, context) {
+        openToast({
+          title: <p className="text-red-500">ไม่สามารถแก้ไขข้อมูลได้</p>,
+          description: <p>{error.response?.data.message}</p>,
+          actionButton: <HiOutlineXMark className="text-2xl text-gray-900" />,
+        });
+      },
+    });
+  };
+
+  return (
+    <FormProvider {...methods}>
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        className={`${isLoading && "pointer-events-none animate-pulse opacity-50"}`}
+      >
+        {children}
+      </form>
+    </FormProvider>
+  );
 };
 
 export default ProfileFormProvider;

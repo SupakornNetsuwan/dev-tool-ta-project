@@ -5,10 +5,14 @@ import Link from "next/link";
 import List from "@/core/components/List";
 import LoadingSkeleton from "./LoadingSkeleton";
 import SelectProfessor from "./SelectProfessor";
+import CourseDropdown from "./CourseDropdown";
+import { HiMiniAdjustmentsHorizontal } from "react-icons/hi2";
 // hook
 import useGetCourse from "@/core/hooks/courses/useGetCourse";
+import { useParams } from "next/navigation";
 
-const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
+const Course: React.FC = () => {
+  const { subjectId } = useParams();
   const { data, isLoading, isError, error } = useGetCourse(subjectId);
   const courseDetail = useMemo(() => data?.data.data, [data]);
 
@@ -17,6 +21,14 @@ const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
 
   return (
     <>
+      <div>
+        <CourseDropdown>
+          <button className="ml-auto flex items-center space-x-1 rounded border bg-white px-3  py-1 text-gray-500 outline-none hover:bg-gray-50">
+            <span>จัดการ</span>
+            <HiMiniAdjustmentsHorizontal className="" />
+          </button>
+        </CourseDropdown>
+      </div>
       <div className="mt-4 bg-white p-4">
         <p className="pb-2 text-lg font-medium text-blue-500">รายละเอียดวิชา</p>
         <List.Wrapper>

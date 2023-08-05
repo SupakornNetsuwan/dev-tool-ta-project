@@ -11,6 +11,7 @@ import CustomToastContextProvider from "@/core/components/CustomToast/provider/C
 import LoadingScreenContextProvider from "@/core/components/LoadingScreen/provider/LoadingScreenContextProvider";
 import ClientLocalizationProvider from "@/core/providers/ClientLocalizationProvider";
 import ClientQueryClientProvider from "@/core/providers/ClientQueryClientProvider";
+import ClientTooltipProvider from "@/core/providers/ClientTooltipProvider";
 
 export const metadata = {
   title: {
@@ -30,6 +31,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             <AuthProvider key="auth-provider" />,
             <CustomToastContextProvider key="customtoast-provider" />,
             <LoadingScreenContextProvider key="loadingscreen-provider" />,
+            <ClientTooltipProvider key="tooltip-provider" />,
             <ClientLocalizationProvider key="localization-provider" />,
             <ClientQueryClientProvider key="queryclient-provider" />,
           ]}

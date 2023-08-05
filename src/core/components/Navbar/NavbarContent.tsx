@@ -23,7 +23,7 @@ const rolesItem = {
   ],
   STUDENT: [
     { name: "หน้าหลัก", path: "/" },
-    { name: "สมัครทีเอ", path: "/enroll" },
+    { name: "สมัครผู้ช่วยสอน", path: "/enroll" },
     { name: "โปรไฟล์", path: "/profile" },
   ],
   UNROLE: [

@@ -8,7 +8,7 @@ const page = async ({ params }: { params: { subjectId: string } }) => {
     <>
       <GoBackBtn />
       <PageWrapper>
-        <Course subjectId={params.subjectId} />
+        <Course />
       </PageWrapper>
     </>
   );
