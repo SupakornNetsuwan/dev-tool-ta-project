@@ -1,9 +1,7 @@
-"use client";
 import React, { forwardRef } from "react";
 import * as Select from "@radix-ui/react-select";
-import { HiOutlineChevronUp, HiOutlineChevronDown, HiOutlineChevronUpDown, HiOutlineCheck } from "react-icons/hi2";
-// React hooks form
-import { useFormContext, Controller } from "react-hook-form";
+import { HiOutlineCheck, HiOutlineChevronUpDown, HiOutlineChevronUp, HiOutlineChevronDown } from "react-icons/hi2";
+import { Controller, useFormContext } from "react-hook-form";
 
 const SelectItem = forwardRef<
   HTMLDivElement,
@@ -26,21 +24,25 @@ const SelectItem = forwardRef<
 
 SelectItem.displayName = "SelectItem";
 
-const TitleSelector = () => {
-  const { register, watch, control, ...methods } = useFormContext();
+const Selector: React.FC<{
+  name: string;
+  placeholder: string;
+  defaultValue?: string;
+  options: { label: string; value: string }[];
+}> = ({ name, options, placeholder, defaultValue }) => {
+  const { control, ...methods } = useFormContext();
 
   return (
     <Controller
+      name={name}
       control={control}
-      name="title"
-      render={({ field: { name, onBlur, onChange, ref, value } }) => (
-        <Select.Root  value={value} onValueChange={onChange} name={name}>
+      render={({ field: { name: fieldName, onChange, ref, value } }) => (
+        <Select.Root value={value} onValueChange={onChange} name={fieldName}>
           <Select.Trigger
             ref={ref}
-            className="flex w-full items-center justify-between gap-1 rounded border  bg-white px-[15px] py-2 text-gray-500 outline-none hover:shadow-realistic-1 focus:shadow-realistic-2"
-            aria-label="Title choosing"
+            className="flex h-full w-full items-center justify-between gap-1 rounded border  bg-white px-[15px] py-2 text-gray-500 outline-none hover:shadow-realistic-1 focus:shadow-realistic-2"
           >
-            <Select.Value  placeholder="เลือกคำนำหน้า" aria-label="เลือกคำนำหน้า"/>
+            <Select.Value placeholder={placeholder} />
             <Select.Icon asChild>
               <HiOutlineChevronUpDown className="text-lg text-blue-500" />
             </Select.Icon>
@@ -51,9 +53,11 @@ const TitleSelector = () => {
                 <HiOutlineChevronUp className="text-gray-500" />
               </Select.ScrollUpButton>
               <Select.Viewport className="p-2">
-                <SelectItem value="นาย">นาย</SelectItem>
-                <SelectItem value="นาง">นาง</SelectItem>
-                <SelectItem value="นางสาว">นางสาว</SelectItem>
+                {options.map((option) => (
+                  <SelectItem key={option.label} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
               </Select.Viewport>
               <Select.ScrollDownButton className="flex h-[25px] cursor-default items-center justify-center bg-white">
                 <HiOutlineChevronDown className="text-gray-500" />
@@ -66,4 +70,4 @@ const TitleSelector = () => {
   );
 };
 
-export default TitleSelector;
+export default Selector;

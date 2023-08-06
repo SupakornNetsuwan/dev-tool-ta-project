@@ -5,8 +5,8 @@ import type { CourseDetailModifyType } from "@/app/api/subjects/[subjectId]/Cour
 
 // Components
 import FieldWrapper from "@/core/components/form/FieldWrapper";
-import TitleSelector from "@/core/components/form/TitleSelector";
 import ShowInputError from "@/core/components/form/ShowInputError";
+import Selector from "@/core/components/form/Selector";
 import * as Label from "@radix-ui/react-label";
 
 const CourseDetailForm: React.FC = () => {
@@ -19,7 +19,15 @@ const CourseDetailForm: React.FC = () => {
       <div className="grid grid-cols-1 gap-2">
         <div className="grid grid-cols-1 items-start gap-2 md:grid-cols-3">
           <FieldWrapper errorComponent={<ShowInputError inputName="title" />} label={<Label.Root>คำนำหน้า</Label.Root>}>
-            <TitleSelector />
+            <Selector
+              name="title"
+              placeholder="เลือกคำนำหน้า"
+              options={[
+                { label: "นาย", value: "นาย" },
+                { label: "นาง", value: "นาง" },
+                { label: "นางสาว", value: "นางสาว" },
+              ]}
+            />
           </FieldWrapper>
 
           <FieldWrapper

@@ -1,47 +1,27 @@
 import type { ProfileFormType } from "../ProfileFormType"
 import { prisma } from "@/core/libs/prisma/connector"
 import { ZodError, z } from "zod"
+import profileFormSchema from "./profileFormSchema"
 
-const profileSchema = z.object({
-    id: z.string(),
-    email: z.string().nullish(),
-    title: z.string().refine(value => ["นาย", "นางสาว", "นาง"].includes(value), { message: "กรุณาเลือกคำนำหน้า" }),
-    firstname: z.string().nonempty({ message: "กรุณากรอกชื่อจริง" }),
-    lastname: z.string().nonempty({ message: "กรุณากรอกนามสกุล" }),
-    address: z.string().nonempty({ message: "กรุณากรอกที่อยู่" }),
-    bookBankNumber: z.string().nonempty({ message: "กรุณากรอกเลขที่บัญชีธนาคาร" }),
-    phoneNumber: z
-        .string()
-        .nonempty({ message: "กรุณากรอกเบอร์โทรศัพท์" })
-        .startsWith("0", { message: "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง" })
-        .length(10, { message: "กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 หลัก" })
-        .refine((value) => new RegExp(/^0[0-9]{9}$/).test(value), {
-            message: "กรุณากรอกเบอร์โทรศัพท์เป็นตัวเลข",
-        }),
-    UserDocument: z.object({
-        bookBankPath: z.any().nullish(),
-        classTablePath: z.any().nullish(),
-        picturePath: z.any().nullish(),
-        transcriptPath: z.any().nullish(),
-    }),
-})
-
-const updateProfile = async (toUpdatePayload: Omit<ProfileFormType, "email">): Promise<ProfileFormType> => {
-    const { title, firstname, lastname, address, phoneNumber, id, UserDocument, bookBankNumber } = toUpdatePayload
+const updateProfile = async (toUpdatePayload: ProfileFormType): Promise<ProfileFormType> => {
+    const { title, firstname, lastname, address, phoneNumber, email, id, UserDocument, bankName, degree, bookBankNumber } = toUpdatePayload
     const { bookBankPath, classTablePath, picturePath, transcriptPath } = UserDocument || {};
 
     console.log(".\n.\n.\nข้อมูลที่ได้รับมา และ เตรียมจัดเก็บ :", {
-        title, firstname, lastname, address, phoneNumber, id, bookBankNumber, UserDocument: {
+        title, firstname, lastname, address, phoneNumber, id, bankName, email, degree, bookBankNumber, UserDocument: {
             classTablePath, transcriptPath, picturePath, bookBankPath
         }
     });
 
     try {
-        profileSchema.parse({
+        profileFormSchema.parse({
             id,
             firstname,
             lastname,
             title,
+            email,
+            bankName,
+            degree,
             bookBankNumber,
             address,
             phoneNumber,
@@ -53,6 +33,7 @@ const updateProfile = async (toUpdatePayload: Omit<ProfileFormType, "email">): P
             },
         },)
     } catch (error) {
+        console.log(error);
         if (error instanceof ZodError) throw new Error(error.errors[0].message)
     }
 
@@ -61,10 +42,12 @@ const updateProfile = async (toUpdatePayload: Omit<ProfileFormType, "email">): P
         create: {
             id,
             address,
-            email: "ไม่สามารถระบุ",
+            email,
             title,
             firstname,
             lastname,
+            bankName,
+            degree,
             bookBankNumber,
             phoneNumber,
             UserDocument: {
@@ -84,6 +67,9 @@ const updateProfile = async (toUpdatePayload: Omit<ProfileFormType, "email">): P
             title,
             firstname,
             lastname,
+            email,
+            bankName,
+            degree,
             bookBankNumber,
             phoneNumber,
             UserDocument: {
