@@ -2,6 +2,7 @@
 import React, { useMemo } from "react";
 // custom hook
 import useGetEnroll from "@/core/hooks/enroll/useGetEnroll";
+import TableApprovalform from "./components/TableApprovalForm";
 import type { ResponseGetEnrollsType } from "@/app/api/enrolls/[subjectId]/EnrollType";
 
 
@@ -12,6 +13,7 @@ const Page: React.FC<{ params: { subjectId: string } }> = ({ params: { subjectId
   return (
     <>
       <p className="text-sx m-4 font-bold text-center">สรุปข้อมูลขออนุมัตินักศึกษาช่วยงาน(รายวิชา)</p>
+      <TableApprovalform  enrolledStudents={enrolledStudents}></TableApprovalform>
     </>
   );
 };

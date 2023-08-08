@@ -154,12 +154,11 @@ enum Degree {
 }
 
 model Enroll {
-  enrollId           Int          @id @unique @default(autoincrement())
   enrollDate         DateTime     @default(now())
   enrollStatus       EnrollStatus
-  courseId           String?
+  courseId           String
   course             Course?      @relation(fields: [courseId], references: [subjectId], onDelete: Cascade)
-  studentId          String?
+  studentId          String
   student            User?        @relation(fields: [studentId], references: [id], onDelete: Cascade)
   degree             Degree
   grade              Grade  
@@ -167,6 +166,6 @@ model Enroll {
   passedInBenchelor  Banchelor 
   passedCourseId     String
   passedCourseName   String    
-  @@unique([courseId, studentId])
+  @@id([courseId, studentId])
 }
 

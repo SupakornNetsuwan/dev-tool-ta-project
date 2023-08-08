@@ -1,7 +1,7 @@
 import { DataGrid } from "@mui/x-data-grid";
-import type { ResponseGetEnrollType } from "@/app/api/enrolls/[subjectId]/EnrollType";
+import type { ResponseGetEnrollsType } from "@/app/api/enrolls/[subjectId]/EnrollType";
 
-const TableStudents: React.FC<{ enrolledStudents: ResponseGetEnrollType }> = ({ enrolledStudents }) => {
+const TableStudents: React.FC<{ enrolledStudents: ResponseGetEnrollsType }> = ({ enrolledStudents }) => {
   return (
     <>
       <DataGrid
@@ -11,7 +11,6 @@ const TableStudents: React.FC<{ enrolledStudents: ResponseGetEnrollType }> = ({ 
         disableRowSelectionOnClick
         rows={enrolledStudents}
         getCellClassName={(row) => (row.value?.enrollStatus === "APPROVED" ? "bg-green-600" : "bg-grey-600")}
-        getRowId={(rows) => rows.enrollId}
         columns={[
           {
             field: "sequence",
