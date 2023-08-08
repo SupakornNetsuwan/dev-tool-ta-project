@@ -32,7 +32,7 @@ const TableApprovalform : React.FC<{ enrolledStudents: ResponseGetEnrollsType }>
   const enrolledStudentsFormatted = FormatEnrolledData(enrolledStudents)
   const handleExportCSV =() =>{
     const csvContent = CreateCSVFile(enrolledStudentsFormatted)
-    ExportCSVFile(csvContent, `แบบฟอร์มอนุมัติ`)
+    ExportCSVFile(csvContent, `แบบขอฟอร์มอนุมัติ${enrolledStudents[0].course?.nameEng}`)
   }
   return(
     <>

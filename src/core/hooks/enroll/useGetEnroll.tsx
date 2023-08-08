@@ -7,7 +7,6 @@ const useGetEnroll = (subjectId: string) => {
     queryKey: ["getEnrolls", subjectId],
     queryFn: () => axios.get(`/api/enrolls/${subjectId}`),
   });
-  console.log("API Response:", query.data);
   return query
 };
 
