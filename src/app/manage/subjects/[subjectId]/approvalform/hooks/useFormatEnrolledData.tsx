@@ -24,7 +24,7 @@ export type StudentData = {
     grade:string|undefined,
 }
 
-const useFormatEnrolledData = (enrolledStudent:ResponseGetEnrollsType)=>{
+const FormatEnrolledData = (enrolledStudent:ResponseGetEnrollsType)=>{
     const formattedData:FormatEnrolledData[] = []
     enrolledStudent.forEach((enrolDetail : ResponseGetEnrollType)=>{
         const courseNameEng = enrolDetail.course?.nameEng as string;
@@ -36,7 +36,7 @@ const useFormatEnrolledData = (enrolledStudent:ResponseGetEnrollsType)=>{
         const passedCourseId = enrolDetail.passedCourseId
         const passedCourseName = enrolDetail.passedCourseName
         const grade = enrolDetail.grade
-        const student:StudentData = {
+        const studentEnroll:StudentData = {
                 id: enrolDetail.student?.id,
                 fullname:enrolDetail.student?.fullname,
                 courseBenchelor,
@@ -48,13 +48,13 @@ const useFormatEnrolledData = (enrolledStudent:ResponseGetEnrollsType)=>{
         };
         const existingDataIndex = formattedData.findIndex((data) => data?.subjectId === subjectId);
         if (existingDataIndex !== -1) {
-            formattedData[existingDataIndex].studentData.push(student);
+            formattedData[existingDataIndex].studentData.push(studentEnroll);
           } else {
             const newFormattedData: FormatEnrolledData = {
               courseNameEng,
               subjectId,
               courseProfessor,
-              studentData: [student],
+              studentData: [studentEnroll],
               totalStudent: "1"
             };
             formattedData.push(newFormattedData);
@@ -67,4 +67,4 @@ const useFormatEnrolledData = (enrolledStudent:ResponseGetEnrollsType)=>{
     })
     return {"ApprovalForm" : formattedData}
 }
-export default useFormatEnrolledData
+export default FormatEnrolledData

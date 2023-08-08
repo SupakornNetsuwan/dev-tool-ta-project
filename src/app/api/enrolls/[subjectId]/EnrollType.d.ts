@@ -1,11 +1,11 @@
-    import { Prisma, Enroll } from "@prisma/client";
+import { Prisma, Enroll } from "@prisma/client";
 
 export type ResponseGetEnrollType = Prisma.EnrollGetPayload<{
         select: {
-            PassedInBenchelor:true,
+            passedInBenchelor:true,
             passedCourseId:true,
-            passedCourseName
-            Degree:true
+            passedCourseName:true
+            degree:true
             courseBenchelor:true
             enrollStatus: true,
             enrollId: true,

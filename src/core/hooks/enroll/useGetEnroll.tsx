@@ -3,10 +3,12 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { ResponseGetEnrollsType } from "@/app/api/enrolls/[subjectId]/EnrollType";
 
 const useGetEnroll = (subjectId: string) => {
-  return useQuery<AxiosResponse<{ message: string; data: ResponseGetEnrollsType }>, AxiosError<{ message: string }>>({
+  const query =  useQuery<AxiosResponse<{ message: string; data: ResponseGetEnrollsType }>, AxiosError<{ message: string }>>({
     queryKey: ["getEnrolls", subjectId],
     queryFn: () => axios.get(`/api/enrolls/${subjectId}`),
   });
+  console.log("API Response:", query.data);
+  return query
 };
 
 export default useGetEnroll;

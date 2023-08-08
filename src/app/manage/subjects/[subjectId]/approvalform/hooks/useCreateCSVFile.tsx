@@ -1,7 +1,7 @@
 
 import type { FormatEnrolledData , StudentData, AprovalFormFormattedType} from "./useFormatEnrolledData";
 
-const useCreateCSVFile = (enrolledStudentsFormatted:AprovalFormFormattedType) =>{
+const CreateCSVFile = (enrolledStudentsFormatted:AprovalFormFormattedType) =>{
     let csvContent:string="";
     // Header row
     csvContent += `ลำดับ,รหัสวิชา,ชื่อวิชา,จำนวน TA,อาจารย์ผู้สอน,รหัสนักศึกษา,ชื่อ - นามสกุล,ระดับการศึกษา/,วิชาที่ช่วยสอนอยู่ในหลักสูตรวิทยาศาสตรบัณฑิต,\
@@ -29,4 +29,4 @@ const useCreateCSVFile = (enrolledStudentsFormatted:AprovalFormFormattedType) =>
     
 }
 
-export default useCreateCSVFile
+export default CreateCSVFile

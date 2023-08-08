@@ -144,7 +144,6 @@ enum Grade {
   F
 }
 enum Banchelor {
-  เทคโนโลยีสาร
   INFORMATION_TECHNOLOGY
   DATA_SCIENCE_AND_BUSINESS_ANALYTICS
 }
@@ -162,7 +161,7 @@ model Enroll {
   course             Course?      @relation(fields: [courseId], references: [subjectId], onDelete: Cascade)
   studentId          String?
   student            User?        @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  degree             Degree  
+  degree             Degree
   grade              Grade  
   courseBenchelor    Banchelor
   passedInBenchelor  Banchelor 
