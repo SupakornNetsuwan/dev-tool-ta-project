@@ -31,15 +31,12 @@ export const GET = async (request: NextRequest, { params: { subjectId } }: Param
 
         const course = await getCourse(subjectId, {
             ...(isGetApprovalData && {
-                GTEForm: true,
-                LTForm: true,
-                RefScheduleForm: true,
+                PracticeForm: true,
                 TheoryForm: true,
                 ProjectBaseForm: true,
-                OtherForm: true,
             })
         })
-        
+
         console.log(`ทำการดึงข้อมูลคอร์ส ${subjectId} สำเร็จ ✅`);
         return NextResponse.json({ message: "ร้องขอข้อมูลรายวิชาสำเร็จ", data: course })
 

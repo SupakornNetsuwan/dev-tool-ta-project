@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { FormProvider, useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { GTE_EIGHT_formSchema } from "@/app/api/subjects/[subjectId]/approvalForm/func/PRACTICE/PRACTICE_formSchema";
+import { PRACTICE_formSchema } from "@/app/api/subjects/[subjectId]/approvalForm/func/PRACTICE/PRACTICE_formSchema";
 import type { AxiosResponse } from "axios";
 import type { FetchCourseTypeWithApprovementType } from "@/app/api/subjects/[subjectId]/CourseTypes";
 import { useQueryClient } from "@tanstack/react-query";
@@ -14,7 +14,7 @@ import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
 import { HiOutlineXMark } from "react-icons/hi2";
 
 /**
- * @description สำหรับฟอร์มขออนุมัติ TA ประเภท GTE_EIGHT
+ * @description สำหรับฟอร์มขออนุมัติ TA ประเภท PRACTICE
  */
 
 const ApprovalFormProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -29,16 +29,16 @@ const ApprovalFormProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   ]); // ทำการเข้าถึง cache จากการ fetch ที่ \type\components\CourseType.tsx ซึ่งยังไงมันก็มีการ fetch อยู่แล้ว จึงไม่มีทางที่จะเป็น null
 
   const methods = useForm<PRACTICEFormType>({
-    resolver: zodResolver(GTE_EIGHT_formSchema),
+    resolver: zodResolver(PRACTICE_formSchema),
     values: {
-      TaForms: data?.data.data?.GTEForm.map((item) => stringifiedObj(item)) || [],
+      TaForms: data?.data.data?.PracticeForm.map((item) => stringifiedObj(item)) || [],
     },
     defaultValues: {
       TaForms: [],
     },
   });
 
-  // console.log(methods.watch());
+  console.log(methods.watch());
 
   useEffect(() => {
     if (Object.values(methods.formState.errors).length > 0) {
@@ -48,7 +48,7 @@ const ApprovalFormProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const onSubmit: SubmitHandler<PRACTICEFormType> = (payload) => {
     updateOrCreate.mutate(
-      { ...payload, approvalFormType: "GTE_EIGHT" },
+      { ...payload, approvalFormType: "PRACTICE" },
       {
         onSuccess(data, variables, context) {
           queryClient.invalidateQueries(["getCoursesWithapprovalForm", subjectId]);

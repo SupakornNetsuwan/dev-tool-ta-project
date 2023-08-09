@@ -79,22 +79,22 @@ const Content: React.FC<{ index: number }> = ({ index }) => {
       </div>
       <div className="grid grid-cols-2 gap-2">
         <FieldWrapper
-          label={<Label.Root>วัน-เวลา สอนเสริม</Label.Root>}
-          errorComponent={<ShowInputError inputName={`TaForms.${index}.otherTaTeachDay`} />}
+          label={<Label.Root>วันสอนเสริม</Label.Root>}
+          errorComponent={<ShowInputError inputName={`TaForms.${index}.taWorkDay`} />}
         >
           <input
             type="text"
-            {...register(`TaForms.${index}.otherTaTeachDay`)}
+            {...register(`TaForms.${index}.taWorkDay`)}
             className="w-full justify-self-end rounded border p-2 text-gray-500 outline-none disabled:opacity-50"
           />
         </FieldWrapper>
         <FieldWrapper
-          label={<Label.Root>วันปฏิบัติงานอื่น (เตรียมการสอน + ช่วยงาน)</Label.Root>}
-          errorComponent={<ShowInputError inputName={`TaForms.${index}.otherTaWorkDay`} />}
+          label={<Label.Root>วันปฏิบัติงานอื่น</Label.Root>}
+          errorComponent={<ShowInputError inputName={`TaForms.${index}.taOtherWorkDay`} />}
         >
           <input
             type="text"
-            {...register(`TaForms.${index}.otherTaWorkDay`)}
+            {...register(`TaForms.${index}.taOtherWorkDay`)}
             className="w-full justify-self-end rounded border p-2 text-gray-500 outline-none disabled:opacity-50"
           />
         </FieldWrapper>

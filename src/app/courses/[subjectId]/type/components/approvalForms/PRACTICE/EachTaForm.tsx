@@ -1,15 +1,15 @@
 import React from "react";
+import { twMerge } from "tailwind-merge";
 import FieldWrapper from "@/core/components/form/FieldWrapper";
 import ShowInputError from "@/core/components/form/ShowInputError";
 import * as Label from "@radix-ui/react-label";
+import DatePicker from "@/core/components/form/DatePicker";
+import { HiOutlineTrash } from "react-icons/hi2";
+import useCustomDialog from "@/core/components/CustomDialog/hooks/useCustomDialog";
 import { useFormContext } from "react-hook-form";
-import { Prisma } from "@prisma/client";
+import CustomDialog from "@/core/components/CustomDialog";
 // Form type
 import { PRACTICEFormType } from "@/app/api/subjects/[subjectId]/approvalForm/func/PRACTICE/PRACTICE";
-import { HiOutlineTrash } from "react-icons/hi2";
-import { twMerge } from "tailwind-merge";
-import useCustomDialog from "@/core/components/CustomDialog/hooks/useCustomDialog";
-import CustomDialog from "@/core/components/CustomDialog";
 
 const DeleteGroupButton: React.FC<React.ComponentPropsWithoutRef<"button">> = ({ onClick, className }) => {
   const { dialogState, setShowDialog, openDialog } = useCustomDialog();
@@ -77,8 +77,6 @@ const Content: React.FC<{ index: number }> = ({ index }) => {
             className="w-full justify-self-end rounded border p-2 text-gray-500 outline-none disabled:opacity-50"
           />
         </FieldWrapper>
-      </div>
-      <div className="grid grid-cols-2 gap-2">
         <FieldWrapper
           label={<Label.Root>จำนวน TA</Label.Root>}
           errorComponent={<ShowInputError inputName={`TaForms.${index}.taAmount`} />}
@@ -86,16 +84,6 @@ const Content: React.FC<{ index: number }> = ({ index }) => {
           <input
             type="text"
             {...register(`TaForms.${index}.taAmount`)}
-            className="w-full justify-self-end rounded border p-2 text-gray-500 outline-none disabled:opacity-50"
-          />
-        </FieldWrapper>
-        <FieldWrapper
-          label={<Label.Root>วัน-เวลาช่วยสอน</Label.Root>}
-          errorComponent={<ShowInputError inputName={`TaForms.${index}.taWorkDay`} />}
-        >
-          <input
-            type="text"
-            {...register(`TaForms.${index}.taWorkDay`)}
             className="w-full justify-self-end rounded border p-2 text-gray-500 outline-none disabled:opacity-50"
           />
         </FieldWrapper>
@@ -109,6 +97,60 @@ const Content: React.FC<{ index: number }> = ({ index }) => {
             className="w-full justify-self-end rounded border p-2 text-gray-500 outline-none disabled:opacity-50"
           />
         </FieldWrapper>
+
+        <div className="col-span-2 grid grid-cols-1 gap-2 rounded bg-gray-50 p-2">
+          <FieldWrapper
+            label={<Label.Root>วันช่วยสอน</Label.Root>}
+            errorComponent={<ShowInputError inputName={`TaForms.${index}.taWorkDay`} />}
+          >
+            <input
+              type="text"
+              {...register(`TaForms.${index}.taWorkDay`)}
+              className="w-full justify-self-end rounded border p-2 text-gray-500 outline-none disabled:opacity-50"
+            />
+          </FieldWrapper>
+          <div className="grid grid-cols-2 gap-2">
+            <FieldWrapper
+              label={<Label.Root>เวลาเริ่มต้น</Label.Root>}
+              errorComponent={<ShowInputError inputName={`TaForms.${index}.taWorkDayStart`} />}
+            >
+              <DatePicker name={`TaForms.${index}.taWorkDayStart`} />
+            </FieldWrapper>
+            <FieldWrapper
+              label={<Label.Root>เวลาสิ้นสุด</Label.Root>}
+              errorComponent={<ShowInputError inputName={`TaForms.${index}.taWorkDayEnd`} />}
+            >
+              <DatePicker name={`TaForms.${index}.taWorkDayEnd`} />
+            </FieldWrapper>
+          </div>
+        </div>
+
+        <div className="col-span-2 grid grid-cols-1 gap-2 rounded bg-gray-50 p-2">
+          <FieldWrapper
+            label={<Label.Root>วันปฏิบัติงานอื่น</Label.Root>}
+            errorComponent={<ShowInputError inputName={`TaForms.${index}.taOtherWorkDay`} />}
+          >
+            <input
+              type="text"
+              {...register(`TaForms.${index}.taOtherWorkDay`)}
+              className="w-full justify-self-end rounded border p-2 text-gray-500 outline-none disabled:opacity-50"
+            />
+          </FieldWrapper>
+          <div className="grid grid-cols-2 gap-2">
+            <FieldWrapper
+              label={<Label.Root>เวลาเริ่มต้น</Label.Root>}
+              errorComponent={<ShowInputError inputName={`TaForms.${index}.taOtherWorkDayStart`} />}
+            >
+              <DatePicker name={`TaForms.${index}.taOtherWorkDayStart`} />
+            </FieldWrapper>
+            <FieldWrapper
+              label={<Label.Root>เวลาสิ้นสุด</Label.Root>}
+              errorComponent={<ShowInputError inputName={`TaForms.${index}.taOtherWorkDayEnd`} />}
+            >
+              <DatePicker name={`TaForms.${index}.taOtherWorkDayEnd`} />
+            </FieldWrapper>
+          </div>
+        </div>
       </div>
     </div>
   );
