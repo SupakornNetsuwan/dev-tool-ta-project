@@ -5,7 +5,7 @@ import * as Label from "@radix-ui/react-label";
 import { useFormContext } from "react-hook-form";
 import { Prisma } from "@prisma/client";
 // Form type
-import { GTEFormType } from "@/app/api/subjects/[subjectId]/approvalForm/func/GTE_EIGHT/GTE_EIGHT";
+import { PRACTICEFormType } from "@/app/api/subjects/[subjectId]/approvalForm/func/PRACTICE/PRACTICE";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { twMerge } from "tailwind-merge";
 import useCustomDialog from "@/core/components/CustomDialog/hooks/useCustomDialog";
@@ -52,7 +52,7 @@ const Wrapper: React.FC<{ children: React.ReactNode } & React.ComponentPropsWith
 };
 
 const Content: React.FC<{ index: number }> = ({ index }) => {
-  const { register } = useFormContext<GTEFormType>();
+  const { register } = useFormContext<PRACTICEFormType>();
 
   return (
     <div className="flex-1 border border-l-0 p-4">

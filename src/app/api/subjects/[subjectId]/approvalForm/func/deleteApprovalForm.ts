@@ -25,17 +25,7 @@ const deleteApprovalForm = async (subjectId: string) => {
             },
             data: {
                 approvalForm: null,
-                GTEForm: {
-                    deleteMany: {
-                        subjectId
-                    }
-                },
-                LTForm: {
-                    deleteMany: {
-                        subjectId
-                    }
-                },
-                RefScheduleForm: {
+                PracticeForm: {
                     deleteMany: {
                         subjectId
                     }
@@ -46,11 +36,6 @@ const deleteApprovalForm = async (subjectId: string) => {
                     }
                 },
                 ProjectBaseForm: {
-                    deleteMany: {
-                        subjectId
-                    }
-                },
-                OtherForm: {
                     deleteMany: {
                         subjectId
                     }

@@ -65,18 +65,28 @@ const updateOrCreate = async (subjectId: string, payload: ApprovalFormPayloadTyp
                             }
                         },
                         create: {
-                            groupNumber: parseInt(ta.groupNumber),
                             subjectId: ta.subjectId,
+                            groupNumber: parseInt(ta.groupNumber),
                             studentAmount: parseInt(ta.studentAmount),
-                            otherTaTeachDay: ta.otherTaTeachDay,
-                            otherTaWorkDay: ta.otherTaWorkDay
+                            taAmount: parseInt(ta.taAmount),
+                            taWorkDay: ta.taWorkDay,
+                            taWorkDayStart: ta.taWorkDayStart,
+                            taWorkDayEnd: ta.taWorkDayEnd,
+                            taOtherWorkDay: ta.taOtherWorkDay,
+                            taOtherWorkDayStart: ta.taOtherWorkDayStart,
+                            taOtherWorkDayEnd: ta.taOtherWorkDayEnd,
                         },
                         update: {
-                            groupNumber: parseInt(ta.groupNumber),
                             subjectId: ta.subjectId,
+                            groupNumber: parseInt(ta.groupNumber),
                             studentAmount: parseInt(ta.studentAmount),
-                            otherTaTeachDay: ta.otherTaTeachDay,
-                            otherTaWorkDay: ta.otherTaWorkDay
+                            taAmount: parseInt(ta.taAmount),
+                            taWorkDay: ta.taWorkDay,
+                            taWorkDayStart: ta.taWorkDayStart,
+                            taWorkDayEnd: ta.taWorkDayEnd,
+                            taOtherWorkDay: ta.taOtherWorkDay,
+                            taOtherWorkDayStart: ta.taOtherWorkDayStart,
+                            taOtherWorkDayEnd: ta.taOtherWorkDayEnd,
                         }
                     })
                 }),

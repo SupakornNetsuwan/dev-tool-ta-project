@@ -11,12 +11,9 @@ export type FetchCourseType = Prisma.CourseGetPayload<{
 type FetchCourseTypeWithApprovementType = Prisma.CourseGetPayload<{
     include: {
         professor: true,
-        GTEForm: true,
-        LTForm: true,
-        RefScheduleForm: true,
+        PracticeForm: true,
         TheoryForm: true,
         ProjectBaseForm: true,
-        OtherForm: true,
     }
 }> & { isBasicDetailCompleted: boolean }
 
