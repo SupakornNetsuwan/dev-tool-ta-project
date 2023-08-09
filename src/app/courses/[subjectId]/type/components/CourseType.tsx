@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import CustomTabs from "./CustomTabs";
 import SidebarToggler from "./SidebarToggler";
-import { GTE_EIGHT, LT_EIGHT, REF_SCHEDULE, THEORY, PROJECTBASE, OTHER } from "./approvalForms";
+import { PRACTICE, THEORY, PROJECTBASE } from "./approvalForms";
 import useGetCourseWithApproval from "@/core/hooks/courses/useGetCourseWithApproval";
 import LoadingSekeleton from "./LoadingSekeleton";
 import { twMerge } from "tailwind-merge";
@@ -33,7 +33,7 @@ const CourseTypeChoosing: React.FC<{ subjectId: string }> = ({ subjectId }) => {
         isSidebarToggle={isSidebarToggle}
       />
       <CustomTabs.Root
-        defaultValue={courseDetail?.approvalForm || "GTE_EIGHT"}
+        defaultValue={courseDetail?.approvalForm || "PRACTICE"}
         className="relative grid-cols-12 overflow-hidden"
       >
         <CustomTabs.List
@@ -44,27 +44,9 @@ const CourseTypeChoosing: React.FC<{ subjectId: string }> = ({ subjectId }) => {
             isHasAproovalForm && "hidden"
           )}
         >
-          <CustomTabs.Trigger value="GTE_EIGHT">
-            <div className="flex flex-col items-start">
-              <p>รายวิชาปฏิบัติการ</p>
-              <p className="text-sm text-gray-400">(ไม่น้อยกว่า 8 ชม./สัปดาห์)</p>
-            </div>
-          </CustomTabs.Trigger>
-          <CustomTabs.Trigger value="LT_EIGHT">
-            <div className="flex flex-col items-start">
-              <p>รายวิชาปฏิบัติการ</p>
-              <p className="text-sm text-gray-400">(น้อยกว่า 8 ชม./สัปดาห์)</p>
-            </div>
-          </CustomTabs.Trigger>
-          <CustomTabs.Trigger value="REF_SCHEDULE">
-            <div className="flex flex-col items-start">
-              <p>รายวิชาปฏิบัติการ</p>
-              <p className="text-sm text-gray-400">(ตามหน้าตารางจริง)</p>
-            </div>
-          </CustomTabs.Trigger>
+          <CustomTabs.Trigger value="PRACTICE">รายวิชาปฏิบัติการ</CustomTabs.Trigger>
           <CustomTabs.Trigger value="THEORY">รายวิชาทฤษฎี</CustomTabs.Trigger>
           <CustomTabs.Trigger value="PROJECTBASE">วิชาทฤษฎีที่สอนแบบ Project base</CustomTabs.Trigger>
-          <CustomTabs.Trigger value="OTHER">ปฏิบัติงานอื่น</CustomTabs.Trigger>
         </CustomTabs.List>
         <CustomTabs.ContentContainer
           className={twMerge(
@@ -76,32 +58,15 @@ const CourseTypeChoosing: React.FC<{ subjectId: string }> = ({ subjectId }) => {
           <CustomTabs.Content
             description="สำหรับรายรูปแบบที่ไม่น้อยกว่า 8 ชม./สัปดาห์"
             title="รายวิชาปฏิบัติการ"
-            value="GTE_EIGHT"
+            value="PRACTICE"
           >
-            <GTE_EIGHT />
+            <PRACTICE />
           </CustomTabs.Content>
-          <CustomTabs.Content
-            description="สำหรับรายรูปแบบที่น้อยกว่า 8 ชม./สัปดาห์"
-            title="รายวิชาปฏิบัติการ"
-            value="LT_EIGHT"
-          >
-            <LT_EIGHT />
-          </CustomTabs.Content>
-          <CustomTabs.Content
-            description="สำหรับรายรูปแบบที่อิงตามหน้าตารางจริง"
-            title="รายวิชาปฏิบัติการ"
-            value="REF_SCHEDULE"
-          >
-            <REF_SCHEDULE />
-          </CustomTabs.Content>
-          <CustomTabs.Content title="รายวิชาทฤษฎี" value="THEORY">
+          <CustomTabs.Content title="รายวิชาทฤษฎีแบบทั่วไป" value="THEORY">
             <THEORY />
           </CustomTabs.Content>
           <CustomTabs.Content title="วิชาทฤษฎีที่สอนแบบ Project base" value="PROJECTBASE">
             <PROJECTBASE />
-          </CustomTabs.Content>
-          <CustomTabs.Content title="ปฏิบัติงานอื่น" value="OTHER">
-            <OTHER />
           </CustomTabs.Content>
         </CustomTabs.ContentContainer>
       </CustomTabs.Root>
