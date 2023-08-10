@@ -1,4 +1,4 @@
-import client from "./ldapConnector";
+import client from "./LdapConnector";
 
 type LdapAuthType = (
     dn: string,
