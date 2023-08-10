@@ -164,8 +164,8 @@ model Enroll {
   student            User?        @relation(fields: [studentId], references: [id], onDelete: Cascade)
   degree             Degree
   grade              Grade  
-  courseInMajors    Majors
-  passedInMajors   Majors
+  courseInMajors     Majors
+  passedInMajors     Majors
   passedCourse       String
   @@id([courseId, studentId])
 }
