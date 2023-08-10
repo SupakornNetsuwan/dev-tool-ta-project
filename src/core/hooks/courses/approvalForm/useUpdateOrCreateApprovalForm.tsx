@@ -4,7 +4,7 @@ import type { ApprovalFormPayloadType } from '@/app/api/subjects/[subjectId]/app
 
 /**
  * @param subjectId รหัสวิชาที่ต้องการสร้างหรืออัปเดตฟอร์มอนุมัติ TA
- * @description เป็นการสร้างหรืออัปเดตฟอร์มอนุมัติ TA โดยจะรองรับทั้ง 6 ฟอร์มหมดเลย เราต้องมีการแนบ payload มาสำหรับการเรียก mutate นี้ด้วย โดย payload จะต้องมีค่า approvalFormType ด้วย
+ * @description เป็นการสร้างหรืออัปเดตฟอร์มอนุมัติ TA โดยจะรองรับทั้ง 3 ฟอร์มหมดเลย เราต้องมีการแนบ payload มาสำหรับการเรียก mutate นี้ด้วย โดย payload จะต้องมีค่า approvalFormType ด้วย
  */
 
 const useUpdateOrCreateApprovalForm = (subjectId: string) => {

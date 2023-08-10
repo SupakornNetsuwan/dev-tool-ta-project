@@ -2,19 +2,19 @@
 import React, { useEffect } from "react";
 import { FormProvider, useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { OTHER_formSchema } from "@/app/api/subjects/[subjectId]/approvalForm/func/OTHER/OTHER_formSchema";
+import { PRACTICE_formSchema } from "@/app/api/subjects/[subjectId]/approvalForm/func/PRACTICE/PRACTICE_formSchema";
 import type { AxiosResponse } from "axios";
 import type { FetchCourseTypeWithApprovementType } from "@/app/api/subjects/[subjectId]/CourseTypes";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import { OTHERFormType } from "@/app/api/subjects/[subjectId]/approvalForm/func/OTHER/OTHER";
+import { PRACTICEFormType } from "@/app/api/subjects/[subjectId]/approvalForm/func/PRACTICE/PRACTICE";
 import useUpdateOrCreateApprovalForm from "@/core/hooks/courses/approvalForm/useUpdateOrCreateApprovalForm";
 import stringifiedObj from "@/core/func/stringifiedObj ";
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
 import { HiOutlineXMark } from "react-icons/hi2";
 
 /**
- * @description สำหรับฟอร์มขออนุมัติ TA ประเภท OTHER
+ * @description สำหรับฟอร์มขออนุมัติ TA ประเภท PRACTICE
  */
 
 const ApprovalFormProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -28,10 +28,10 @@ const ApprovalFormProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     subjectId,
   ]); // ทำการเข้าถึง cache จากการ fetch ที่ \type\components\CourseType.tsx ซึ่งยังไงมันก็มีการ fetch อยู่แล้ว จึงไม่มีทางที่จะเป็น null
 
-  const methods = useForm<OTHERFormType>({
-    resolver: zodResolver(OTHER_formSchema),
+  const methods = useForm<PRACTICEFormType>({
+    resolver: zodResolver(PRACTICE_formSchema),
     values: {
-      TaForms: data?.data.data?.OtherForm.map((item) => stringifiedObj(item)) || [],
+      TaForms: data?.data.data?.PracticeForm.map((item) => stringifiedObj(item)) || [],
     },
     defaultValues: {
       TaForms: [],
@@ -46,9 +46,9 @@ const ApprovalFormProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   }, [methods.formState.errors]);
 
-  const onSubmit: SubmitHandler<OTHERFormType> = (payload) => {
+  const onSubmit: SubmitHandler<PRACTICEFormType> = (payload) => {
     updateOrCreate.mutate(
-      { ...payload, approvalFormType: "OTHER" },
+      { ...payload, approvalFormType: "PRACTICE" },
       {
         onSuccess(data, variables, context) {
           queryClient.invalidateQueries(["getCoursesWithapprovalForm", subjectId]);

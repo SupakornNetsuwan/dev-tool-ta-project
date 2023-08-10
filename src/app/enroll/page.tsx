@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
+import EnrollTable from "./components/EnrollTable";
 
-const page = () => {
-  return (
-    <div>page</div>
-  )
-}
+const page = async () => {
+  return <EnrollTable />;
+};
 
-export default page
+export default page;

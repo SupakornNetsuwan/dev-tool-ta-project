@@ -1,21 +1,21 @@
 import React from "react";
+import { twMerge } from "tailwind-merge";
 import FieldWrapper from "@/core/components/form/FieldWrapper";
 import ShowInputError from "@/core/components/form/ShowInputError";
-import DatePicker from "@/core/components/form/DatePicker";
 import * as Label from "@radix-ui/react-label";
+import DatePicker from "@/core/components/form/DatePicker";
 import Selector from "@/core/components/form/Selector";
-import { useFormContext } from "react-hook-form";
-// Form type
-import { THEORYFormType } from "@/app/api/subjects/[subjectId]/approvalForm/func/THEORY/THEORY";
 import { HiOutlineTrash } from "react-icons/hi2";
-import { twMerge } from "tailwind-merge";
 import useCustomDialog from "@/core/components/CustomDialog/hooks/useCustomDialog";
+import { useFormContext } from "react-hook-form";
 import CustomDialog from "@/core/components/CustomDialog";
+// Form type
+import { PRACTICEFormType } from "@/app/api/subjects/[subjectId]/approvalForm/func/PRACTICE/PRACTICE";
 
 const DeleteGroupButton: React.FC<React.ComponentPropsWithoutRef<"button">> = ({ onClick, className }) => {
   const { dialogState, setShowDialog, openDialog } = useCustomDialog();
 
-  const deleteHandler = (e: React.MouseEvent) => {
+  const confirmDelete = (e: React.MouseEvent) => {
     openDialog({
       title: <p className="text-red-500">คำเตือน ⚠️</p>,
       description: <p className="text-gray-500">ยืนยันที่จะลบกลุ่ม / ลำดับหรือไม่</p>,
@@ -36,7 +36,7 @@ const DeleteGroupButton: React.FC<React.ComponentPropsWithoutRef<"button">> = ({
           "btn click-animation rounded rounded-br-none rounded-tr-none border border-r-0 border-red-300 bg-red-50 text-red-500 hover:border-red-500",
           className
         )}
-        onClick={deleteHandler}
+        onClick={confirmDelete}
       >
         <HiOutlineTrash />
       </button>
@@ -53,7 +53,7 @@ const Wrapper: React.FC<{ children: React.ReactNode } & React.ComponentPropsWith
 };
 
 const Content: React.FC<{ index: number }> = ({ index }) => {
-  const { register } = useFormContext<THEORYFormType>();
+  const { register } = useFormContext<PRACTICEFormType>();
 
   return (
     <div className="flex-1 border border-l-0 p-4">
@@ -88,8 +88,18 @@ const Content: React.FC<{ index: number }> = ({ index }) => {
             className="w-full justify-self-end rounded border p-2 text-gray-500 outline-none disabled:opacity-50"
           />
         </FieldWrapper>
+        <FieldWrapper
+          label={<Label.Root>ระยะเวลาจ้าง</Label.Root>}
+          errorComponent={<ShowInputError inputName={`TaForms.${index}.taHireDuration`} />}
+        >
+          <input
+            type="text"
+            {...register(`TaForms.${index}.taHireDuration`)}
+            className="w-full justify-self-end rounded border p-2 text-gray-500 outline-none disabled:opacity-50"
+          />
+        </FieldWrapper>
 
-        <div className="grid grid-cols-1 col-span-2 gap-2 rounded bg-gray-50 p-2 sm:grid-cols-3">
+        <div className="col-span-2 grid grid-cols-3 gap-2 rounded bg-gray-50 p-2">
           <FieldWrapper
             label={<Label.Root>วันช่วยสอน</Label.Root>}
             errorComponent={<ShowInputError inputName={`TaForms.${index}.taWorkDay`} />}
@@ -122,7 +132,7 @@ const Content: React.FC<{ index: number }> = ({ index }) => {
           </FieldWrapper>
         </div>
 
-        <div className="col-span-2 grid grid-cols-1 gap-2 rounded bg-gray-50 p-2 sm:grid-cols-3">
+        <div className="col-span-2 grid grid-cols-3 gap-2 rounded bg-gray-50 p-2">
           <FieldWrapper
             label={<Label.Root>วันปฏิบัติงานอื่น</Label.Root>}
             errorComponent={<ShowInputError inputName={`TaForms.${index}.taOtherWorkDay`} />}

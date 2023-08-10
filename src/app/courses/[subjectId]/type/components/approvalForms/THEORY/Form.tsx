@@ -41,11 +41,16 @@ const Form = () => {
         <CreateGroupBtn
           onClick={() =>
             append({
+              subjectId,
               groupNumber: undefined,
               studentAmount: undefined,
-              subjectId,
-              otherTaWorkDay: "",
-              otherTaTeachDay: "",
+              taAmount: undefined,
+              taWorkDay: undefined,
+              taWorkDayStart: undefined,
+              taWorkDayEnd: undefined,
+              taOtherWorkDay: undefined,
+              taOtherWorkDayStart: undefined,
+              taOtherWorkDayEnd: undefined,
             })
           }
         />

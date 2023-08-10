@@ -81,76 +81,50 @@ model Course {
   Enroll          Enroll[]
   // ฟอร์มการขออนุมัติจ้างนักศึกษา
   approvalForm    ApprovalFormType?
-  GTEForm         GTEForm[]
-  LTForm          LTForm[]
-  RefScheduleForm RefScheduleForm[]
+  PracticeForm    PracticeForm[]
   TheoryForm      TheoryForm[]
   ProjectBaseForm ProjectBaseForm[]
-  OtherForm       OtherForm[]
 }
 
 enum ApprovalFormType {
-  GTE_EIGHT
-  LT_EIGHT
-  REF_SCHEDULE
+  PRACTICE
   THEORY
   PROJECTBASE
-  OTHER
 }
 
-// เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษา >= 8 คน
-// ใช้กับ ApprovalFromType = GTE_EIGHT
-model GTEForm {
-  subjectId      String
-  groupNumber    Int
-  course         Course @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
-  studentAmount  Int
-  taAmount       Int
-  taWorkDay      String
-  taHireDuration String
+// เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษาประเภทปฏิบัติ
+// ใช้กับ ApprovalFromType = PRACTICE
+model PracticeForm {
+  subjectId           String
+  groupNumber         Int
+  course              Course   @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
+  studentAmount       Int
+  taAmount            Int
+  taWorkDay           String
+  taWorkDayStart      DateTime @db.Time()
+  taWorkDayEnd        DateTime @db.Time()
+  taOtherWorkDay      String
+  taOtherWorkDayStart DateTime @db.Time()
+  taOtherWorkDayEnd   DateTime @db.Time()
+  taHireDuration      String
 
   @@id([subjectId, groupNumber])
 }
 
-// เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษา < 8 คน
-// ใช้กับ ApprovalFromType = LT_EIGHT
-model LTForm {
-  subjectId      String
-  groupNumber    Int
-  course         Course @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
-  studentAmount  Int
-  taAmount       Int
-  taWorkDay      String
-  taHireDuration String
-  otherTaWorkDay String
-
-  @@id([subjectId, groupNumber])
-}
-
-// เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษา ตามหน้าตารางจริง
-// ใช้กับ ApprovalFromType = REF_SCHEDULE
-model RefScheduleForm {
-  subjectId      String
-  groupNumber    Int
-  course         Course @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
-  studentAmount  Int
-  taAmount       Int
-  taWorkDay      String
-  taHireDuration String
-  otherTaWorkDay String
-
-  @@id([subjectId, groupNumber])
-}
-
-// เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษา รายวิชาทฤษฎี
+// เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษา รายวิชาทฤษฎีแบบทั่วไป
 // ใช้กับ ApprovalFromType = THEORY
 model TheoryForm {
-  subjectId       String
-  groupNumber     Int
-  course          Course @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
-  studentAmount   Int
-  otherTaTeachDay String
-  otherTaWorkDay  String
+  subjectId           String
+  groupNumber         Int
+  course              Course   @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
+  studentAmount       Int
+  taAmount            Int
+  taWorkDay           String
+  taWorkDayStart      DateTime @db.Time()
+  taWorkDayEnd        DateTime @db.Time()
+  taOtherWorkDay      String
+  taOtherWorkDayStart DateTime @db.Time()
+  taOtherWorkDayEnd   DateTime @db.Time()
 
   @@id([subjectId, groupNumber])
 }
@@ -158,26 +132,17 @@ model TheoryForm {
 // เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษา รายวิชาทฤษฎีที่สอนแบบ Project base
 // ใช้กับ ApprovalFromType = PROJECTBASE
 model ProjectBaseForm {
-  subjectId       String
-  groupNumber     Int
-  course          Course @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
-  studentAmount   Int
-  otherTaTeachDay String
-  otherTaWorkDay  String
-
-  @@id([subjectId, groupNumber])
-}
-
-// เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษา ประเภทปฏิบัติงานอื่น
-// ใช้กับ ApprovalFromType = OTHERS
-model OtherForm {
-  subjectId      String
-  groupNumber    Int
-  course         Course @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
-  taCertificate  String // คุณวุฒิ
-  taWorkDay      String
-  taHireDuration String
-  taTask         String // งานที่มอบหมาย
+  subjectId           String
+  groupNumber         Int
+  course              Course   @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
+  studentAmount       Int
+  taAmount            Int
+  taWorkDay           String
+  taWorkDayStart      DateTime @db.Time()
+  taWorkDayEnd        DateTime @db.Time()
+  taOtherWorkDay      String
+  taOtherWorkDayStart DateTime @db.Time()
+  taOtherWorkDayEnd   DateTime @db.Time()
 
   @@id([subjectId, groupNumber])
 }

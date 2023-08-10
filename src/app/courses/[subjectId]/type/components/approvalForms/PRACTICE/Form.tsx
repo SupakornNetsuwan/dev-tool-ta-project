@@ -3,7 +3,7 @@ import React from "react";
 import EachTaForm from "./EachTaForm";
 import { useFormContext, useFieldArray } from "react-hook-form";
 import * as Separator from "@radix-ui/react-separator";
-import { GTEFormType } from "@/app/api/subjects/[subjectId]/approvalForm/func/GTE_EIGHT/GTE_EIGHT";
+import { PRACTICEFormType } from "@/app/api/subjects/[subjectId]/approvalForm/func/PRACTICE/PRACTICE";
 import { useParams } from "next/navigation";
 import ShowCreationAdvice from "../core/ShowCreationAdvice";
 import CreateGroupBtn from "../core/CreateGroupBtn";
@@ -14,7 +14,7 @@ const Form = () => {
     control,
     getValues,
     formState: { isDirty },
-  } = useFormContext<GTEFormType>();
+  } = useFormContext<PRACTICEFormType>();
   const { fields, append, remove } = useFieldArray({
     name: "TaForms",
     control: control,
@@ -41,12 +41,17 @@ const Form = () => {
         <CreateGroupBtn
           onClick={() =>
             append({
+              subjectId,
               groupNumber: undefined,
               studentAmount: undefined,
               taAmount: undefined,
-              taWorkDay: "",
-              taHireDuration: "",
-              subjectId,
+              taWorkDay: undefined,
+              taWorkDayStart: undefined,
+              taWorkDayEnd: undefined,
+              taOtherWorkDay: undefined,
+              taOtherWorkDayStart: undefined,
+              taOtherWorkDayEnd: undefined,
+              taHireDuration: undefined,
             })
           }
         />

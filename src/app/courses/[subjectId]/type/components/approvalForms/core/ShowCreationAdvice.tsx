@@ -17,7 +17,7 @@ const ShowCreationAdvice = () => {
         </div>
         <div className="flex flex-col items-center">
           <p className="text-[10px] text-gray-200">Illustration by <a href="https://icons8.com/illustrations/author/XTPoH093lluQ">Viktoriya Belinio</a> from <a href="https://icons8.com/illustrations">Ouch!</a></p>
-          <h2 className=" text-xl font-semibold text-amber-500">
+          <h2 className=" text-xl font-semibold text-amber-500 text-center">
             โอ็ะโอ เหมือนคุณยังไม่ได้สร้างกลุ่ม / ลำดับผู้ช่วยสอนเลย
           </h2>
           <p className="text-lg text-gray-500">ลองกดปุ่มด้านล่างนี้สิ!</p>
