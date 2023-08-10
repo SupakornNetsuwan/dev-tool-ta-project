@@ -45,12 +45,12 @@ const Form = () => {
               groupNumber: undefined,
               studentAmount: undefined,
               taAmount: undefined,
-              taWorkDay: "",
-              taWorkDayStart: "",
-              taWorkDayEnd: "",
-              taOtherWorkDay: "",
-              taOtherWorkDayStart: "",
-              taOtherWorkDayEnd: "",
+              taWorkDay: undefined,
+              taWorkDayStart: undefined,
+              taWorkDayEnd: undefined,
+              taOtherWorkDay: undefined,
+              taOtherWorkDayStart: undefined,
+              taOtherWorkDayEnd: undefined,
             })
           }
         />

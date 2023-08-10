@@ -22,7 +22,7 @@ const Submit = () => {
             description: <p>วิชา {subjectId} ได้เปิดให้ลงทะเบียนแล้ว</p>,
             actionButton: <HiOutlineXMark className="text-2xl text-gray-900" />,
           });
-          router.push(`/courses/${subjectId}`);
+          router.replace(`/courses/${subjectId}`);
         },
         onError(error, variables, context) {
           openToast({

@@ -18,12 +18,9 @@ const DatePicker: React.FC<{ name: FieldPath<PRACTICEFormType> }> = ({ name }) =
           ref={ref}
           onChange={(newValue) => {
             try {
-              console.log(newValue);
               onChange(dayjs(newValue).toISOString());
             } catch (error) {
-              if (error instanceof Error) {
-                console.log("จาก Date component :", error.message);
-              }
+              if (error instanceof Error) console.log("จาก Date component :", error.message);
             }
           }}
           closeOnSelect={true}

@@ -27,9 +27,8 @@ SelectItem.displayName = "SelectItem";
 const Selector: React.FC<{
   name: string;
   placeholder: string;
-  defaultValue?: string;
   options: { label: string; value: string }[];
-}> = ({ name, options, placeholder, defaultValue }) => {
+}> = ({ name, options, placeholder }) => {
   const { control, ...methods } = useFormContext();
 
   return (

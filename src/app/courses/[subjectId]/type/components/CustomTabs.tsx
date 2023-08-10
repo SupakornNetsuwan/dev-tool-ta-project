@@ -36,7 +36,7 @@ const Trigger: React.FC<React.ComponentPropsWithoutRef<typeof Tabs.Trigger>> = (
       )}
     >
       <>{children}</>
-      <HiOutlineChevronRight className="icon box-content p-1 font-medium text-gray-400 duration-200" />
+      <HiOutlineChevronRight className="icon ml-2 box-content p-1 font-medium text-gray-400 duration-200" />
     </Tabs.Trigger>
   );
 };
