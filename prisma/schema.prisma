@@ -97,15 +97,15 @@ enum ApprovalFormType {
 model PracticeForm {
   subjectId           String
   groupNumber         Int
-  course              Course   @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
+  course              Course    @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
   studentAmount       Int
   taAmount            Int
   taWorkDay           String
-  taWorkDayStart      DateTime @db.Time()
-  taWorkDayEnd        DateTime @db.Time()
-  taOtherWorkDay      String
-  taOtherWorkDayStart DateTime @db.Time()
-  taOtherWorkDayEnd   DateTime @db.Time()
+  taWorkDayStart      DateTime  @db.Time()
+  taWorkDayEnd        DateTime  @db.Time()
+  taOtherWorkDay      String?
+  taOtherWorkDayStart DateTime? @db.Time()
+  taOtherWorkDayEnd   DateTime? @db.Time()
   taHireDuration      String
 
   @@id([subjectId, groupNumber])

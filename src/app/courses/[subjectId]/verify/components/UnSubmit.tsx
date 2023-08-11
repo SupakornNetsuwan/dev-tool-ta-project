@@ -3,9 +3,11 @@ import { HiOutlineWrench, HiOutlineXMark } from "react-icons/hi2";
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
 import useUpdateCourse from "@/core/hooks/courses/useUpdateCourse";
 import { useParams, useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 
 const UnSubmit = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const updateCourse = useUpdateCourse();
   const { subjectId } = useParams();
   const { openToast } = useCustomToast();
@@ -22,6 +24,7 @@ const UnSubmit = () => {
             description: <p>ตอนนี้คุณสามารถแก้ไขข้อมูลได้แล้ว</p>,
             actionButton: <HiOutlineXMark className="text-2xl text-gray-900" />,
           });
+          queryClient.invalidateQueries(["getCoursesWithapprovalForm", subjectId]);
           router.replace(`/courses/${subjectId}`);
         },
         onError(error, variables, context) {
