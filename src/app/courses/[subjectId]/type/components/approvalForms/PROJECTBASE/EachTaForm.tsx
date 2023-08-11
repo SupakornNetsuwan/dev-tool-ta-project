@@ -89,7 +89,7 @@ const Content: React.FC<{ index: number }> = ({ index }) => {
           />
         </FieldWrapper>
 
-        <div className="grid grid-cols-1 col-span-2 gap-2 rounded bg-gray-50 p-2 sm:grid-cols-3">
+        <div className="col-span-2 grid grid-cols-1 gap-2 rounded bg-gray-50 p-2 sm:grid-cols-3">
           <FieldWrapper
             label={<Label.Root>วันช่วยสอน</Label.Root>}
             errorComponent={<ShowInputError inputName={`TaForms.${index}.taWorkDay`} />}
