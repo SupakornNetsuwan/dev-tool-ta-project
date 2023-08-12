@@ -3,9 +3,9 @@
 import type { ResponseGetEnrollsType } from "@/app/api/enrolls/[subjectId]/EnrollType";
 import React from "react";
 // custom hook
-import FormatEnrolledData from "../hooks/useFormatEnrolledData";
-import CreateCSVFile from "../hooks/useCreateCSVFile";
-import ExportCSVFile from "../hooks/useExportCSVFive";
+import FormatEnrolledData from "../../hooks/approvalForm/useFormatEnrolledData";
+import CreateCSVFile from "../../hooks/approvalForm/useCreateCSVFile";
+import ExportCSVFile from "../../hooks/approvalForm/useExportCSVFive";
 
 
 const TdComponent: React.FC<{

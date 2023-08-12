@@ -2,7 +2,7 @@
 import React, { useMemo } from "react";
 // custom hook
 import useGetEnroll from "@/core/hooks/enroll/useGetEnroll";
-import TableApprovalform from "./components/TableApprovalForm";
+import TableApprovalform from "../../../../../core/components/approvalForm/TableApprovalForm";
 import type { ResponseGetEnrollsType } from "@/app/api/enrolls/[subjectId]/EnrollType";
 import GoBackBtn from "@/core/components/GoBackBtn";
 const Page: React.FC<{ params: { subjectId: string } }> = ({ params: { subjectId } }) => {
