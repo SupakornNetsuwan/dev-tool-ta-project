@@ -2,7 +2,7 @@ import { prisma } from "@/core/libs/prisma/connector";
 
 const getEnroll = async (subjectId: string) => {
   
-  const Enroll = await prisma.enroll.findMany({
+  const enroll = await prisma.enroll.findMany({
     where: {
       course: {
         subjectId: subjectId,
@@ -34,6 +34,7 @@ const getEnroll = async (subjectId: string) => {
       },
     },
   });
-  return Enroll;
+  
+  return enroll;
 };
 export default getEnroll;
