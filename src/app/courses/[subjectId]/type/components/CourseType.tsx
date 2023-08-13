@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 
 const CourseTypeChoosing: React.FC<{ subjectId: string }> = ({ subjectId }) => {
   const router = useRouter();
-  const { status, data } = useGetCourseWithApproval(subjectId); // ทำการ fetch ข้อมูลมา และ เผื่อสำหรับ approvalForm ด้วย
+  const { status, data, error, isError } = useGetCourseWithApproval(subjectId); // ทำการ fetch ข้อมูลมา และ เผื่อสำหรับ approvalForm ด้วย
   const [isSidebarToggle, setIsSidebarToggle] = useState(false);
   const courseDetail = data?.data.data;
   const isHasAproovalForm = Boolean(courseDetail?.approvalForm);
@@ -24,6 +24,7 @@ const CourseTypeChoosing: React.FC<{ subjectId: string }> = ({ subjectId }) => {
   const toggleSidebar = () => setIsSidebarToggle(!isSidebarToggle);
 
   if (status === "loading") return <LoadingSekeleton />;
+  if (isError) throw error;
 
   return (
     <>
