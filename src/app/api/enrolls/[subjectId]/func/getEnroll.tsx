@@ -1,5 +1,4 @@
 import { prisma } from "@/core/libs/prisma/connector";
-import type { ResponseGetEnrollsType } from "../EnrollType";
 
 const getEnroll = async (subjectId: string) => {
   
