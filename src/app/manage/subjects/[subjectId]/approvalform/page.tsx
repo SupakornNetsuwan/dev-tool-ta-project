@@ -6,7 +6,7 @@ import TableApprovalform from "../../../../../core/components/approvalForm/Table
 //components
 import PageWrapper from "@/core/components/PageWrapper";
 import GoBackBtn from "@/core/components/GoBackBtn";
-import ExportCSVProvider from "../../../../../core/components/approvalForm/ExportCSVprovider";
+import ExportCSVComponent from "../../../../../core/components/approvalForm/ExportCSVComponent";
 
 const Page: React.FC<{ params: { subjectId: string } }> = ({ params: { subjectId } }) => {
   const getEnroll = useGetEnroll(subjectId);
@@ -17,12 +17,9 @@ const Page: React.FC<{ params: { subjectId: string } }> = ({ params: { subjectId
       <GoBackBtn />
       <p className="text-sx m-4 text-center font-bold">สรุปข้อมูลขออนุมัตินักศึกษาช่วยงาน(รายวิชา)</p>
       <PageWrapper className="max-w-6xl rounded">
-        <ExportCSVProvider
-          fileName={enrolledStudents[0]?.course?.nameEng ? enrolledStudents[0]?.course?.nameEng : "ไม่มีข้อมูล"}
-          enrolledStudents={enrolledStudents}
-        >
-          <TableApprovalform enrolledStudents={enrolledStudents} />
-        </ExportCSVProvider>
+        {enrolledStudents.length > 0 && <ExportCSVComponent enrolledStudents={enrolledStudents} fileName={`แบบฟอร์มขออนุมัติรายวิชา${enrolledStudents[0]?.course?.nameEng}`}/>}
+        {enrolledStudents.length === 0 && <p>ปุ่มดาวน์โหลดจะปรากฎขึ้นเมื่อมีข้อมูลนักศึกษา</p>}
+        <TableApprovalform enrolledStudents={enrolledStudents} />
       </PageWrapper>
     </>
   );

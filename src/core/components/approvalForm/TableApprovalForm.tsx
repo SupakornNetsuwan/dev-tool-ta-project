@@ -1,6 +1,6 @@
 "use client";
 // type
-import type { ResponseGetEnrollsType } from "@/app/api/enrolls/[subjectId]/EnrollType";
+import type { ResponseGetEnrollsType } from "@/app/api/enrolls/[subjectId]/EnrollType";4
 import React from "react";
 // custom hook
 import formatEnrolledData from "../../hooks/approvalForm/useFormatEnrolledData";
@@ -27,12 +27,15 @@ const ThComponent: React.FC<{
   );
 };
 
+
+
 const TableApprovalform: React.FC<{ enrolledStudents: ResponseGetEnrollsType }> = ({ enrolledStudents }) => {
   const enrolledStudentsFormatted = formatEnrolledData(enrolledStudents);
   return (
     <>
-      <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
-        <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <table className="w-full text-left text-sm text-gray-400">
+        <thead className="text-xs uppercase text-gray-700 bg-gray-700 ">
           <tr>
             <ThComponent text={<>ลำดับ</>} />
             <ThComponent text={<>รหัสวิชา</>} />
@@ -54,7 +57,7 @@ const TableApprovalform: React.FC<{ enrolledStudents: ResponseGetEnrollsType }> 
             enrolledStudentsFormatted.ApprovalForm.map((row, index) => (
               <React.Fragment key={index}>
                 {row.studentData.map((student, studentIndex) => (
-                  <tr key={`${index}-${studentIndex}`} className="border-b bg-white  dark:border-gray-700">
+                  <tr key={`${index}-${studentIndex}`} className="border-b bg-white  ">
                     <TdComponent rowSpan={undefined} text={<>{studentIndex + 1}</>} />
                     <TdComponent rowSpan={undefined} text={<>{row.subjectId}</>} />
                     <TdComponent rowSpan={undefined} text={<>{row.courseNameEng}</>} />
@@ -84,12 +87,12 @@ const TableApprovalform: React.FC<{ enrolledStudents: ResponseGetEnrollsType }> 
           {[...new Array(3)].map((_, index) => (
             <div key={index} />
           ))}
-          <p className="text-center">No data available</p>
           {[...new Array(3)].map((_, index) => (
             <div key={index} />
           ))}
         </div>
       )}
+      </div>
     </>
   );
 };

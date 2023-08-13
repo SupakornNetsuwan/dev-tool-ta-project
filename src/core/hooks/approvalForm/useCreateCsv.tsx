@@ -1,6 +1,7 @@
 import type { FormatEnrolledData, StudentData, ApprovalFormFormattedType } from "./useFormatEnrolledData";
 
-const useCreateCSVFile = (enrolledStudentsFormatted: ApprovalFormFormattedType) => {
+const useCreateCsv= (enrolledStudentsFormatted: ApprovalFormFormattedType|undefined) => {
+  if(enrolledStudentsFormatted){
   let csvContent: string = "";
   // Header row
   csvContent += `ลำดับ,รหัสวิชา,ชื่อวิชา,จำนวน TA,อาจารย์ผู้สอน,รหัสนักศึกษา,ชื่อ - นามสกุล,ระดับการศึกษา/,วิชาที่ช่วยสอนอยู่ในหลักสูตรวิทยาศาสตรบัณฑิต,\
@@ -33,6 +34,7 @@ const useCreateCSVFile = (enrolledStudentsFormatted: ApprovalFormFormattedType) 
     });
   });
   return csvContent;
+}
 };
 
-export default useCreateCSVFile;
+export default useCreateCsv;
