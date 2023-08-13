@@ -1,7 +1,7 @@
 
-import type { FormatEnrolledData , StudentData, AprovalFormFormattedType} from "./useFormatEnrolledData";
+import type { FormatEnrolledData , StudentData, ApprovalFormFormattedType} from "./useFormatEnrolledData";
 
-const CreateCSVFile = (enrolledStudentsFormatted:AprovalFormFormattedType) =>{
+const CreateCSVFile = (enrolledStudentsFormatted:ApprovalFormFormattedType) =>{
     let csvContent:string="";
     // Header row
     csvContent += `ลำดับ,รหัสวิชา,ชื่อวิชา,จำนวน TA,อาจารย์ผู้สอน,รหัสนักศึกษา,ชื่อ - นามสกุล,ระดับการศึกษา/,วิชาที่ช่วยสอนอยู่ในหลักสูตรวิทยาศาสตรบัณฑิต,\
@@ -16,9 +16,9 @@ const CreateCSVFile = (enrolledStudentsFormatted:AprovalFormFormattedType) =>{
       approval.studentData.forEach((student:StudentData, index) => {
         if (isFirstRow) {
           isFirstRow = false;
-          csvContent += `${index+1},${approval.subjectId},${approval.courseNameEng},${approval.totalStudent},${approval.courseProfessor},${student.id},${student.fullname},${student.degree},${student.courseBenchelor},${student.passedInBenchelor},${student.passedCourseId as string+student.passedCourseName},${student.grade}\n`;
+          csvContent += `${index+1},${approval.subjectId},${approval.courseNameEng},${approval.totalStudent},${approval.courseProfessor},${student.id},${student.fullname},${student.degree},${student.courseInMajor},${student.passedInMajors},${student.passedCourse},${student.grade}\n`;
         } else {
-          csvContent += `${index+1},${approval.subjectId},${approval.courseNameEng},,,${student.id},${student.fullname},${student.degree},${student.courseBenchelor},${student.passedInBenchelor},${student.passedCourseId as string+student.passedCourseName},${student.grade}\n`;
+          csvContent += `${index+1},${approval.subjectId},${approval.courseNameEng},,,${student.id},${student.fullname},${student.degree},${student.courseInMajor},${student.passedInMajors},${student.passedCourse},${student.grade}\n`;
         }
         if (index === rowspan - 1) {
           isFirstRow = true;

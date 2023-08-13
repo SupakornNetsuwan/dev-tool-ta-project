@@ -1,24 +1,29 @@
 "use client"
 import { ResponseGetEnrollsType } from "@/app/api/enrolls/[subjectId]/EnrollType"
+// custom hook
 import FormatEnrolledData from "@/core/hooks/approvalForm/useFormatEnrolledData"
 import CreateCSVFile from "@/core/hooks/approvalForm/useCreateCSVFile"
 import ExportCSVFile from "@/core/hooks/approvalForm/useExportCSVFive"
-import React from "react"
+// type
+import { ApprovalFormFormattedType } from "@/core/hooks/approvalForm/useFormatEnrolledData"
+import React, { useEffect,useState } from "react"
 interface ExportCSVProviderProps {
     enrolledStudents: ResponseGetEnrollsType;
-    fileName: string;
+    fileName: string|undefined;
     children: React.ReactNode;
   }
 const ExportCSVProvider : React.FC<ExportCSVProviderProps> = ({children, enrolledStudents, fileName})=>{
-    const enrolledStudentsFormatted = FormatEnrolledData(enrolledStudents)
+    const [formattedEnrolledStudents, setFormattedEnrolledStudents] = useState<ApprovalFormFormattedType >();
+    useEffect(()=>{
+        const enrolledStudentsFormatted = FormatEnrolledData(enrolledStudents)
+        setFormattedEnrolledStudents(enrolledStudentsFormatted)
+    },[enrolledStudents])
     const handleExportCSV =() =>{
-        const csvContent = CreateCSVFile(enrolledStudentsFormatted)
-        ExportCSVFile(csvContent, `แบบขอฟอร์มอนุมัติ${fileName}`)
-      }
-    
-    const tableStudentWithFormattedenrolledData =  React.Children.map(children, (child:any)=>
-        React.cloneElement(child,{enrolledStudents : enrolledStudentsFormatted})
-    )
+        if (formattedEnrolledStudents) {
+            const csvContent = CreateCSVFile(formattedEnrolledStudents)
+            ExportCSVFile(csvContent, `แบบฟอร์มขออนุมัติ${fileName}`)
+        }
+    }
     return(
         <>
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -31,7 +36,7 @@ const ExportCSVProvider : React.FC<ExportCSVProviderProps> = ({children, enrolle
                     </button>
                 </div>
             </div>
-            {tableStudentWithFormattedenrolledData }
+            {children }
         </div>
         </>
     )

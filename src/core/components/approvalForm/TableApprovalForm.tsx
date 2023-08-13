@@ -4,9 +4,6 @@ import type { ResponseGetEnrollsType } from "@/app/api/enrolls/[subjectId]/Enrol
 import React from "react";
 // custom hook
 import FormatEnrolledData from "../../hooks/approvalForm/useFormatEnrolledData";
-import CreateCSVFile from "../../hooks/approvalForm/useCreateCSVFile";
-import ExportCSVFile from "../../hooks/approvalForm/useExportCSVFive";
-
 
 const TdComponent: React.FC<{
   text:React.ReactElement
@@ -29,23 +26,10 @@ const ThComponent: React.FC<{
 }
 
 const TableApprovalform : React.FC<{ enrolledStudents: ResponseGetEnrollsType }> = ({ enrolledStudents }) => {
-  const enrolledStudentsFormatted = FormatEnrolledData(enrolledStudents)
-  const handleExportCSV =() =>{
-    const csvContent = CreateCSVFile(enrolledStudentsFormatted)
-    ExportCSVFile(csvContent, `แบบขอฟอร์มอนุมัติ${enrolledStudents[0].course?.nameEng}`)
-  }
+  const enrolledStudentsFormatted = FormatEnrolledData(enrolledStudents);
   return(
     <>
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <div className="flex items-end justify-end p-4 bg-white dark:bg-gray-700 ">
-            <div className="">
-                <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction" className="inline-flex items-center text-whute bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button"
-                onClick={handleExportCSV}
-                >
-                    Export
-                </button>
-            </div>
-        </div>
+    
         <table  className=" w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -82,9 +66,9 @@ const TableApprovalform : React.FC<{ enrolledStudents: ResponseGetEnrollsType }>
                       <TdComponent rowSpan={undefined} text={<>{student.id}</>} />
                       <TdComponent rowSpan={undefined} text={<>{student.fullname}</>} />
                       <TdComponent rowSpan={undefined} text={<>{student.degree}</>} />
-                      <TdComponent rowSpan={undefined} text={<>{student.courseBenchelor}</>} />
-                      <TdComponent rowSpan={undefined} text={<>{student.passedInBenchelor}</>} />
-                      <TdComponent rowSpan={undefined} text={<>{student.passedCourseId as string +" " +student.passedCourseName}</>} />
+                      <TdComponent rowSpan={undefined} text={<>{student.courseInMajor}</>} />
+                      <TdComponent rowSpan={undefined} text={<>{student.passedInMajors}</>} />
+                      <TdComponent rowSpan={undefined} text={<>{student.passedCourse} </>}/>
                       <TdComponent rowSpan={undefined} text={<>{student.grade}</>} />
                       <TdComponent rowSpan={undefined} text={<></>} />
                   </tr>  
@@ -95,11 +79,16 @@ const TableApprovalform : React.FC<{ enrolledStudents: ResponseGetEnrollsType }>
       </table>
       {enrolledStudents.length === 0 &&  
             <div className="flex w-full animate-pulse flex-col space-y-4 rounded bg-white p-4 [&>div:nth-child(1)]:bg-blue-100 [&>div]:h-8 [&>div]:rounded-md [&>div]:bg-blue-50">
-                {[...new Array(7)].map((_, index) => (
-                  <div key={index} />
+                {[...new Array(3)].map((_, index) => (
+                  <div key={index}/>
+
+                ))}
+                <p className="text-center">No data available</p>
+                {[...new Array(3)].map((_, index) => (
+                  <div key={index}/>
+
                 ))}
       </div>}
-    </div>
     </>
   )
 

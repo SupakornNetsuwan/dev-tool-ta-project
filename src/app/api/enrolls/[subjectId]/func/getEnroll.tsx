@@ -10,11 +10,10 @@ const getEnroll = async (subjectId: string) => {
       },
     },
     select: {
-      passedInBenchelor:true,
-      passedCourseId:true,
-      passedCourseName:true,
+      passedInMajors:true,
+      passedCourse:true,
       degree:true,
-      courseBenchelor:true,
+      courseInMajors:true,
       enrollStatus: true,
       grade:true,
       student: {

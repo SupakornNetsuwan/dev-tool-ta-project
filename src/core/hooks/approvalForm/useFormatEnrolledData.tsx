@@ -2,7 +2,7 @@
 // change structure of object to foramt csv and can do rows span in table
 import type { ResponseGetEnrollsType , ResponseGetEnrollType} from "@/app/api/enrolls/[subjectId]/EnrollType"
 
-export type AprovalFormFormattedType ={
+export type ApprovalFormFormattedType ={
   ApprovalForm:FormatEnrolledData[]
 }
 
@@ -16,34 +16,32 @@ export type FormatEnrolledData = {
 export type StudentData = {
     id: string | undefined;
     fullname:string | undefined;
-    courseBenchelor:string|undefined
+    courseInMajor:string|undefined
     degree:string|undefined
-    passedInBenchelor:string|undefined
-    passedCourseId:string|undefined
-    passedCourseName:string|undefined
+    passedInMajors:string|undefined
+    passedCourse:string|undefined
     grade:string|undefined,
 }
 
 const FormatEnrolledData = (enrolledStudent:ResponseGetEnrollsType)=>{
     const formattedData:FormatEnrolledData[] = []
+    if(enrolledStudent.length> 0){
     enrolledStudent.forEach((enrolDetail : ResponseGetEnrollType)=>{
         const courseNameEng = enrolDetail.course?.nameEng as string;
         const subjectId = enrolDetail.course?.subjectId as string;
         const courseProfessor = enrolDetail.course?.professor?.fullname as string;
-        const courseBenchelor = enrolDetail.courseBenchelor
+        const courseInMajor = enrolDetail.courseInMajors
         const degree = enrolDetail.degree
-        const passedInBenchelor = enrolDetail.passedInBenchelor
-        const passedCourseId = enrolDetail.passedCourseId
-        const passedCourseName = enrolDetail.passedCourseName
+        const passedInMajors = enrolDetail.courseInMajors
+        const passedCourse = enrolDetail.passedCourse
         const grade = enrolDetail.grade
         const studentEnroll:StudentData = {
                 id: enrolDetail.student?.id,
                 fullname:enrolDetail.student?.fullname,
-                courseBenchelor,
+                courseInMajor,
                 degree,
-                passedCourseId,
-                passedCourseName,
-                passedInBenchelor,
+                passedCourse,
+                passedInMajors,
                 grade
         };
         const existingDataIndex = formattedData.findIndex((data) => data?.subjectId === subjectId);
@@ -60,7 +58,7 @@ const FormatEnrolledData = (enrolledStudent:ResponseGetEnrollsType)=>{
             formattedData.push(newFormattedData);
           }
     })
-    
+  }
     formattedData.forEach(courseDetail =>{
       const totalStudent = courseDetail.studentData?.length
       courseDetail.totalStudent = totalStudent?.toString() 
