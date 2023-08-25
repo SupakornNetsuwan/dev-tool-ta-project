@@ -3,13 +3,12 @@ import React from "react";
 // Components
 import CourseListWrapper from "@/core/components/course/CourseListWrapper";
 import CourseCard from "../../../core/components/course/CourseCard";
-import CreateCourseCard from "./CreateCourseCard";
 import LoadingSkeleton from "./LoadingSkeleton";
 // Hooks
 import useGetCourseByProfessor from "@/core/hooks/courses/useGetCourseByProfessor";
 import type { FetchCourseType } from "@/app/api/subjects/[subjectId]/CourseTypes";
 
-const DisplayCourses: React.FC<{ professorId: string }> = ({ professorId }) => {
+const SystemClosedCourses: React.FC<{ professorId: string }> = ({ professorId }) => {
   const { data, isLoading, isError, error } = useGetCourseByProfessor(professorId);
   const courses = data?.data.data;
 
@@ -18,9 +17,14 @@ const DisplayCourses: React.FC<{ professorId: string }> = ({ professorId }) => {
 
   return (
     <>
+      <div className="mb-4 rounded bg-gradient-to-tr from-gray-100 to-gray-50/10 p-4">
+        <p className="text-gray-500 [text-wrap:balance]">
+          ระบบปิดรับสมัครแล้ว คุณจะสามารถเข้าถึงได้เฉพาะวิชาที่คุณได้เปิดรับสมัครไปในช่วงที่มีการเปิดรับสมัคร
+        </p>
+      </div>
       <CourseListWrapper>
         {courses
-          ?.filter((course) => course.creationStatus === "CREATED" || course.creationStatus === "ENROLLABLE")
+          ?.filter((course) => course.creationStatus === "ENROLLABLE")
           ?.map((course: FetchCourseType, index) => (
             <CourseCard
               key={index}
@@ -42,12 +46,9 @@ const DisplayCourses: React.FC<{ professorId: string }> = ({ professorId }) => {
               ]}
             />
           ))}
-        {courses?.find((course) => course.creationStatus === "UNCREATED") && (
-          <CreateCourseCard uncreatedCourses={courses.filter((course) => course.creationStatus === "UNCREATED")} />
-        )}
       </CourseListWrapper>
     </>
   );
 };
 
-export default DisplayCourses;
+export default SystemClosedCourses;

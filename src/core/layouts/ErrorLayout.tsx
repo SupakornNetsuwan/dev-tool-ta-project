@@ -7,6 +7,7 @@ import React from "react";
  */
 
 const ErrorLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  
   return (
     <div className="mx-auto flex min-h-[50dvh] w-full max-w-[30em] flex-col items-center justify-center">
       <h2 className="text-center text-3xl font-semibold text-red-500">มีปัญหาบางอย่างเกิดขึ้น</h2>

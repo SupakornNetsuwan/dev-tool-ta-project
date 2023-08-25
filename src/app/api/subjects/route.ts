@@ -13,12 +13,10 @@ export const GET = async (request: NextRequest) => {
     if (!session) return NextResponse.json({ message: "โปรดเข้าสู่ระบบ" }, { status: 401 })
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
     console.log(`---------- ทำการดึงข้อมูลคอร์สจำนวนมาก 📖📖 ---------`)
-    
     const url = new URL(request.nextUrl)
     const professorId = url.searchParams.get("professorId")
 
     try {
-
         if (!professorId) {
             const courses = await getAllCourses()
             return NextResponse.json({ message: "ร้องขอข้อมูลทุกวิชาสำเร็จ", data: courses })
@@ -32,7 +30,7 @@ export const GET = async (request: NextRequest) => {
 
     } catch (error) {
         console.log(error);
-        
+
         let message = "เกิดปัญหาที่ไม่ทราบสาเหตุ"
         if (error instanceof Object && !(error instanceof Error)) message = JSON.stringify(error);
         if (error instanceof Error) message = error.message

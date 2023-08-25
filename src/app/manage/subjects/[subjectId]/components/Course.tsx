@@ -47,9 +47,6 @@ const Course: React.FC = () => {
           <List.Item topic="อาจารย์ผู้สอน">
             <SelectProfessor subjectId={subjectId} value={courseDetail?.professor?.id} />
           </List.Item>
-          <List.Item topic="จำนวนนักศึกษาที่สมัคร">
-            <p className="text-gray-500">{0}</p>
-          </List.Item>
         </List.Wrapper>
       </div>
       <div className="mt-4 bg-white p-4">
@@ -58,7 +55,7 @@ const Course: React.FC = () => {
           <List.Item topic="สถานะการคัดเลือก">
             <p className="text-green-600">คัดเลือกเรียบร้อย</p>
           </List.Item>
-          <List.Item topic="รายชื่อนึกศึกษาที่ผ่านการคัดเลือก">
+          <List.Item topic="รายชื่อนักศึกษาที่ผ่านการคัดเลือก">
             <Link href={`/manage/subjects/${subjectId}/enrollment`}>
               <p className="text-blue-600 underline">ตรวจสอบรายชื่อ</p>
             </Link>
