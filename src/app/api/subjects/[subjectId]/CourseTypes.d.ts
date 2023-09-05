@@ -19,6 +19,9 @@ type FetchCourseTypeWithApprovementType = Prisma.CourseGetPayload<{
 
 export type UpdateCourseType = Prisma.CourseUpdateInput & { subjectId: string }
 
+// สำหรับอัปเดตข้อมูล Course workload file ทั่วไป
+export type CourseWorkLoadModifyType = { shareWorkloadFile: File | undefined | null | string }
+
 // สำหรับอัปเดตข้อมูล Course detail ทั่วไป
 export type CourseDetailModifyType = Prisma.CourseGetPayload<{
     select: {
