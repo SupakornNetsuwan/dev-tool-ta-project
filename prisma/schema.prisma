@@ -63,27 +63,28 @@ enum Role {
 }
 
 model Course {
-  subjectId       String                @id
-  professorId     String?
-  professor       User?                 @relation(fields: [professorId], references: [id], onDelete: SetNull)
-  nameEng         String
-  nameThai        String
-  credit          String
-  description     String?               @db.Text
-  creationStatus  CourseCreationStatus? @default(UNCREATED)
-  title           String?               @default("นาย")
-  firstname       String?
-  lastname        String?
-  contact         String?
-  enrollCondition String?
-  secretCode      String?
+  subjectId         String                @id
+  professorId       String?
+  professor         User?                 @relation(fields: [professorId], references: [id], onDelete: SetNull)
+  nameEng           String
+  nameThai          String
+  credit            String
+  description       String?               @db.Text
+  creationStatus    CourseCreationStatus? @default(UNCREATED)
+  title             String?               @default("นาย")
+  firstname         String?
+  lastname          String?
+  contact           String?
+  enrollCondition   String?
+  secretCode        String?
+  shareWorkloadFile String?
   // ตารางสำรายชื่อนักศึกษาที่สมัคร
-  Enroll          Enroll[]
+  Enroll            Enroll[]
   // ฟอร์มการขออนุมัติจ้างนักศึกษา
-  approvalForm    ApprovalFormType?
-  PracticeForm    PracticeForm[]
-  TheoryForm      TheoryForm[]
-  ProjectBaseForm ProjectBaseForm[]
+  approvalForm      ApprovalFormType?
+  PracticeForm      PracticeForm[]
+  TheoryForm        TheoryForm[]
+  ProjectBaseForm   ProjectBaseForm[]
 }
 
 enum ApprovalFormType {

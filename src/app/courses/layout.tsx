@@ -15,7 +15,7 @@ dayjs.locale("th");
 
 export const metadata: Metadata = {
   title: "จัดการคอร์สเรียน",
-  description:"จัดการคอร์สเรียน สำหรับอาจารย์ประจำวิชา",
+  description: "จัดการคอร์สเรียน สำหรับอาจารย์ประจำวิชา",
 };
 
 const DisplaySystemStatus: React.FC<{
@@ -85,16 +85,7 @@ const layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => 
         </SubNavbar.Item>
       </SubNavbar.Wrapper>
       <DisplaySystemStatus semester={semester} year={year} openDate={openDate} closeDate={closeDate} isOpen={isOpen} />
-      {isOpen ? (
-        <div className=" min-h-[80vh] bg-gray-50 p-4 ">{children}</div>
-      ) : (
-        /**
-         * มันต้องมี process อยู่ตรงนี้อีก เช่น คัดเลือก นศ. ตอนนี้ไหม ? หรือ ทำการอัปโหลดไฟล์แบบฟอร์มแบ่งภาระงานไหม ?
-         */
-        <div className="flex h-full min-h-[60vh] items-center justify-center bg-gray-50">
-          <p className="text-gray-500">ระบบไม่ได้อยู่ในช่วงเปิดรับสมัคร</p>
-        </div>
-      )}
+      <div className=" min-h-[80vh] bg-gray-50 p-4 ">{children}</div>
     </>
   );
 };
