@@ -15,7 +15,7 @@ const SystemClosedCourseCompleted: React.FC<{
 
   return (
     <>
-      <NavigateAction disabled={false} isCompleted={Boolean(courseDetail?.shareWorkloadFile)} href={`${pathname}/xxxx`}>
+      <NavigateAction disabled={false} isCompleted={Boolean(courseDetail?.shareWorkloadFile)} href={`${pathname}/workload`}>
         <span>อัปโหลดไฟล์แบ่งภาระงาน</span>
       </NavigateAction>
     </>

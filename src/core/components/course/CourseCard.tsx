@@ -28,7 +28,7 @@ const CourseCard: React.FC<{
     if (isVerifyCompleted) {
       return "เปิดรับสมัครอยู่";
     }
-    
+
     return "ยังไม่ได้เปิดรับสมัคร";
   }, [isSystemOpen, systemStatus.isSuccess, isVerifyCompleted]);
 
@@ -64,6 +64,9 @@ const CourseCard: React.FC<{
         <SuccessStepper isCompleted={isBasicDetailCompleted}>กรอกรายละเอียดเบื้องต้นแล้ว</SuccessStepper>
         <SuccessStepper isCompleted={isApprovalFormCompleted}>เลือกประเภทวิชาแล้ว</SuccessStepper>
         <SuccessStepper isCompleted={isVerifyCompleted}>ตรวจสอบ และ ยืนยันแล้ว</SuccessStepper>
+        {isVerifyCompleted && courseStatus === "ระบบปิดรับสมัครอัตโนมัติ" && (
+          <SuccessStepper isCompleted={Boolean(course.shareWorkloadFile)}>อัปโหลดไฟล์แบ่งภาระงาน</SuccessStepper>
+        )}
       </div>
       {children}
       <div className="mt-auto flex items-center justify-end space-x-2">

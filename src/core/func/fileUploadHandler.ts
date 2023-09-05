@@ -9,7 +9,7 @@ import { stat, mkdir, writeFile } from "fs/promises"
  * @returns `null | string`
  */
 
-const fileUploadHandler = async (file: FormDataEntryValue | null, folderName: string, tracker: string | null = "") => {
+const fileUploadHandler = async (file: FormDataEntryValue | null, folderName: string, tracker: string | null = "", accept?: string[]) => {
     tracker += tracker ? " :" : ""
 
     if (!file) {
@@ -24,9 +24,17 @@ const fileUploadHandler = async (file: FormDataEntryValue | null, folderName: st
 
     console.log(`${tracker} ได้รับไฟล์แล้ว ประเภทของไฟล์ 🪄 : ${file.type}`);
 
-    if (!["image/jpeg", "image/jpg", "image/png", "application/pdf"].includes(file.type.toLowerCase())) {
-        console.log(`ประเภทของไฟล์ไม่ถูกต้อง`);
-        throw new Error("ประเภทของไฟล์ไม่ถูกต้อง โปรดใช้ png / jpg / jpeg / pdf")
+    if (accept) {
+        if (!accept.includes(file.type.toLowerCase())) {
+            console.log(`ประเภทของไฟล์ไม่ถูกต้อง`);
+            throw new Error(`ประเภทของไฟล์ไม่ถูกต้อง โปรดใช้ ${accept.join(" / ")}`)
+        }
+    } else {
+        // ถ้าไม่มีการกำหนดประเภทไฟล์ก็ให้เป็นพวก รูป และ PDF
+        if (!["image/jpeg", "image/jpg", "image/png", "application/pdf"].includes(file.type.toLowerCase())) {
+            console.log(`ประเภทของไฟล์ไม่ถูกต้อง`);
+            throw new Error("ประเภทของไฟล์ไม่ถูกต้อง โปรดใช้ png / jpg / jpeg / pdf")
+        }
     }
 
 
