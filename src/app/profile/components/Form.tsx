@@ -39,7 +39,7 @@ const ProfileForm = () => {
             options={[
               { label: "นาย", value: "นาย" },
               { label: "นาง", value: "นาง" },
-              { label: "นางสาว", value: "นางสาว" }
+              { label: "นางสาว", value: "นางสาว" },
             ]}
           />
         </FieldWrapper>
@@ -200,7 +200,7 @@ const ProfileForm = () => {
         type="submit"
         className="btn click-animation self-start rounded border border-blue-500 bg-blue-50 px-12 text-blue-500"
       >
-        แก้ไข
+        บันทึก
       </button>
     </>
   );

@@ -10,12 +10,11 @@ import useGetCourseByProfessor from "@/core/hooks/courses/useGetCourseByProfesso
 import type { FetchCourseType } from "@/app/api/subjects/[subjectId]/CourseTypes";
 
 const DisplayCourses: React.FC<{ professorId: string }> = ({ professorId }) => {
-  const { data, isLoading } = useGetCourseByProfessor(professorId);
+  const { data, isLoading, isError, error } = useGetCourseByProfessor(professorId);
   const courses = data?.data.data;
 
-  if (isLoading) {
-    return <LoadingSkeleton />;
-  }
+  if (isError) throw error;
+  if (isLoading) return <LoadingSkeleton />;
 
   return (
     <>

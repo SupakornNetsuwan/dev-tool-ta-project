@@ -13,6 +13,7 @@ import useGetCourse from "@/core/hooks/courses/useGetCourse";
 import useGetSystemStatus from "@/core/hooks/systemStatus/useGetSystemStatus";
 import { HiOutlineXMark } from "react-icons/hi2";
 import useUpdateCourse from "@/core/hooks/courses/useUpdateCourse";
+import { useRouter } from "next/navigation";
 
 const schema = z.object({
   contact: z.string().nonempty({ message: "กรุณากรอกช่องทางการติดต่อ" }),
@@ -30,27 +31,28 @@ const schema = z.object({
 const ProfileFormProvider = ({ children, subjectId }: { children: React.ReactNode; subjectId: string }) => {
   const updateCourse = useUpdateCourse();
   const { openToast } = useCustomToast();
-  const getCourseDetailQuery = useGetCourse(subjectId);
-  const getSystemStatus = useGetSystemStatus();
-  const [courseDetail, systemStatus] = [getCourseDetailQuery.data?.data.data, getSystemStatus.data?.data.data];
-  const isLoading = getCourseDetailQuery.status == "loading" || getSystemStatus.status == "loading";
+  const router = useRouter();
+  const courseDetail = useGetCourse(subjectId);
+  const systemStatus = useGetSystemStatus();
+  const [courseDetailData, systemStatusData] = [courseDetail.data?.data.data, systemStatus.data?.data.data];
+  const isLoading = courseDetail.status == "loading" || systemStatus.status == "loading";
 
-  if (getCourseDetailQuery.isError) throw getCourseDetailQuery.error.response?.data.message;
-  if (getSystemStatus.isError) throw getSystemStatus.error.response?.data.message;
+  if (courseDetail.isError) throw courseDetail.error.response?.data.message;
+  if (systemStatus.isError) throw systemStatus.error.response?.data.message;
 
   const methods = useForm<CourseDetailModifyType>({
     resolver: zodResolver(schema),
     values: {
-      contact: courseDetail?.contact || "",
-      enrollCondition: courseDetail?.enrollCondition || "",
-      firstname: courseDetail?.firstname || "",
-      lastname: courseDetail?.lastname || "",
-      nameThai: courseDetail?.nameThai || "",
-      secretCode: courseDetail?.secretCode || "",
+      contact: courseDetailData?.contact || "",
+      enrollCondition: courseDetailData?.enrollCondition || "",
+      firstname: courseDetailData?.firstname || "",
+      lastname: courseDetailData?.lastname || "",
+      nameThai: courseDetailData?.nameThai || "",
+      secretCode: courseDetailData?.secretCode || "",
       subjectId: subjectId,
-      title: courseDetail?.title || "นาย",
-      semester: systemStatus?.semester || 0,
-      year: systemStatus?.year || 0,
+      title: courseDetailData?.title || "นาย",
+      semester: systemStatusData?.semester || 0,
+      year: systemStatusData?.year || 0,
     },
     defaultValues: {
       contact: "",
@@ -87,8 +89,9 @@ const ProfileFormProvider = ({ children, subjectId }: { children: React.ReactNod
 
     updateCourse.mutate(courseUpdateData, {
       onSuccess(data, variables, context) {
-        getCourseDetailQuery.refetch();
-        getSystemStatus.refetch();
+        courseDetail.refetch();
+        systemStatus.refetch();
+        router.back();
         openToast({
           title: <p className="text-blue-500">แก้ไขข้อมูลสำเร็จ 🎉</p>,
           description: <p>ข้อมูลรายวิชาแก้ไขแล้ว</p>,

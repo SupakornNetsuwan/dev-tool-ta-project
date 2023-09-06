@@ -132,37 +132,40 @@ const Content: React.FC<{ index: number }> = ({ index }) => {
           </FieldWrapper>
         </div>
 
-        <div className="col-span-2 grid grid-cols-1 gap-2 rounded bg-gray-50 p-2 sm:grid-cols-3">
-          <FieldWrapper
-            label={<Label.Root>วันปฏิบัติงานอื่น</Label.Root>}
-            errorComponent={<ShowInputError inputName={`TaForms.${index}.taOtherWorkDay`} />}
-          >
-            <Selector
-              name={`TaForms.${index}.taOtherWorkDay`}
-              options={[
-                { label: "วันจันทร์", value: "วันจันทร์" },
-                { label: "วันอังคาร", value: "วันอังคาร" },
-                { label: "วันพุธ", value: "วันพุธ" },
-                { label: "วันพฤหัสบดี", value: "วันพฤหัสบดี" },
-                { label: "วันศุกร์", value: "วันศุกร์" },
-                { label: "วันเสาร์", value: "วันเสาร์" },
-                { label: "วันอาทิตย์", value: "วันอาทิตย์" },
-              ]}
-              placeholder="เลือกวันช่วยสอน"
-            />
-          </FieldWrapper>
-          <FieldWrapper
-            label={<Label.Root>เวลาเริ่มต้น</Label.Root>}
-            errorComponent={<ShowInputError inputName={`TaForms.${index}.taOtherWorkDayStart`} />}
-          >
-            <DatePicker name={`TaForms.${index}.taOtherWorkDayStart`} />
-          </FieldWrapper>
-          <FieldWrapper
-            label={<Label.Root>เวลาสิ้นสุด</Label.Root>}
-            errorComponent={<ShowInputError inputName={`TaForms.${index}.taOtherWorkDayEnd`} />}
-          >
-            <DatePicker name={`TaForms.${index}.taOtherWorkDayEnd`} />
-          </FieldWrapper>
+        <div className="col-span-2 rounded bg-gray-50  p-2">
+          <p className="my-2 font-medium text-amber-500">ถ้าหากไม่มีวันปฏิบัติงานอื่น ไม่จำเป็นต้องกรอก</p>
+          <div className="col-span-2 grid grid-cols-1 gap-2 sm:grid-cols-3">
+            <FieldWrapper
+              label={<Label.Root>วันปฏิบัติงานอื่น</Label.Root>}
+              errorComponent={<ShowInputError inputName={`TaForms.${index}.taOtherWorkDay`} />}
+            >
+              <Selector
+                name={`TaForms.${index}.taOtherWorkDay`}
+                options={[
+                  { label: "วันจันทร์", value: "วันจันทร์" },
+                  { label: "วันอังคาร", value: "วันอังคาร" },
+                  { label: "วันพุธ", value: "วันพุธ" },
+                  { label: "วันพฤหัสบดี", value: "วันพฤหัสบดี" },
+                  { label: "วันศุกร์", value: "วันศุกร์" },
+                  { label: "วันเสาร์", value: "วันเสาร์" },
+                  { label: "วันอาทิตย์", value: "วันอาทิตย์" },
+                ]}
+                placeholder="เลือกวันช่วยสอน"
+              />
+            </FieldWrapper>
+            <FieldWrapper
+              label={<Label.Root>เวลาเริ่มต้น</Label.Root>}
+              errorComponent={<ShowInputError inputName={`TaForms.${index}.taOtherWorkDayStart`} />}
+            >
+              <DatePicker name={`TaForms.${index}.taOtherWorkDayStart`} />
+            </FieldWrapper>
+            <FieldWrapper
+              label={<Label.Root>เวลาสิ้นสุด</Label.Root>}
+              errorComponent={<ShowInputError inputName={`TaForms.${index}.taOtherWorkDayEnd`} />}
+            >
+              <DatePicker name={`TaForms.${index}.taOtherWorkDayEnd`} />
+            </FieldWrapper>
+          </div>
         </div>
       </div>
     </div>
