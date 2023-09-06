@@ -34,6 +34,8 @@ model Profile {
   phoneNumber    String?
   email          String?
   bookBankNumber String?
+  bankName       String?
+  degree         String?
 }
 
 model UserDocument {
@@ -61,66 +63,89 @@ enum Role {
 }
 
 model Course {
-  subjectId       String                @id
-  professorId     String?
-  professor       User?                 @relation(fields: [professorId], references: [id], onDelete: SetNull)
-  nameEng         String
-  nameThai        String
-  credit          String
-  description     String?               @db.Text
-  creationStatus  CourseCreationStatus? @default(UNCREATED)
-  title           String?               @default("นาย")
-  firstname       String?
-  lastname        String?
-  contact         String?
-  enrollCondition String?
-  secretCode      String?
+  subjectId         String                @id
+  professorId       String?
+  professor         User?                 @relation(fields: [professorId], references: [id], onDelete: SetNull)
+  nameEng           String
+  nameThai          String
+  credit            String
+  description       String?               @db.Text
+  creationStatus    CourseCreationStatus? @default(UNCREATED)
+  title             String?               @default("นาย")
+  firstname         String?
+  lastname          String?
+  contact           String?
+  enrollCondition   String?
+  secretCode        String?
+  shareWorkloadFile String?
   // ตารางสำรายชื่อนักศึกษาที่สมัคร
-  Enroll          Enroll[]
+  Enroll            Enroll[]
   // ฟอร์มการขออนุมัติจ้างนักศึกษา
-  approvalForm    ApprovalFormType?
-  GTEForm         GTEForm?
-  LTForm          LTForm?
-  RefScheduleForm RefScheduleForm?
-  TheoryForm      TheoryForm?
+  approvalForm      ApprovalFormType?
+  PracticeForm      PracticeForm[]
+  TheoryForm        TheoryForm[]
+  ProjectBaseForm   ProjectBaseForm[]
 }
 
 enum ApprovalFormType {
-  GTE_EIGHT
-  LT_EIGHT
-  REF_SCHEDULE
+  PRACTICE
   THEORY
   PROJECTBASE
-  RESEARCH_HELPER
-  OTHERS
 }
 
-// เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษา >= 8 คน
-// ใช้กับ ApprovalFromType = GTE_EIGHT
-model GTEForm {
-  id     String @id
-  course Course @relation(fields: [id], references: [subjectId], onDelete: Cascade)
+// เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษาประเภทปฏิบัติ
+// ใช้กับ ApprovalFromType = PRACTICE
+model PracticeForm {
+  subjectId           String
+  groupNumber         Int
+  course              Course    @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
+  studentAmount       Int
+  taAmount            Int
+  taWorkDay           String
+  taWorkDayStart      DateTime  @db.Time()
+  taWorkDayEnd        DateTime  @db.Time()
+  taOtherWorkDay      String?
+  taOtherWorkDayStart DateTime? @db.Time()
+  taOtherWorkDayEnd   DateTime? @db.Time()
+  taHireDuration      String
+
+  @@id([subjectId, groupNumber])
 }
 
-// เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษา < 8 คน
-// ใช้กับ ApprovalFromType = LT_EIGHT
-model LTForm {
-  id     String @id
-  course Course @relation(fields: [id], references: [subjectId], onDelete: Cascade)
-}
-
-// เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษาตามหน้าตารางจริง
-// ใช้กับ ApprovalFromType = REF_SCHEDULE
-model RefScheduleForm {
-  id     String @id
-  course Course @relation(fields: [id], references: [subjectId], onDelete: Cascade)
-}
-
-// เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษาตามรายวิชาทฤษฎี
+// เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษา รายวิชาทฤษฎีแบบทั่วไป
 // ใช้กับ ApprovalFromType = THEORY
 model TheoryForm {
-  id     String @id
-  course Course @relation(fields: [id], references: [subjectId], onDelete: Cascade)
+  subjectId           String
+  groupNumber         Int
+  course              Course   @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
+  studentAmount       Int
+  taAmount            Int
+  taWorkDay           String
+  taWorkDayStart      DateTime @db.Time()
+  taWorkDayEnd        DateTime @db.Time()
+  taOtherWorkDay      String
+  taOtherWorkDayStart DateTime @db.Time()
+  taOtherWorkDayEnd   DateTime @db.Time()
+
+  @@id([subjectId, groupNumber])
+}
+
+// เป็นฟอร์มแบบขออนุมัติจ้างนักศึกษา รายวิชาทฤษฎีที่สอนแบบ Project base
+// ใช้กับ ApprovalFromType = PROJECTBASE
+model ProjectBaseForm {
+  subjectId           String
+  groupNumber         Int
+  course              Course   @relation(fields: [subjectId], references: [subjectId], onDelete: Cascade)
+  studentAmount       Int
+  taAmount            Int
+  taWorkDay           String
+  taWorkDayStart      DateTime @db.Time()
+  taWorkDayEnd        DateTime @db.Time()
+  taOtherWorkDay      String
+  taOtherWorkDayStart DateTime @db.Time()
+  taOtherWorkDayEnd   DateTime @db.Time()
+
+  @@id([subjectId, groupNumber])
 }
 
 enum CourseCreationStatus {
@@ -128,6 +153,19 @@ enum CourseCreationStatus {
   CREATED
   UNCREATED
 }
+
+model Enroll {
+  enrollId     Int          @id @unique @default(autoincrement())
+  enrollDate   DateTime     @default(now())
+  enrollStatus EnrollStatus
+  courseId     String
+  course       Course       @relation(fields: [courseId], references: [subjectId], onDelete: Cascade)
+  studentId    String
+  student      User         @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([courseId, studentId])
+}
+
 enum EnrollStatus {
   PENDING
   APPROVED

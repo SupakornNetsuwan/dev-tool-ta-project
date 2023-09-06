@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic";
 import { HiOutlineXMark, HiOutlineArrowSmallLeft } from "react-icons/hi2";
 // Components
-const TableCourse = dynamic(()=>import("./TableCourse"))
-const DropFileArea = dynamic(()=>import("./DropFileArea"))
+const TableCourse = dynamic(() => import("./TableCourse"));
+const DropFileArea = dynamic(() => import("./DropFileArea"));
 import GoBackBtn from "@/core/components/GoBackBtn";
 // Custom hooks
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
@@ -19,7 +19,7 @@ const FileInput = () => {
   const [fileFromUpload, setFileFromUpload] = useState<File | undefined>();
   const [fileObject, setFileObject] = useState<Papa.ParseResult<Record<string, string>>>();
   type ResultData = Papa.ParseResult<Record<string, unknown>>;
-  
+
   const fileUploadHandler = useCallback(
     (file: File, resultdata: ResultData) => {
       console.log(resultdata);
@@ -62,6 +62,7 @@ const FileInput = () => {
         enrollCondition: "",
         contact: "",
         approvalForm: null,
+        shareWorkloadFile: "",
       }));
 
       if (courses) {

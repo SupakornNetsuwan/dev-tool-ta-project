@@ -5,10 +5,14 @@ import Link from "next/link";
 import List from "@/core/components/List";
 import LoadingSkeleton from "./LoadingSkeleton";
 import SelectProfessor from "./SelectProfessor";
+import CourseDropdown from "./CourseDropdown";
+import { HiMiniAdjustmentsHorizontal, HiMiniChevronRight } from "react-icons/hi2";
 // hook
 import useGetCourse from "@/core/hooks/courses/useGetCourse";
+import { useParams } from "next/navigation";
 
-const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
+const Course: React.FC = () => {
+  const { subjectId } = useParams();
   const { data, isLoading, isError, error } = useGetCourse(subjectId);
   const courseDetail = useMemo(() => data?.data.data, [data]);
 
@@ -17,6 +21,14 @@ const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
 
   return (
     <>
+      <div>
+        <CourseDropdown>
+          <button className="ml-auto flex items-center space-x-1 rounded border bg-white px-3  py-1 text-gray-500 outline-none hover:bg-gray-50">
+            <span>จัดการ</span>
+            <HiMiniAdjustmentsHorizontal className="" />
+          </button>
+        </CourseDropdown>
+      </div>
       <div className="mt-4 bg-white p-4">
         <p className="pb-2 text-lg font-medium text-blue-500">รายละเอียดวิชา</p>
         <List.Wrapper>
@@ -35,26 +47,41 @@ const Course: React.FC<{ subjectId: string }> = ({ subjectId }) => {
           <List.Item topic="อาจารย์ผู้สอน">
             <SelectProfessor subjectId={subjectId} value={courseDetail?.professor?.id} />
           </List.Item>
-          <List.Item topic="จำนวนนักศึกษาที่สมัคร">
-            <p className="text-gray-500">{0}</p>
-          </List.Item>
         </List.Wrapper>
       </div>
       <div className="mt-4 bg-white p-4">
         <p className="pb-2 text-lg font-medium text-blue-500">การคัดเลือก</p>
         <List.Wrapper>
-          <List.Item topic="สถานะการคัดเลือก">
-            <p className="text-green-600">คัดเลือกเรียบร้อย</p>
-          </List.Item>
-          <List.Item topic="รายชื่อนึกศึกษาที่ผ่านการคัดเลือก">
+          <List.Item topic="รายชื่อนักศึกษาที่ผ่านการคัดเลือก">
             <Link href={`/manage/subjects/${subjectId}/enrollment`}>
-              <p className="text-blue-600 underline">ตรวจสอบรายชื่อ</p>
+              <p className="flex items-center text-blue-500">
+                <span>ตรวจสอบรายชื่อ</span>
+                <HiMiniChevronRight className="text-lg" />
+              </p>
             </Link>
           </List.Item>
-          <List.Item topic="แบบฟอร์มขออนุมัติ(รายวิชา)">
+          <List.Item topic="แบบฟอร์มขออนุมัติ (รายวิชา)">
             <Link href={`/manage/subjects/${subjectId}/approvalform`}>
-              <p className="text-blue-600 underline">ตรวจสอบ</p>
+              <p className="flex items-center text-blue-500">
+                <span>ตรวจสอบ</span>
+                <HiMiniChevronRight className="text-lg" />
+              </p>
             </Link>
+          </List.Item>
+          <List.Item topic="แบบฟอร์มแบ่งภาระงาน">
+            {courseDetail?.shareWorkloadFile ? (
+              <a
+                target="_blank"
+                className="flex items-center text-blue-500"
+                href={`/api/file?path=${courseDetail.shareWorkloadFile}`}
+                rel="noopener noreferrer"
+              >
+                <span>ดาวน์โหลด</span>
+                <HiMiniChevronRight className="text-lg" />
+              </a>
+            ) : (
+              <p className="text-gray-500">ยังไม่อัปโหลด</p>
+            )}
           </List.Item>
         </List.Wrapper>
       </div>

@@ -1,7 +1,7 @@
 import util from "util"
-import client, { base, filter_fmt } from "./LdapConnector";
-import ldapAuth from './LdapAuth';
-import type { FindUserType, LDAPuser } from "./ldapTypes"
+import { createClient } from 'ldapjs';
+import { base, filter_fmt, url } from "./ldapConnector";
+import type { FindUserType, LDAPuser } from "./LdapTypes"
 
 const findUser: FindUserType = async (username, password) => {
 
@@ -18,6 +18,7 @@ const findUser: FindUserType = async (username, password) => {
         */
 
         const result = new Promise((resolve, reject) => {
+            const client = createClient({ url });
             console.log("------------------------\nกำลังเริ่มต้นค้นหาผู้ใช้งาน...");
 
             let user = {};
@@ -53,21 +54,20 @@ const findUser: FindUserType = async (username, password) => {
                 * @description จบการทำงาน result.status ควรจะเท่ากับ 0
                 */
                 // @ts-ignore
-                res.on('end', async (result) => {
+                res.on('end', (result) => {
                     console.log(result.status === 0 ? "ปิดการค้นหาด้วยสถนะปกติ (status = 0) " : "มีปัญหาเกิดขึ้นระหว่าง client.search");
-
                     if (!Object.keys(user).length) return reject(new Error("User not found"))
 
                     // ตรวจสอบว่า Password ถูกต้อง หรือ ไม่
                     // @ts-ignore
-                    await ldapAuth(user?.dn.toString(), password, (isPasswordValid, error) => {
-                        if (isPasswordValid) {
-                            // @ts-ignore
-                            return user?.pojo ? resolve(user?.pojo) : reject(new Error("User not found after password was checked"))
-                        } else {
-                            return reject(error)
-                        }
-                    })
+                    client.bind(user?.dn.toString(), password, (error) => {
+                        if (error) return reject(error)
+                        console.log("Authenticate user ผ่านแล้ว🎉...")
+                        // @ts-ignore
+                        if (user?.pojo) return resolve(user?.pojo)
+                        client.unbind();
+                        client.destroy();
+                    });
                 });
             });
         })
@@ -93,8 +93,6 @@ const findUser: FindUserType = async (username, password) => {
         }
 
         return { LDAPuser: null, LDAPerror: new Error("Unknown error") }
-    } finally {
-        // close conenction here
     }
 }
 

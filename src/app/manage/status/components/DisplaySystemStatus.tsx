@@ -10,6 +10,7 @@ import "dayjs/locale/th";
 dayjs.locale("th");
 
 const DisplaySystemStatus: React.FC<{ systemStatus: SystemStatus }> = ({ systemStatus }) => {
+  
   return (
     <>
       <div className="bg-white p-4">

@@ -33,14 +33,14 @@ const CreateCourseOption = ({ course, closeDialog }: { course: FetchCourseType; 
         },
         onError(error) {
           openToast({
-            title: <p className="text-red-500">ไม่สามารถกำหนดเวลาได้</p>,
+            title: <p className="text-red-500">ไม่สามารถสร้างวิชาได้</p>,
             description: <p>{error?.response?.data.message || "ไม่ทราบสาเหตุ"}</p>,
             actionButton: <HiOutlineXMark className="text-2xl text-gray-900" />,
           });
         },
         onSettled() {
           setShowConfirm(false);
-          closeDialog()
+          closeDialog();
         },
       }
     );
@@ -56,7 +56,7 @@ const CreateCourseOption = ({ course, closeDialog }: { course: FetchCourseType; 
       >
         <p className="inline text-gray-800 group-hover:text-blue-500">
           {course.nameThai}
-          <span className="text-gray-500 group-hover:text-blue-500 ml-1">({course.subjectId})</span>
+          <span className="ml-1 text-gray-500 group-hover:text-blue-500">({course.subjectId})</span>
         </p>
         <HiOutlineCheck className="ml-2 inline -translate-x-4 text-lg text-emerald-600 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100" />
       </button>
