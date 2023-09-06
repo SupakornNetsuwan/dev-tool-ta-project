@@ -155,18 +155,45 @@ enum CourseCreationStatus {
 }
 
 model Enroll {
-  enrollId     Int          @id @unique @default(autoincrement())
-  enrollDate   DateTime     @default(now())
-  enrollStatus EnrollStatus
-  courseId     String
-  course       Course       @relation(fields: [courseId], references: [subjectId], onDelete: Cascade)
-  studentId    String
-  student      User         @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  enrollDate     DateTime     @default(now())
+  enrollStatus   EnrollStatus
+  courseId       String
+  course         Course?      @relation(fields: [courseId], references: [subjectId], onDelete: Cascade)
+  studentId      String
+  student        User?        @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  degree         Degree
+  grade          Grade
+  courseInMajors Majors
+  passedInMajors Majors
+  passedCourse   String
 
-  @@unique([courseId, studentId])
+  @@id([courseId, studentId])
 }
 
 enum EnrollStatus {
   PENDING
   APPROVED
+}
+
+enum Grade {
+  A
+  B_PLUS
+  B
+  C_PLUS
+  C
+  D_PLUS
+  D
+  F
+}
+
+enum Majors {
+  INFORMATION_TECHNOLOGY
+  DATA_SCIENCE_AND_BUSINESS_ANALYTICS
+  BUSINESS_INFORMATION_TECHNOLOGY_INTERNATIONAL_PROGRAM
+  ARTIFICIAL_INTELLIGENCE_TECHNOLOGY
+}
+
+enum Degree {
+  BACHELOR_DEGREE
+  MASTER_DEGREE
 }
