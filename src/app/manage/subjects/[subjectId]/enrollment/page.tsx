@@ -1,8 +1,7 @@
-import dynamic from "next/dynamic";
-const DisplayStudents = dynamic(() => import("./components/DisplayStudents"));
+import Page from "./components/Page";
 
-const page: React.FC<{ params: { subjectId: string } }> = ({ params: { subjectId } }) => {
-  return <DisplayStudents subjectId={subjectId} />;
+const page: React.FC = () => {
+  return <Page />;
 };
 
 export default page;

@@ -6,22 +6,31 @@ import TableApprovalform from "../../../../../core/components/approvalForm/Table
 //components
 import PageWrapper from "@/core/components/PageWrapper";
 import GoBackBtn from "@/core/components/GoBackBtn";
-import ExportCSVComponent from "../../../../../core/components/approvalForm/ExportCSVComponent";
+import ExportButton from "../../../../../core/components/approvalForm/ExportCSVComponent";
 
 const Page: React.FC<{ params: { subjectId: string } }> = ({ params: { subjectId } }) => {
-  const getEnroll = useGetEnroll(subjectId);
-  const enrolledStudents = useMemo(() => getEnroll.data?.data.data || [], [getEnroll.data]);
+  const { data, isLoading } = useGetEnroll(subjectId);
+  const enrolledStudents = useMemo(() => data?.data.data || [], [data]);
 
   return (
-    <>
-      <GoBackBtn />
-      <p className="text-sx m-4 text-center font-bold">สรุปข้อมูลขออนุมัตินักศึกษาช่วยงาน(รายวิชา)</p>
-      <PageWrapper className="max-w-6xl rounded">
-        {enrolledStudents.length > 0 && <ExportCSVComponent enrolledStudents={enrolledStudents} fileName={`แบบฟอร์มขออนุมัติรายวิชา${enrolledStudents[0]?.course?.nameEng}`}/>}
-        {enrolledStudents.length === 0 && <p>ปุ่มดาวน์โหลดจะปรากฎขึ้นเมื่อมีข้อมูลนักศึกษา</p>}
-        <TableApprovalform enrolledStudents={enrolledStudents} />
-      </PageWrapper>
-    </>
+    <div className=" bg-white p-4">
+      <p className="text-lg font-medium text-blue-500">รายละเอียดวิชา</p>
+      {enrolledStudents.length > 0 ? (
+        <div className="my-4 flex flex-col">
+          <TableApprovalform enrolledStudents={enrolledStudents} />
+          <ExportButton
+            className="btn click-animation my-4 ml-auto border border-blue-500 bg-blue-50 text-blue-500"
+            enrolledStudents={enrolledStudents}
+            fileName={`แบบฟอร์มขออนุมัติรายวิชา${enrolledStudents[0]?.course?.nameEng}`}
+          />
+        </div>
+      ) : (
+        <div className="flex h-44 flex-col items-center justify-center ">
+          <p className="text-gray-800">ไม่มีข้อมูลนักศึกษา</p>
+          <p className="text-gray-500">ข้อมูลจะแสดงที่นี่ หากมีรายชื่อนักศึกษาที่สมัคร</p>
+        </div>
+      )}
+    </div>
   );
 };
 

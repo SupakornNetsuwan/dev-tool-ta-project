@@ -36,7 +36,7 @@ const useFormatEnrolledData = (enrolledStudent: ResponseGetEnrollsType) => {
       const grade = enrolDetail.grade;
       const studentEnroll: StudentData = {
         id: enrolDetail.student?.id,
-        fullname: enrolDetail.student?.fullname,
+        fullname: enrolDetail.student?.Profile?.firstname + " " + enrolDetail.student?.Profile?.lastname,
         courseInMajor,
         degree,
         passedCourse,

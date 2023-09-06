@@ -155,15 +155,19 @@ enum CourseCreationStatus {
 }
 
 model Enroll {
-  enrollId     Int          @id @unique @default(autoincrement())
-  enrollDate   DateTime     @default(now())
-  enrollStatus EnrollStatus
-  courseId     String
-  course       Course       @relation(fields: [courseId], references: [subjectId], onDelete: Cascade)
-  studentId    String
-  student      User         @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  enrollDate     DateTime     @default(now())
+  enrollStatus   EnrollStatus
+  courseId       String
+  course         Course?      @relation(fields: [courseId], references: [subjectId], onDelete: Cascade)
+  studentId      String
+  student        User?        @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  degree         Degree
+  grade          Grade
+  courseInMajors Majors
+  passedInMajors Majors
+  passedCourse   String
 
-  @@unique([courseId, studentId])
+  @@id([courseId, studentId])
 }
 
 enum EnrollStatus {
@@ -181,6 +185,7 @@ enum Grade {
   D
   F
 }
+
 enum Majors {
   INFORMATION_TECHNOLOGY
   DATA_SCIENCE_AND_BUSINESS_ANALYTICS
@@ -192,19 +197,3 @@ enum Degree {
   BACHELOR_DEGREE
   MASTER_DEGREE
 }
-
-model Enroll {
-  enrollDate         DateTime     @default(now())
-  enrollStatus       EnrollStatus
-  courseId           String
-  course             Course?      @relation(fields: [courseId], references: [subjectId], onDelete: Cascade)
-  studentId          String
-  student            User?        @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  degree             Degree
-  grade              Grade  
-  courseInMajors     Majors
-  passedInMajors     Majors
-  passedCourse       String
-  @@id([courseId, studentId])
-}
-

@@ -1,62 +1,72 @@
 import { DataGrid } from "@mui/x-data-grid";
 import type { ResponseGetEnrollsType } from "@/app/api/enrolls/[subjectId]/EnrollType";
+import Link from "next/link";
+import { twMerge } from "tailwind-merge";
 
 const TableStudents: React.FC<{ enrolledStudents: ResponseGetEnrollsType }> = ({ enrolledStudents }) => {
   return (
     <>
       <DataGrid
         sx={{ fontFamily: "Noto Sans Thai", color: "#6b7280" }}
-        disableVirtualization
         autoHeight
         disableRowSelectionOnClick
+        density="compact"
         rows={enrolledStudents}
         getCellClassName={(row) => (row.value?.enrollStatus === "APPROVED" ? "bg-green-600" : "bg-grey-600")}
+        getRowId={(row) => row.course?.subjectId + "_" + row.student?.id}
         columns={[
-          {
-            field: "sequence",
-            headerName: "ลำดับ",
-            headerClassName: "text-blue-500",
-            renderCell: (index) => index.api.getAllRowIds(),
-          },
           {
             field: "studentId",
             headerName: "รหัสนักศึกษา",
             flex: 1,
-            minWidth: 100,
+            minWidth: 150,
             headerClassName: "text-blue-500",
             renderCell: (param) => {
               return <p>{param.row.student?.id}</p>;
             },
           },
           {
-            field: "fullname",
-            headerName: "รหัสนักศึกษา",
+            field: "student.fullname",
+            headerName: "ชื่อจริง-นามสกุล",
             flex: 2,
-            minWidth: 100,
-            headerClassName: "text-blue-500",
-            renderCell: (param) => {
-              return <p>{param.row.student?.fullname}</p>;
+            minWidth: 225,
+            headerClassName: "text-blue-500 text-center",
+            valueGetter(params) {
+              const profile = params.row.student?.Profile;
+              return `${profile?.firstname} ${profile?.lastname}`;
+            },
+            renderCell(params) {
+              return <div className="flex w-full overflow-x-auto">{params.value}</div>;
             },
           },
           {
-            field: "button",
+            field: "enrollment-form",
             headerName: "แบบฟอร์มการสมัคร",
             flex: 2,
-            minWidth: 100,
+            minWidth: 150,
             headerClassName: "text-blue-500",
-            renderCell: (param) => {
-              return <p className="text-blue-800 underline">ตรวจสอบ</p>;
+            renderCell() {
+              return (
+                <Link href={`/students/`}>
+                  <p className="text-blue-800 underline">ตรวจสอบ</p>
+                </Link>
+              );
             },
           },
           {
             field: "enrollStatus",
             headerName: "สถานะการสมัคร",
             flex: 2,
-            minWidth: 100,
+            minWidth: 150,
             headerClassName: "text-blue-500",
             renderCell: (param) => {
               return (
-                <p className={param.row.enrollStatus === "PENDING" ? "text-yellow-500" : "text-green-500"}>
+                <p
+                  className={twMerge(
+                    param.row.enrollStatus === "PENDING" && "text-amber-500",
+                    param.row.enrollStatus === "APPROVED" && "text-green-500"
+                  )}
+                >
                   {param.row.enrollStatus}
                 </p>
               );
