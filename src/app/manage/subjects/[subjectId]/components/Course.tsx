@@ -55,7 +55,7 @@ const Course: React.FC = () => {
           <List.Item topic="รายชื่อนักศึกษาที่ผ่านการคัดเลือก">
             <Link href={`/manage/subjects/${subjectId}/enrollment`}>
               <p className="flex items-center text-blue-500">
-                <span>ตรวจสอบรายชื่อ</span>
+                <span>จัดการรายชื่อ</span>
                 <HiMiniChevronRight className="text-lg" />
               </p>
             </Link>

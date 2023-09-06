@@ -4,8 +4,6 @@ import React, { useMemo } from "react";
 import useGetEnroll from "@/core/hooks/enroll/useGetEnroll";
 import TableApprovalform from "../../../../../core/components/approvalForm/TableApprovalForm";
 //components
-import PageWrapper from "@/core/components/PageWrapper";
-import GoBackBtn from "@/core/components/GoBackBtn";
 import ExportButton from "../../../../../core/components/approvalForm/ExportCSVComponent";
 
 const Page: React.FC<{ params: { subjectId: string } }> = ({ params: { subjectId } }) => {
@@ -14,7 +12,7 @@ const Page: React.FC<{ params: { subjectId: string } }> = ({ params: { subjectId
 
   return (
     <div className=" bg-white p-4">
-      <p className="text-lg font-medium text-blue-500">รายละเอียดวิชา</p>
+      <p className="text-lg font-medium text-blue-500">แบบฟอร์มขออนุมัติ (รายวิชา)</p>
       {enrolledStudents.length > 0 ? (
         <div className="my-4 flex flex-col">
           <TableApprovalform enrolledStudents={enrolledStudents} />

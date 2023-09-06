@@ -14,6 +14,9 @@ const TableStudents: React.FC<{ enrolledStudents: ResponseGetEnrollsType }> = ({
         rows={enrolledStudents}
         getCellClassName={(row) => (row.value?.enrollStatus === "APPROVED" ? "bg-green-600" : "bg-grey-600")}
         getRowId={(row) => row.course?.subjectId + "_" + row.student?.id}
+        slots={{
+          noRowsOverlay: () => <div className="flex items-center justify-center h-full">ไม่มีข้อมูล</div>,
+        }}
         columns={[
           {
             field: "studentId",

@@ -15,7 +15,8 @@ const DisplayStudents: React.FC = () => {
   if (isLoading) return <LoadingSkeleton />;
 
   return (
-    <div className="rounded bg-white p-4">
+    <div className=" bg-white p-4">
+      <p className="mb-4 text-lg font-medium text-blue-500">รายชื่อนักศึกษาที่ผ่านการคัดเลือก</p>
       <TableStudentsEnroll enrolledStudents={data?.data.data || []} />
     </div>
   );
