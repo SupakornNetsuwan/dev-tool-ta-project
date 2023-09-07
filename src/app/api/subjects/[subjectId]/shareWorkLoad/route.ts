@@ -16,7 +16,7 @@ type ParamsType = {
  */
 
 export const PATCH = async (request: NextRequest, { params: { subjectId } }: ParamsType) => {
-    const { hasPermission, session } = await checkAuth(["ADMIN", "PROFESSOR", "STUDENT", "SUPERADMIN"])
+    const { hasPermission, session } = await checkAuth(["ADMIN", "PROFESSOR", "SUPERADMIN"])
     if (!session) return NextResponse.json({ message: "โปรดเข้าสู่ระบบ" }, { status: 401 })
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
 

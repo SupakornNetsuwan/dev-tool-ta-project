@@ -19,7 +19,7 @@ type ParamsType = {
  */
 
 export const GET = async (request: NextRequest, { params: { subjectId } }: ParamsType) => {
-    const { hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN", "STUDENT", "PROFESSOR"]);
+    const { hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN", "PROFESSOR"]); // TODO : ทำให้ถ้าเป็น นศ. จะได้แค่ข้อมูลบาง Field หรือ แยก route ไปเลยดีกว่า ?
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
     const url = new URL(request.url)
 
