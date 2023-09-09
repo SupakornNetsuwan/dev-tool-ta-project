@@ -1,8 +1,8 @@
-import Page from "./components/Page";
 import React from "react";
 
 const page = () => {
-  return <Page />;
+  
+  return <div>page</div>;
 };
 
 export default page;

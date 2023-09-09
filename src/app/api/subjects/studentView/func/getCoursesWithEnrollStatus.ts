@@ -1,6 +1,6 @@
 import { prisma } from "@/core/libs/prisma/connector"
 import exclude from "@/core/func/exclude"
-import { GetCoursesWithEnrollStatus } from "../GetStudentCourseType"
+import { GetCoursesWithEnrollStatusType } from "../GetCoursesWithEnrollStatusType"
 
 /**
  * 
@@ -8,8 +8,8 @@ import { GetCoursesWithEnrollStatus } from "../GetStudentCourseType"
  * @description หาคอร์สที่เกี่ยวข้องกับผู้ใช้ที่ได้ให้มาเช่น ผู้ใช้ A ต้องการเห็นมุมมองคอร์สของเขา เขาก็จะเห็นคอร์สทั้งหมด ส่วนคอร์สไหนที่สามารถลงทะเบียนได้ก็จะมีการทำเป็น status ถ้าหากว่ามีการลงทะเบียนไปแล้วก็จะมี status ที่แตกต่างไป
  */
 
-const getCoursesWithEnrollStatus = async (userId: string): Promise<GetCoursesWithEnrollStatus> => {
-    const results = await prisma.course.findMany({
+const getCoursesWithEnrollStatus = async (userId: string): Promise<GetCoursesWithEnrollStatusType> => {
+    let results = await prisma.course.findMany({
         include: {
             Enroll: {
                 where: {
@@ -28,8 +28,8 @@ const getCoursesWithEnrollStatus = async (userId: string): Promise<GetCoursesWit
 
     // เอา passcode และ shareWorkloadFile ออกไป
     return results.map(result => {
-        result = { ...result }
-        return exclude(result, ["secretCode", "shareWorkloadFile"])
+        const excludedResults = exclude(result, ["secretCode", "shareWorkloadFile"])
+        return { ...excludedResults, status: excludedResults.Enroll.length > 0 ? "enrolled" : "unenrolled" }
     })
 }
 

@@ -1,6 +1,5 @@
 import checkAuth from "@/core/func/checkAuth";
 import { NextRequest, NextResponse } from "next/server";
-import getEnroll from "./func/getEnroll";
 
 type ParamsType = {
     params: {
@@ -9,13 +8,16 @@ type ParamsType = {
 }
 
 export const GET = async (request: NextRequest, { params: { subjectId } }: ParamsType) => {
-    console.log(`กำลังค้นหาผู้สมัครในรายวิชา: ${subjectId}`)
-    const { hasPermission } = await checkAuth(["PROFESSOR", "ADMIN", "SUPERADMIN"]);
+    const { hasPermission, session } = await checkAuth(["ADMIN", "STUDENT", "SUPERADMIN", "PROFESSOR"]);
+    if (!session) return NextResponse.json({ message: "โปรดเข้าสู่ระบบ" }, { status: 401 })
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
+    const user = session.user
+    // console.log(`------- ทำการดึงข้อมูลการเข้าถึงคอร์สรหัส ${subjectId} ของนักศึกษารหัส ${user.id} 🎓-------`)
 
     try {
-        const studentsEnroll = await getEnroll(subjectId)
-        return NextResponse.json({ message: "ร้องขอข้อมูลผู้สมัครสำเร็จ", data: studentsEnroll })
+        console.log(subjectId);
+
+        return NextResponse.json({ message: "HELLO", data: subjectId })
     } catch (error) {
         console.log(error);
         let message = "เกิดปัญหาที่ไม่ทราบสาเหตุ"
