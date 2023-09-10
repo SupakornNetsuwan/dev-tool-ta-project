@@ -9,13 +9,13 @@ type ParamsType = {
 }
 
 export const GET = async (request: NextRequest, { params: { subjectId } }: ParamsType) => {
-    console.log("กำลังค้นหาผู้สมัครในรายวิชา: ", subjectId)
-    const { hasPermission } = await checkAuth(["ADMIN", "SUPERADMIN"]);
+    console.log(`กำลังค้นหาผู้สมัครในรายวิชา: ${subjectId}`)
+    const { hasPermission } = await checkAuth(["PROFESSOR", "ADMIN", "SUPERADMIN"]);
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
 
     try {
         const studentsEnroll = await getEnroll(subjectId)
-        return NextResponse.json({ message: "ร้องขอข้อมูลผู้สมัครรายวิชาสำเร็จ", data: studentsEnroll })
+        return NextResponse.json({ message: "ร้องขอข้อมูลผู้สมัครสำเร็จ", data: studentsEnroll })
     } catch (error) {
         console.log(error);
         let message = "เกิดปัญหาที่ไม่ทราบสาเหตุ"

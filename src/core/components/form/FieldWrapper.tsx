@@ -29,7 +29,7 @@ const FieldWrapper: React.FC<
   );
 
   return (
-    <div className="flex flex-col">
+    <div className={twMerge("flex flex-col", className)}>
       <>{deocratedLabel}</>
       <>{decoratedChildren}</>
       <>{decoratedErrorComponent}</>
