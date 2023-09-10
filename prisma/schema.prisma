@@ -173,6 +173,7 @@ model Enroll {
 enum EnrollStatus {
   PENDING
   APPROVED
+  FINAL_APPROVED
 }
 
 enum Grade {

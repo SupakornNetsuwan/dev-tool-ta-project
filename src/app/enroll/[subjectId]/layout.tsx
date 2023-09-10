@@ -7,7 +7,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   const { subjectId } = params;
-  console.log(parent);
+
   return {
     title: `📚 ${subjectId}`,
   };

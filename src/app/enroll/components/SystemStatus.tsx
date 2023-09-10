@@ -16,7 +16,7 @@ const SystemStatus = () => {
         className={twMerge("aspect-square w-2 rounded-full", isOpen ? "animate-pulse bg-green-500" : "bg-gray-500")}
       />
       <span className={twMerge("text-xs ", isOpen ? "text-green-500" : "text-gray-500")}>
-        {isOpen ? "ระบบเปิดรับสมัคร" : "ระบบปิดรับสมัคร"}{" "}
+        {isOpen ? "ระบบเปิดรับสมัคร" : "ระบบปิดรับสมัคร"}
       </span>
     </div>
   );

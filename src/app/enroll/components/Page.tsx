@@ -5,25 +5,27 @@ import Course from "./Course";
 
 const Page = () => {
   return (
-    <Courses.WrapperProvider>
-      <>
-        <div className="mb-4 flex items-center  justify-between">
-          <Courses.Search />
-          <Courses.SystemStatus />
-        </div>
-        <Courses.List>
-          {(courses) => {
-            return (
-              <div className="student-view-course">
-                {courses.map((course) => (
-                  <Course detail={course} key={course.subjectId} />
-                ))}
-              </div>
-            );
-          }}
-        </Courses.List>
-      </>
-    </Courses.WrapperProvider>
+    <div className="rounded bg-gray-50 p-4 mb-12">
+      <Courses.WrapperProvider>
+        <>
+          <div className="mb-4 flex items-center  justify-between">
+            <Courses.Search />
+            <Courses.SystemStatus />
+          </div>
+          <Courses.List>
+            {(courses) => {
+              return (
+                <div className="student-view-course">
+                  {courses.map((course) => (
+                    <Course detail={course} key={course.subjectId} />
+                  ))}
+                </div>
+              );
+            }}
+          </Courses.List>
+        </>
+      </Courses.WrapperProvider>
+    </div>
   );
 };
 
