@@ -1,10 +1,47 @@
 "use client";
 // type
 import type { ResponseGetEnrollsType } from "@/app/api/enrolls/[subjectId]/EnrollType";
-4;
+import type { EnrollCourseFormType } from "@/app/api/subjects/studentView/[subjectId]/FullCourseWithEnrollStatusType";
+
 import React from "react";
+
 // custom hook
 import formatEnrolledData from "../../hooks/approvalForm/useFormatEnrolledData";
+const degreeMapper: { label: string; value: EnrollCourseFormType["degree"] }[] = [
+  { label: "ปริญญาตรี", value: "BACHELOR_DEGREE" },
+  { label: "ปริญญาโท", value: "MASTER_DEGREE" },
+];
+
+const courseInMajorsMapper: { label: string; value: EnrollCourseFormType["courseInMajors"] }[] = [
+  { label: "สาขาวิชาเทคโนโลยีปัญญาประดิษฐ์", value: "ARTIFICIAL_INTELLIGENCE_TECHNOLOGY" },
+  {
+    label: "สาขาวิชาเทคโนโลยีสารสนเทศทางธุรกิจ (หลักสูตรนานาชาติ)",
+    value: "BUSINESS_INFORMATION_TECHNOLOGY_INTERNATIONAL_PROGRAM",
+  },
+  { label: "สาขาวิทยาการข้อมูลและการวิเคราะห์เชิงธุรกิจ", value: "DATA_SCIENCE_AND_BUSINESS_ANALYTICS" },
+  { label: "สาขาวิชาเทคโนโลยีสารสนเทศ", value: "INFORMATION_TECHNOLOGY" },
+];
+
+const passedInMajorsMapper: { label: string; value: EnrollCourseFormType["passedInMajors"] }[] = [
+  { label: "สาขาวิชาเทคโนโลยีปัญญาประดิษฐ์", value: "ARTIFICIAL_INTELLIGENCE_TECHNOLOGY" },
+  {
+    label: "สาขาวิชาเทคโนโลยีสารสนเทศทางธุรกิจ (หลักสูตรนานาชาติ)",
+    value: "BUSINESS_INFORMATION_TECHNOLOGY_INTERNATIONAL_PROGRAM",
+  },
+  { label: "สาขาวิทยาการข้อมูลและการวิเคราะห์เชิงธุรกิจ", value: "DATA_SCIENCE_AND_BUSINESS_ANALYTICS" },
+  { label: "สาขาวิชาเทคโนโลยีสารสนเทศ", value: "INFORMATION_TECHNOLOGY" },
+];
+
+const gradeMapper: { label: string; value: EnrollCourseFormType["grade"] }[] = [
+  { label: "A", value: "A" },
+  { label: "B+", value: "B_PLUS" },
+  { label: "B", value: "B" },
+  { label: "C+", value: "C_PLUS" },
+  { label: "C", value: "C" },
+  { label: "D+", value: "D_PLUS" },
+  { label: "D", value: "D" },
+  { label: "F", value: "F" },
+];
 
 const Td: React.FC<{
   text: React.ReactElement;
@@ -65,11 +102,11 @@ const TableApprovalform: React.FC<{ enrolledStudents: ResponseGetEnrollsType }> 
                       {studentIndex === 0 && <Td rowSpan={row.studentData?.length} text={<>{row.courseProfessor}</>} />}
                       <Td rowSpan={undefined} text={<>{student.id}</>} />
                       <Td rowSpan={undefined} text={<>{student.fullname}</>} />
-                      <Td rowSpan={undefined} text={<>{student.degree}</>} />
-                      <Td rowSpan={undefined} text={<>{student.courseInMajor}</>} />
-                      <Td rowSpan={undefined} text={<>{student.passedInMajors}</>} />
+                      <Td rowSpan={undefined} text={<>{degreeMapper.find(item => item.value ===student.degree)?.label}</>} />
+                      <Td rowSpan={undefined} text={<>{courseInMajorsMapper.find(item => item.value === student.courseInMajor)?.label}</>} />
+                      <Td rowSpan={undefined} text={<>{passedInMajorsMapper.find(item => item.value === student.courseInMajor)?.label}</>} />
                       <Td rowSpan={undefined} text={<>{student.passedCourse} </>} />
-                      <Td rowSpan={undefined} text={<>{student.grade}</>} />
+                      <Td rowSpan={undefined} text={<>{gradeMapper.find(item => item.value ===student.grade)?.label}</>} />
                       <Td rowSpan={undefined} text={<></>} />
                     </tr>
                   ))}

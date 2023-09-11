@@ -7,6 +7,8 @@ const getEnroll = async (subjectId: string): Promise<ResponseGetEnrollsType> => 
       course: {
         subjectId: subjectId,
       },
+      //ทำการดึงข้อมูลของผู้สมัครที่มีสถานะ FINAL_APPROVED แล้วเท่านั้น
+      enrollStatus:'FINAL_APPROVED'
     },
     select: {
       passedInMajors: true,
