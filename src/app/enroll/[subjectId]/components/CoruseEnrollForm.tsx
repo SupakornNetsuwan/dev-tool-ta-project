@@ -48,10 +48,10 @@ const gradeMapper: { label: string; value: EnrollCourseFormType["grade"] }[] = [
 
 const CoruseEnrollForm = () => {
   const { subjectId } = useParams();
-  const { register, watch } = useFormContext<EnrollCourseFormType>();
+  const { register } = useFormContext<EnrollCourseFormType>();
   const { data: courseDetail } = useGetFullCourseWithEnrollStatus(subjectId);
   const [submitConfirm, setSubmitConfirm] = useState(false);
-  const { isNeedSecretCode } = courseDetail?.data.data!;
+  const { isNeedSecretEnrollCode: isNeedSecretCode } = courseDetail?.data.data!;
 
   const inverSubmitConfirmState = () => setSubmitConfirm((prevState) => !prevState);
 

@@ -29,17 +29,8 @@ export const GET = async (request: NextRequest, { params: { subjectId } }: Param
     console.log(`------- ทำการดึงข้อมูลการเข้าถึงคอร์สรหัส ${subjectId} ของนักศึกษารหัส ${user.id} 🎓-------`)
 
     try {
-        const [course, systemStatus] = await Promise.all([getFullCourseWithEnrollStatus(user.id, subjectId), getSystemStatus()])
-
-        if (!systemStatus?.isOpen && course.status === "unenrolled") {
-            // ระบบปิดอยู่ และ นักศึกษาไม่ได้ลงทะเบียน 🟡
-            return NextResponse.json({ message: `ระบบได้ปิดรับสมัครแล้ว (${dayjs(systemStatus?.closeDate).format("YYYY/M/D HH:mm")})` }, {
-                status: 403
-            })
-        } else {
-            // ระบบเปิดอยู่ หรือ ถึงจะปิดก็ได้ลงทะเบียนไว้แล้วเข้ามาดูผลสมัครได้ 🟢
-            return NextResponse.json({ message: `ร้องขอรายวิชา ${subjectId} สำหรับ ${user.fullname} (${user.email}) สำเร็จ`, data: course })
-        }
+        const course = await getFullCourseWithEnrollStatus(user.id, subjectId)
+        return NextResponse.json({ message: `ร้องขอรายวิชา ${subjectId} สำหรับ ${user.fullname} (${user.email}) สำเร็จ`, data: course })
 
     } catch (error) {
         console.log(error);

@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client"
 
 /**
- * @description ไว้เป็น type สำหรับนำไปใช้ในกรณีที่นักศึกษาต้องการดึงคอร์สในวิชสที่จำเพราะ (กดเข้าไปดูว่า วิชานี้ลงทะเบียนสถานะเป็นเช่นไร)
+ * @description ไว้เป็น type สำหรับนำไปใช้ในกรณีที่นักศึกษาต้องการดึงคอร์สในวิชาที่จำเพราะ (กดเข้าไปดูว่า วิชานี้ลงทะเบียนสถานะเป็นเช่นไร)
  */
 
 export type GetFullCourseWithEnrollStatusType = (Omit<Prisma.CourseGetPayload<{
@@ -12,7 +12,7 @@ export type GetFullCourseWithEnrollStatusType = (Omit<Prisma.CourseGetPayload<{
         Enroll: {
             where: {
                 studentId: {
-                    equals: userId
+                    equals: string
                 },
             },
             select: {
@@ -23,8 +23,11 @@ export type GetFullCourseWithEnrollStatusType = (Omit<Prisma.CourseGetPayload<{
         },
     }
 }>, "secretCode" | "shareWorkloadFile"> & {
-    status: "enrolled" | "unenrolled";
-    isNeedSecretCode: boolean
+    isEnrolled: boolean;
+    isNeedSecretEnrollCode: boolean;
+    Enroll: {
+        formatEnrollStatus: "รอการคัดเลือก" | "ไม่ผ่านการคัดเลือก" | "ผ่านการคัดเลือก" | "ไม่สามารถระบุได้"
+    }[]
 })
 
 /**

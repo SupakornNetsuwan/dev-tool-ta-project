@@ -20,7 +20,8 @@ const List: React.FC<{ children: (courses: GetCoursesWithEnrollStatusType) => JS
 
   if (isLoading) return <LoadingSkeleton />;
 
-  return children(courses?.data.data.filter((course) => filterSearchCourse(course, search)) || []);
+  if (courses?.data.data.filter((course) => filterSearchCourse(course, search)).length === 0) return <div className="text-gray-500 text-center py-24">ไม่พบวิชา 🍃</div>
+    return children(courses?.data.data.filter((course) => filterSearchCourse(course, search)) || []);
 };
 
 export default List;
