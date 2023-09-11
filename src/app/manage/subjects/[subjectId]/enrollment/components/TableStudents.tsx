@@ -15,7 +15,7 @@ const TableStudents: React.FC<{ enrolledStudents: ResponseGetEnrollsType }> = ({
         getCellClassName={(row) => (row.value?.enrollStatus === "APPROVED" ? "bg-green-600" : "bg-grey-600")}
         getRowId={(row) => row.course?.subjectId + "_" + row.student?.id}
         slots={{
-          noRowsOverlay: () => <div className="flex items-center justify-center h-full">ไม่มีข้อมูล</div>,
+          noRowsOverlay: () => <div className="flex h-full items-center justify-center">ไม่มีข้อมูล</div>,
         }}
         columns={[
           {
@@ -63,16 +63,7 @@ const TableStudents: React.FC<{ enrolledStudents: ResponseGetEnrollsType }> = ({
             minWidth: 150,
             headerClassName: "text-blue-500",
             renderCell: (param) => {
-              return (
-                <p
-                  className={twMerge(
-                    param.row.enrollStatus === "PENDING" && "text-amber-500",
-                    param.row.enrollStatus === "APPROVED" && "text-green-500"
-                  )}
-                >
-                  {param.row.enrollStatus}
-                </p>
-              );
+              return <p className={twMerge()}>{param.row.enrollStatus}</p>;
             },
           },
         ]}

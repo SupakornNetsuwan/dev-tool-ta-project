@@ -95,9 +95,6 @@ const Course: React.FC = () => {
           <List.Item topic="อาจารย์ผู้สอน">
             <p className="text-gray-500">{courseDetail?.professor?.id}</p>
           </List.Item>
-          <List.Item topic="จำนวนนักศึกษาที่สมัคร">
-            <p className="text-gray-500">{0}</p>
-          </List.Item>
         </List.Wrapper>
       </div>
     </>
