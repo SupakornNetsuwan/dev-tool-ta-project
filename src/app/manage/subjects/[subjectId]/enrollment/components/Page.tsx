@@ -6,10 +6,11 @@ import dynamic from "next/dynamic";
 import useGetEnroll from "@/core/hooks/enroll/useGetEnroll";
 import LoadingSkeleton from "./LoadingSkeleton";
 const TableStudentsEnroll = dynamic(() => import("./TableStudents"));
+import { EnrollStatus } from "@prisma/client";
 
 const DisplayStudents: React.FC = () => {
   const { subjectId } = useParams();
-  const { data, isLoading, isError, error } = useGetEnroll(subjectId);
+  const { data, isLoading, isError, error } = useGetEnroll(subjectId, EnrollStatus.APPROVED);
 
   if (isError) throw new Error(error.response?.data.message);
   if (isLoading) return <LoadingSkeleton />;

@@ -5,9 +5,9 @@ import useGetEnroll from "@/core/hooks/enroll/useGetEnroll";
 import TableApprovalform from "../../../../../core/components/approvalForm/TableApprovalForm";
 //components
 import ExportButton from "../../../../../core/components/approvalForm/ExportCSVComponent";
-
+import { EnrollStatus } from "@prisma/client";
 const Page: React.FC<{ params: { subjectId: string } }> = ({ params: { subjectId } }) => {
-  const { data, isLoading } = useGetEnroll(subjectId);
+  const { data, isLoading } = useGetEnroll(subjectId, EnrollStatus.FINAL_APPROVED);
   const enrolledStudents = useMemo(() => data?.data.data || [], [data]);
 
   return (
