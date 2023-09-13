@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import Courses from "./Courses";
 import Course from "./Course";
 

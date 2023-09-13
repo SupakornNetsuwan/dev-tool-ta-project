@@ -48,13 +48,13 @@ const CourseDetail = () => {
       <div className="my-4 rounded-sm bg-blue-50/50 p-4 text-gray-800">{detail?.description || "ไม่ระบุ"}</div>
       <List.Wrapper>
         <List.Item topic="หน่วยกิต">
-          <p className="text-gray-500">{detail?.credit || "ไม่ระบุ"}</p>
+          <p className="text-gray-500 text-right">{detail?.credit || "ไม่ระบุ"}</p>
         </List.Item>
         <List.Item topic="การติดต่อ">
-          <p className="text-gray-500">{detail?.contact || "ไม่ระบุ"}</p>
+          <p className="text-gray-500 text-right">{detail?.contact || "ไม่ระบุ"}</p>
         </List.Item>
         <List.Item topic="เงื่อนไขในการสมัคร">
-          <p className=" text-gray-500">{detail?.enrollCondition || "ไม่ระบุ"}</p>
+          <p className=" text-gray-500 text-right">{detail?.enrollCondition || "ไม่ระบุ"}</p>
         </List.Item>
       </List.Wrapper>
     </div>
