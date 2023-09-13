@@ -60,10 +60,10 @@ const TableStudents: React.FC = () => {
             flex: 2,
             minWidth: 150,
             headerClassName: "text-blue-500",
-            renderCell() {
+            renderCell(body) {
               return (
-                <Link href={`/students/`}>
-                  <p className="text-blue-800 underline">ตรวจสอบ</p>
+                <Link href={`/manage/users/${body.row.student?.id}?subjectId=${body.row.course?.subjectId}`}>
+                  <p className="text-blue-500 underline underline-offset-2">ตรวจสอบ</p>
                 </Link>
               );
             },

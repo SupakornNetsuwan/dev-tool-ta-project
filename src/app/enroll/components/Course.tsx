@@ -58,11 +58,13 @@ const Course: React.FC<{ detail: GetCoursesWithEnrollStatusType[number] }> = ({ 
       href={`${pathName}/${detail.subjectId}`}
       className="course mt-1 block cursor-pointer flex-col rounded border bg-white p-4 hover:shadow-realistic-2 sm:p-6"
     >
-      <div className="flex items-start">
-        <h2 className="font-semibold text-blue-500">
-          {detail.nameThai} <span className="block text-sm font-normal text-gray-500">({detail.nameEng})</span>
-        </h2>
-        <div className="ml-auto flex items-center space-x-2">
+      <div className="flex flex-col-reverse items-start sm:flex-row justify-between">
+        <div className="font-semibold text-blue-500">
+          <p>{detail.nameThai}</p>
+          <p className="text-sm font-normal text-gray-500"> ({detail.subjectId})</p>
+          <p className="text-sm font-normal text-gray-500">({detail.nameEng})</p>
+        </div>
+        <div className="mb-2 flex w-full items-center justify-between space-x-2 sm:mb-0 sm:w-auto sm:justify-end">
           <Status status={detail.status} />
           <HiChevronRight className="box-content text-xl text-blue-500" />
         </div>

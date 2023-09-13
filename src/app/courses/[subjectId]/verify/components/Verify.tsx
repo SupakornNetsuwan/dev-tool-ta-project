@@ -56,16 +56,17 @@ const Verify = () => {
         <List.Item topic="หน่วยกิต">
           <p className="text-gray-500">{courseDetailData?.credit}</p>
         </List.Item>
+        <List.Item topic="รหัสสมัคร">
+          <p className="text-gray-500">{courseDetailData?.secretCode}</p>
+        </List.Item>
         <List.Item topic="ภาคการศึกษา">
           <p className="text-gray-500">{systemStatusData?.semester}</p>
         </List.Item>
         <List.Item topic="ปีการศึกษา">
           <p className="text-gray-500">{systemStatusData?.year}</p>
         </List.Item>
-        <p className="py-4 text-lg font-medium text-gray-800">ขออนุมัติจ้างนักศึกษาเพื่อช่วยปฏิบัติงานดังนี้</p>
-        <List.Item topic="xxxx">
-          <p className="text-gray-500">xxxx</p>
-        </List.Item>
+        {/* <p className="py-4 text-lg font-medium text-gray-800">ขออนุมัติจ้างนักศึกษาเพื่อช่วยปฏิบัติงานดังนี้</p> */}
+
         <div className="flex justify-end pt-12">{isVerifyCompleted ? <UnSubmit /> : <Submit />}</div>
       </List.Wrapper>
     </>

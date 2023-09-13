@@ -5,10 +5,10 @@ import Course from "./Course";
 
 const Page = () => {
   return (
-    <div className="rounded bg-gray-50 p-4 mb-12">
+    <div className="mb-12 rounded bg-gray-50 p-4">
       <Courses.WrapperProvider>
         <>
-          <div className="mb-4 flex items-center  justify-between">
+          <div className="mb-4 flex flex-col-reverse justify-between gap-y-2 sm:flex-row sm:items-center sm:gap-y-0">
             <Courses.Search />
             <Courses.SystemStatus />
           </div>
