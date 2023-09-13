@@ -34,5 +34,16 @@ export type GetFullCourseWithEnrollStatusType = (Omit<Prisma.CourseGetPayload<{
  * @description ไว้เป็น type สำหรับนำไปใช้ในกรณีที่นักศึกษาต้องการสมัครผู้ช่วยสอน
  */
 
-export type EnrollCourseType = Omit<Prisma.EnrollUpdateManyMutationInput, "enrollStatus" | "enrollDate"> & Prisma.CourseGetPayload<{ select: { secretCode: true } }>
-export type EnrollCourseFormType = Omit<EnrollCourseType, "passedCourse"> & { "passedCourse": { subjectId: string, subjectName: string }[] }
+export type EnrollCourseFormType = Omit<EnrollCourseType, "passedCourse" | "enrollStatus" | "enrollDate">
+    & Prisma.CourseGetPayload<{ select: { secretCode: true } }>
+    & { "passedCourse": { subjectId: string, subjectName: string }[] }
+
+/**
+ * @description ไว้เป็น type สำหรับนการแก้ไขอัปเดตข้อมูล Enroll ของแอดมิน
+ */
+
+export type EnrollUpdateType = Prisma.EnrollGetPayload<{
+    select: {
+        enrollStatus: true
+    }
+}> & { studentId: string }
