@@ -4,6 +4,7 @@ import * as Select from "@radix-ui/react-select";
 import { HiOutlineChevronUp, HiOutlineChevronDown, HiOutlineChevronUpDown, HiOutlineCheck } from "react-icons/hi2";
 import { GridRenderCellParams } from "@mui/x-data-grid";
 import { ResponseGetEnrollsType } from "@/app/api/enrolls/[subjectId]/EnrollType";
+import { enrollStatusMapper } from "@/core/libs/mapper";
 
 const SelectItem = forwardRef<
   HTMLDivElement,
@@ -49,9 +50,11 @@ const RenderApprovalStatus: React.FC<{
             <HiOutlineChevronUp className="text-gray-500" />
           </Select.ScrollUpButton>
           <Select.Viewport className="p-2">
-            <SelectItem value="PENDING">ไม่คัดเลือก</SelectItem>
-            <SelectItem value="APPROVED">อาจารย์คัดเลือก</SelectItem>
-            <SelectItem value="FINAL_APPROVED">ผ่านการคัดเลือก</SelectItem>
+            {enrollStatusMapper.map((status) => (
+              <SelectItem key={status.value} value={status.value}>
+                {status.label}
+              </SelectItem>
+            ))}
           </Select.Viewport>
           <Select.ScrollDownButton className="flex h-[25px] cursor-default items-center justify-center bg-white">
             <HiOutlineChevronDown className="text-gray-500" />

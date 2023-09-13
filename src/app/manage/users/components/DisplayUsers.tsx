@@ -11,6 +11,7 @@ import useUpdateRole from "@/core/hooks/users/useUpdateRole";
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
 import useGetUsers from "@/core/hooks/users/useGetUsers";
 import { useQueryClient } from "@tanstack/react-query";
+import Link from "next/link";
 
 const roles: Role[] = ["ADMIN", "PROFESSOR", "SUPERADMIN", "STUDENT"];
 
@@ -66,6 +67,13 @@ const DisplayUsers: React.FC = () => {
             minWidth: 200,
             headerName: "ชื่อจริง-นามสกุล",
             headerClassName: "text-blue-500",
+            renderCell(body) {
+              return (
+                <Link href={`/manage/users/${body.row.id}`}>
+                  <p className="text-blue-500 underline underline-offset-2">{body.value}</p>
+                </Link>
+              );
+            },
           },
           {
             field: "role",
