@@ -1,42 +1,44 @@
 import { EnrollCourseFormType } from "@/app/api/subjects/studentView/[subjectId]/FullCourseWithEnrollStatusType";
 import type { FormatEnrolledData, StudentData, ApprovalFormFormattedType } from "./useFormatEnrolledData";
+import { courseInMajorsMapper, degreeMapper, gradeMapper, passedInMajorsMapper } from "@/core/libs/mapper";
+
+// const degreeMapper: { label: string; value: EnrollCourseFormType["degree"] }[] = [
+//   { label: "ปริญญาตรี", value: "BACHELOR_DEGREE" },
+//   { label: "ปริญญาโท", value: "MASTER_DEGREE" },
+// ];
+
+// const courseInMajorsMapper: { label: string; value: EnrollCourseFormType["courseInMajors"] }[] = [
+//   { label: "สาขาวิชาเทคโนโลยีปัญญาประดิษฐ์", value: "ARTIFICIAL_INTELLIGENCE_TECHNOLOGY" },
+//   {
+//     label: "สาขาวิชาเทคโนโลยีสารสนเทศทางธุรกิจ (หลักสูตรนานาชาติ)",
+//     value: "BUSINESS_INFORMATION_TECHNOLOGY_INTERNATIONAL_PROGRAM",
+//   },
+//   { label: "สาขาวิทยาการข้อมูลและการวิเคราะห์เชิงธุรกิจ", value: "DATA_SCIENCE_AND_BUSINESS_ANALYTICS" },
+//   { label: "สาขาวิชาเทคโนโลยีสารสนเทศ", value: "INFORMATION_TECHNOLOGY" },
+// ];
+
+// const passedInMajorsMapper: { label: string; value: EnrollCourseFormType["passedInMajors"] }[] = [
+//   { label: "สาขาวิชาเทคโนโลยีปัญญาประดิษฐ์", value: "ARTIFICIAL_INTELLIGENCE_TECHNOLOGY" },
+//   {
+//     label: "สาขาวิชาเทคโนโลยีสารสนเทศทางธุรกิจ (หลักสูตรนานาชาติ)",
+//     value: "BUSINESS_INFORMATION_TECHNOLOGY_INTERNATIONAL_PROGRAM",
+//   },
+//   { label: "สาขาวิทยาการข้อมูลและการวิเคราะห์เชิงธุรกิจ", value: "DATA_SCIENCE_AND_BUSINESS_ANALYTICS" },
+//   { label: "สาขาวิชาเทคโนโลยีสารสนเทศ", value: "INFORMATION_TECHNOLOGY" },
+// ];
+
+// const gradeMapper: { label: string; value: EnrollCourseFormType["grade"] }[] = [
+//   { label: "A", value: "A" },
+//   { label: "B+", value: "B_PLUS" },
+//   { label: "B", value: "B" },
+//   { label: "C+", value: "C_PLUS" },
+//   { label: "C", value: "C" },
+//   { label: "D+", value: "D_PLUS" },
+//   { label: "D", value: "D" },
+//   { label: "F", value: "F" },
+// ];
 
 const useCreateCsv= (enrolledStudentsFormatted: ApprovalFormFormattedType|undefined) => {
-  const degreeMapper: { label: string; value: EnrollCourseFormType["degree"] }[] = [
-    { label: "ปริญญาตรี", value: "BACHELOR_DEGREE" },
-    { label: "ปริญญาโท", value: "MASTER_DEGREE" },
-  ];
-  
-  const courseInMajorsMapper: { label: string; value: EnrollCourseFormType["courseInMajors"] }[] = [
-    { label: "สาขาวิชาเทคโนโลยีปัญญาประดิษฐ์", value: "ARTIFICIAL_INTELLIGENCE_TECHNOLOGY" },
-    {
-      label: "สาขาวิชาเทคโนโลยีสารสนเทศทางธุรกิจ (หลักสูตรนานาชาติ)",
-      value: "BUSINESS_INFORMATION_TECHNOLOGY_INTERNATIONAL_PROGRAM",
-    },
-    { label: "สาขาวิทยาการข้อมูลและการวิเคราะห์เชิงธุรกิจ", value: "DATA_SCIENCE_AND_BUSINESS_ANALYTICS" },
-    { label: "สาขาวิชาเทคโนโลยีสารสนเทศ", value: "INFORMATION_TECHNOLOGY" },
-  ];
-  
-  const passedInMajorsMapper: { label: string; value: EnrollCourseFormType["passedInMajors"] }[] = [
-    { label: "สาขาวิชาเทคโนโลยีปัญญาประดิษฐ์", value: "ARTIFICIAL_INTELLIGENCE_TECHNOLOGY" },
-    {
-      label: "สาขาวิชาเทคโนโลยีสารสนเทศทางธุรกิจ (หลักสูตรนานาชาติ)",
-      value: "BUSINESS_INFORMATION_TECHNOLOGY_INTERNATIONAL_PROGRAM",
-    },
-    { label: "สาขาวิทยาการข้อมูลและการวิเคราะห์เชิงธุรกิจ", value: "DATA_SCIENCE_AND_BUSINESS_ANALYTICS" },
-    { label: "สาขาวิชาเทคโนโลยีสารสนเทศ", value: "INFORMATION_TECHNOLOGY" },
-  ];
-  
-  const gradeMapper: { label: string; value: EnrollCourseFormType["grade"] }[] = [
-    { label: "A", value: "A" },
-    { label: "B+", value: "B_PLUS" },
-    { label: "B", value: "B" },
-    { label: "C+", value: "C_PLUS" },
-    { label: "C", value: "C" },
-    { label: "D+", value: "D_PLUS" },
-    { label: "D", value: "D" },
-    { label: "F", value: "F" },
-  ];
   
   if(enrolledStudentsFormatted){
   let csvContent: string = "";

@@ -11,10 +11,10 @@ import useUpdateEnroll from "@/core/hooks/enroll/useUpdateEnroll";
 
 const TableStudents: React.FC = () => {
   const { subjectId } = useParams();
-  const enrollment = useGetEnroll(subjectId);
-  const updateEnroll = useUpdateEnroll(subjectId);
   const { openToast } = useCustomToast();
   const queryClient = useQueryClient();
+  const updateEnroll = useUpdateEnroll(subjectId);
+  const enrollment = useGetEnroll(subjectId);
   const enrollmentData = enrollment.data?.data.data || [];
 
   return (
