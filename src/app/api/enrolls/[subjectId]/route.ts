@@ -1,7 +1,7 @@
 import checkAuth from "@/core/func/checkAuth";
 import { NextRequest, NextResponse } from "next/server";
-import getEnroll from "./func/getEnroll";
-
+import {getEnroll} from "./func/getEnroll";
+import { EnrollStatus } from "@prisma/client";
 type ParamsType = {
     params: {
         subjectId: string
@@ -14,7 +14,8 @@ export const GET = async (request: NextRequest, { params: { subjectId } }: Param
     if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
 
     try {
-        const studentsEnroll = await getEnroll(subjectId)
+        const enrollStatus = request.nextUrl.searchParams.get("enrollStatus") as EnrollStatus
+        const studentsEnroll = await getEnroll(subjectId, enrollStatus)
         return NextResponse.json({ message: "ร้องขอข้อมูลผู้สมัครสำเร็จ", data: studentsEnroll })
     } catch (error) {
         console.log(error);

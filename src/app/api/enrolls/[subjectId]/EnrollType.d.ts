@@ -1,4 +1,4 @@
-import { Prisma, Enroll } from "@prisma/client";
+import { Prisma, Enroll, EnrollStatus } from "@prisma/client";
 
 export type ResponseGetEnrollType = Prisma.EnrollGetPayload<{
     select: {
@@ -33,3 +33,6 @@ export type ResponseGetEnrollType = Prisma.EnrollGetPayload<{
     }
 }>
 export type ResponseGetEnrollsType = ResponseGetEnrollType[]
+
+
+export type EnumCouseStatusType = EnrollStatus
