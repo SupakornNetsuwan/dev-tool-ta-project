@@ -1,25 +1,22 @@
 "use client";
 import React, { useMemo } from "react";
-// custom hook
-import useGetEnroll from "@/core/hooks/enroll/useGetEnroll";
-import TableApprovalform from "@/core/components/approvalForm/TableApprovalForm";
-//components
 import ExportButton from "@/core/components/approvalForm/ExportCSVComponent";
-
-const Page: React.FC<{ params: { subjectId: string } }> = ({ params: { subjectId } }) => {
-  const { data } = useGetEnroll(subjectId, "FINAL_APPROVED");
+import TableApprovalform from "@/core/components/approvalForm/TableApprovalForm";
+import useGetEnrolls from "@/core/hooks/enroll/useGetEnrolls";
+import { EnrollStatus } from "@prisma/client";
+const Page = () => {
+  const { data } = useGetEnrolls(EnrollStatus.FINAL_APPROVED);
   const enrolledStudents = useMemo(() => data?.data.data || [], [data]);
-
   return (
     <div className=" bg-white p-4">
-      <p className="text-lg font-medium text-blue-500">แบบฟอร์มขออนุมัติ (รายวิชา)</p>
+      <p className="text-lg font-medium text-blue-500">แบบฟอร์มขออนุมัติทุกวิชา</p>
       {enrolledStudents.length > 0 ? (
         <div className="my-4 flex flex-col">
           <TableApprovalform enrolledStudents={enrolledStudents} />
           <ExportButton
             className="btn click-animation my-4 ml-auto border border-blue-500 bg-blue-50 text-blue-500"
             enrolledStudents={enrolledStudents}
-            fileName={`แบบฟอร์มขออนุมัติรายวิชา${enrolledStudents[0]?.course?.nameEng}`}
+            fileName={`แบบฟอร์มขออนุมัติรายวิชา`}
           />
         </div>
       ) : (
