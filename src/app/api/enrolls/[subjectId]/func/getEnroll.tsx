@@ -8,7 +8,7 @@ export const getEnroll = async (subjectId: string, enrollStattus: EnrollStatus):
       course: {
         subjectId: subjectId,
       },
-      // เงื่อไขในการดึงว่าต้องการอะไรเฉพาะสถานะใดเป็นพิเศษมั้ย
+      // เงื่อนไขในการดึงว่าต้องการอะไรเฉพาะสถานะใดเป็นพิเศษมั้ย
       ...(enrollStattus && { enrollStatus: enrollStattus }),
     },
     select: {

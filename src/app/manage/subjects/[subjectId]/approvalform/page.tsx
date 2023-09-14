@@ -25,7 +25,7 @@ const Page: React.FC<{ params: { subjectId: string } }> = ({ params: { subjectId
       ) : (
         <div className="flex h-44 flex-col items-center justify-center ">
           <p className="text-gray-800">ไม่มีข้อมูล</p>
-          <p className="text-gray-500">ข้อมูลจะแสดงที่นี่ หากมีรายชื่อนักศึกษาที่สมัคร</p>
+          <p className="text-gray-500">ข้อมูลจะแสดงที่นี่ หากมีรายชื่อนักศึกษาที่ผ่านการคัดเลือก</p>
         </div>
       )}
     </div>
