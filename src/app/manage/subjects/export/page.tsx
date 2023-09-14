@@ -2,7 +2,7 @@ import PageWrapper from "@/core/components/PageWrapper";
 import GoBackBtn from "@/core/components/GoBackBtn";
 import Page from "./components/Page";
 
-const page = async ({ params }: { params: { subjectId: string } }) => {
+const page = async () => {
   return (
     <>
       <GoBackBtn />
