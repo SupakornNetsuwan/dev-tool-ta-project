@@ -1,26 +1,19 @@
-"use client";
-import React, { useMemo } from "react";
-// custom hook
-import useGetEnroll from "@/core/hooks/enroll/useGetEnroll";
-import TableApprovalform from "@/core/components/approvalForm/TableApprovalForm";
-//components
+import React from "react";
 import ExportButton from "@/core/components/approvalForm/ExportCSVComponent";
+import TableApprovalform from "@/core/components/approvalForm/TableApprovalForm";
 
-const Page: React.FC<{ params: { subjectId: string } }> = ({ params: { subjectId } }) => {
-  const { data } = useGetEnroll(subjectId, "FINAL_APPROVED");
-  const enrolledStudents = useMemo(() => data?.data.data || [], [data]);
-
+const Page = () => {
   return (
     <div className=" bg-white p-4">
       <p className="text-lg font-medium text-blue-500">แบบฟอร์มขออนุมัติ (รายวิชา)</p>
-      {enrolledStudents.length > 0 ? (
+      {[].length > 0 ? (
         <div className="my-4 flex flex-col">
-          <TableApprovalform enrolledStudents={enrolledStudents} />
+          {/* <TableApprovalform enrolledStudents={enrolledStudents} />
           <ExportButton
             className="btn click-animation my-4 ml-auto border border-blue-500 bg-blue-50 text-blue-500"
             enrolledStudents={enrolledStudents}
             fileName={`แบบฟอร์มขออนุมัติรายวิชา${enrolledStudents[0]?.course?.nameEng}`}
-          />
+          /> */}
         </div>
       ) : (
         <div className="flex h-44 flex-col items-center justify-center ">

@@ -2,7 +2,7 @@
 import * as Toolbar from "@radix-ui/react-toolbar";
 import useCoursesToolbar from "../../hooks/useCoursesToolbar";
 import DropdownFilter from "./DropdownFilter";
-import { HiOutlineFunnel, HiOutlinePlus } from "react-icons/hi2";
+import { HiOutlineFunnel, HiOutlinePlus, HiOutlineArrowDownTray } from "react-icons/hi2";
 import Link from "next/link";
 
 const CourseToolbar = () => {
@@ -24,12 +24,20 @@ const CourseToolbar = () => {
             <HiOutlineFunnel />
           </button>
         </DropdownFilter>
-        <Toolbar.Link className="rounded border border-blue-500 bg-blue-50 text-blue-500 hover:bg-blue-100" asChild>
-          <Link href="/manage/subjects/upload" className="flex items-center space-x-1 px-4 py-1.5 text-sm">
-            <HiOutlinePlus />
-            <span>อัปโหลดวิชา</span>
-          </Link>
-        </Toolbar.Link>
+        <div className="flex space-x-2">
+          <Toolbar.Link className="rounded  bg-blue-50 text-blue-500 hover:bg-blue-100" asChild>
+            <Link href="/manage/subjects/export" className="flex items-center space-x-1 px-4 py-1.5 text-sm">
+              <HiOutlineArrowDownTray />
+              <span>ฟอร์มอนุมัติ</span>
+            </Link>
+          </Toolbar.Link>
+          <Toolbar.Link className="rounded border border-blue-500 bg-blue-50 text-blue-500 hover:bg-blue-100" asChild>
+            <Link href="/manage/subjects/upload" className="flex items-center space-x-1 px-4 py-1.5 text-sm">
+              <HiOutlinePlus />
+              <span>อัปโหลดวิชา</span>
+            </Link>
+          </Toolbar.Link>
+        </div>
       </Toolbar.ToggleGroup>
     </Toolbar.Root>
   );

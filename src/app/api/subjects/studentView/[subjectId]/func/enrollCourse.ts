@@ -60,7 +60,7 @@ const enrollCourse = async (subjectId: string, userId: string, payload: z.infer<
                 grade: payload.grade,
                 courseId: subjectId,
                 studentId: userId,
-                passedCourse: payload.passedCourse.map(course => `(${course.subjectId}) ${course.subjectName}`).join(" "),
+                passedCourse: payload.passedCourse.map(course => `(${course.subjectId}) ${course.subjectName}`).join(" - "),
             }
         })
 
