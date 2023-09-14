@@ -16,7 +16,7 @@ const Page = () => {
           <ExportButton
             className="btn click-animation my-4 ml-auto border border-blue-500 bg-blue-50 text-blue-500"
             enrolledStudents={enrolledStudents}
-            fileName={`แบบฟอร์มขออนุมัติรายวิชา${enrolledStudents[0]?.course?.nameEng}`}
+            fileName={`แบบฟอร์มขออนุมัติรายวิชา`}
           />
         </div>
       ) : (
