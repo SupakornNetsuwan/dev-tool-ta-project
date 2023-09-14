@@ -25,7 +25,7 @@ const CourseEnrollFormProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       courseInMajors: "INFORMATION_TECHNOLOGY",
       passedInMajors: "INFORMATION_TECHNOLOGY",
       degree: "BACHELOR_DEGREE",
-      grade: "C",
+      grade: "B",
       passedCourse: [{ subjectId: "", subjectName: "" }],
       secretCode: "",
     },

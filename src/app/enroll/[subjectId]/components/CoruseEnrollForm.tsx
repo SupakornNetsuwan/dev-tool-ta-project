@@ -55,7 +55,7 @@ const CoruseEnrollForm = () => {
           />
         </FieldWrapper>
         <FieldWrapper errorComponent={<ShowInputError inputName="grade" />} label={<Label.Root>ได้เกรด</Label.Root>}>
-          <Selector name={`grade`} options={gradeMapper as { label: string; value: string }[]} placeholder="C" />
+          <Selector name={`grade`} options={gradeMapper as { label: string; value: string }[]} placeholder="B" />
         </FieldWrapper>
         {isNeedSecretCode && (
           <FieldWrapper

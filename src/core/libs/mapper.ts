@@ -30,11 +30,11 @@ export const gradeMapper: { label: string; value: EnrollCourseFormType["grade"] 
     { label: "A", value: "A" },
     { label: "B+", value: "B_PLUS" },
     { label: "B", value: "B" },
-    { label: "C+", value: "C_PLUS" },
-    { label: "C", value: "C" },
-    { label: "D+", value: "D_PLUS" },
-    { label: "D", value: "D" },
-    { label: "F", value: "F" },
+    // { label: "C+", value: "C_PLUS" },
+    // { label: "C", value: "C" },
+    // { label: "D+", value: "D_PLUS" },
+    // { label: "D", value: "D" },
+    // { label: "F", value: "F" },
 ];
 
 export const enrollStatusMapper: { label: string; value: EnrollStatus }[] = [
