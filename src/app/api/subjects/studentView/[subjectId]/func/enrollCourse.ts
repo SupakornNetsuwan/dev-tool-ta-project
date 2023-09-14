@@ -1,18 +1,20 @@
 import schema from '../enrollCourse_formSchema'
 import { z } from 'zod'
 import { prisma } from '@/core/libs/prisma/connector'
-
-
-const checkPassword = async (corsePassword: string | null | undefined, userPassword: string | undefined) => {
-    console.log(corsePassword)
-    if (!corsePassword) return
-    if (corsePassword != userPassword) throw new Error("รหัสผ่านสมัครคอร์สไม่ถูกต้อง")
-}
+import getProfile from '@/app/api/users/[id]/profile/func/getProfile'
 
 const enrollCourse = async (subjectId: string, userId: string, payload: z.infer<typeof schema>) => {
     console.log("ข้อมูล 📃", payload)
 
     return await prisma.$transaction(async tsx => {
+
+        const profile = await getProfile(userId)
+
+        // ⚠️
+        if (!profile?.firstname) throw new Error("โปรดกรอกข้อมูลส่วนตัวที่โปรไฟล์ ให้ครบถ้วน")
+        // ⚠️
+        if (Object.values(profile?.UserDocument || {}).some(value => !value)) throw new Error("โปรดอัปโหลดเอกสารที่โปรไฟล์ ให้ครบถ้วน")
+
 
         const enrolledCourse = await tsx.enroll.findUnique({
             where: {
@@ -24,7 +26,8 @@ const enrollCourse = async (subjectId: string, userId: string, payload: z.infer<
             include: {
                 course: {
                     select: {
-                        secretCode: true
+                        secretCode: true,
+                        creationStatus: true
                     }
                 }
             }
@@ -38,13 +41,15 @@ const enrollCourse = async (subjectId: string, userId: string, payload: z.infer<
                 subjectId
             },
             select: {
-                secretCode: true
+                secretCode: true,
+                creationStatus: true
             }
         })
 
         // ⚠️
         if (Boolean(targetCourse.secretCode) && targetCourse.secretCode !== payload.secretCode) throw new Error("รหัสผ่านสมัครคอร์สไม่ถูกต้อง")
-
+        // ⚠️
+        if (targetCourse?.creationStatus != "ENROLLABLE") throw new Error("ไม่สามารถสมัครได้คอร์ศปิดรับสมัครแล้ว")
 
         const enrolledResullt = await prisma.enroll.create({
             data: {
