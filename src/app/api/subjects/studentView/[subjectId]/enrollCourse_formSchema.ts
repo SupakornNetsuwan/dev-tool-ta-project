@@ -1,5 +1,4 @@
 import { z } from "zod"
-import { EnrollCourseType } from "./FullCourseWithEnrollStatusType"
 
 const schema = z.object({
     courseInMajors: z.enum(["ARTIFICIAL_INTELLIGENCE_TECHNOLOGY", "INFORMATION_TECHNOLOGY", "BUSINESS_INFORMATION_TECHNOLOGY_INTERNATIONAL_PROGRAM", "DATA_SCIENCE_AND_BUSINESS_ANALYTICS"], {

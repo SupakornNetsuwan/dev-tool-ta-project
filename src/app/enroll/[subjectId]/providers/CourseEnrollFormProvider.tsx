@@ -4,20 +4,20 @@ import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import schema from "@/app/api/subjects/studentView/[subjectId]/enrollCourse_formSchema";
 import type { EnrollCourseFormType } from "@/app/api/subjects/studentView/[subjectId]/FullCourseWithEnrollStatusType";
-import dayjs from "dayjs";
 import useEnrollCourse from "@/core/hooks/studentView/useEnrollCourse";
 import { useParams } from "next/navigation";
 import useGetFullCourseWithEnrollStatus from "@/core/hooks/studentView/useGetFullCourseWithEnrollStatus";
 import { HiOutlineXMark } from "react-icons/hi2";
 import LoadingSkeletonEnrollForm from "../components/LoadingSkeletonEnrollForm";
 import useCustomToast from "@/core/components/CustomToast/hooks/useCustomToast";
-import CustomToast from "@/core/components/CustomToast";
+import { useQueryClient } from "@tanstack/react-query";
 
 const CourseEnrollFormProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { openToast } = useCustomToast();
   const { subjectId } = useParams();
   const { isLoading } = useGetFullCourseWithEnrollStatus(subjectId);
   const enrollCourse = useEnrollCourse(subjectId);
+  const queryClient = useQueryClient();
 
   const methods = useForm<EnrollCourseFormType>({
     resolver: zodResolver(schema),
@@ -26,7 +26,7 @@ const CourseEnrollFormProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       passedInMajors: "INFORMATION_TECHNOLOGY",
       degree: "BACHELOR_DEGREE",
       grade: "C",
-      passedCourse: [{ subjectId: "x", subjectName: "y" }],
+      passedCourse: [{ subjectId: "", subjectName: "" }],
       secretCode: "",
     },
   });
@@ -49,17 +49,18 @@ const CourseEnrollFormProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         secretCode: data.secretCode,
       },
       {
-        onError(error, variables, context) {
-          openToast({
-            title: <p className="text-red-500">ไม่สามารถสมัครได้</p>,
-            description: <p>{error?.response?.data.message || "ไม่ทราบสาเหตุ"}</p>,
-            actionButton: <HiOutlineXMark className="text-2xl text-gray-900" />,
-          });
-        },
         onSuccess(data, variables, context) {
           openToast({
             title: <p className="text-blue-500">สมัครสำเร็จ 🎉</p>,
             description: <p>{data.data.message}</p>,
+            actionButton: <HiOutlineXMark className="text-2xl text-gray-900" />,
+          });
+          queryClient.invalidateQueries(["getFullCourseWithEnrollStatus", subjectId]);
+        },
+        onError(error, variables, context) {
+          openToast({
+            title: <p className="text-red-500">ไม่สามารถสมัครได้</p>,
+            description: <p>{error?.response?.data.message || "ไม่ทราบสาเหตุ"}</p>,
             actionButton: <HiOutlineXMark className="text-2xl text-gray-900" />,
           });
         },

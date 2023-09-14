@@ -3,6 +3,11 @@ import { NextRequest, NextResponse } from "next/server";
 import getCoursesWithEnrollStatus from "./func/getCoursesWithEnrollStatus";
 import getSystemStatus from "../../systemStatus/func/getSystemStatus";
 
+/**
+ * @description เมื่อนักศึกษาต้องการข้อมูลการเข้าถึงคอร์สของตัวเองว่าเห็นวิชาใดได้บ้าง (แสดงหลายวิชา)
+ */
+
+
 export const GET = async (request: NextRequest) => {
     const { hasPermission, session } = await checkAuth(["ADMIN", "STUDENT", "SUPERADMIN", "PROFESSOR"]);
     if (!session) return NextResponse.json({ message: "โปรดเข้าสู่ระบบ" }, { status: 401 })

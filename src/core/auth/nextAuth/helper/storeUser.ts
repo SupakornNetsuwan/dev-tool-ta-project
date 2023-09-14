@@ -19,6 +19,8 @@ const storeUser: StoreUserFunctionType = async ({ LDAPemail, LDAPid, LDAPfullnam
     const hashedPassword = await bcrypt.hash(password, 12)
     console.log("กำลังอัปเดตผู้ใช้ในฐานข้อมูล/เพิ่มผู้ใช้...")
 
+    const role = new RegExp(/\d{8}/g).test(LDAPid) ? "STUDENT" : "PROFESSOR"
+
     try {
         const user = await prisma.user.upsert({
             where: {
@@ -33,6 +35,7 @@ const storeUser: StoreUserFunctionType = async ({ LDAPemail, LDAPid, LDAPfullnam
                 fullname: LDAPfullname,
                 password: hashedPassword,
                 department: LDAPdepartment,
+                role: role,
                 Profile: {
                     connectOrCreate: {
                         where: {

@@ -8,7 +8,7 @@ import React from "react";
 export const Item: React.FC<{ children: React.ReactElement; topic: React.ReactNode }> = ({ children, topic }) => {
   return (
     <div className="flex items-center justify-between py-2 first:pt-0 last:pb-0">
-      <p className="text-gray-500">{topic}</p>
+      <div className="text-gray-500">{topic}</div>
       {children}
     </div>
   );

@@ -9,49 +9,14 @@ import Selector from "@/core/components/form/Selector";
 import { HiDocumentPlus } from "react-icons/hi2";
 import useGetFullCourseWithEnrollStatus from "@/core/hooks/studentView/useGetFullCourseWithEnrollStatus";
 import { useParams } from "next/navigation";
-
-const degreeMapper: { label: string; value: EnrollCourseFormType["degree"] }[] = [
-  { label: "ปริญญาตรี", value: "BACHELOR_DEGREE" },
-  { label: "ปริญญาโท", value: "MASTER_DEGREE" },
-];
-
-const courseInMajorsMapper: { label: string; value: EnrollCourseFormType["courseInMajors"] }[] = [
-  { label: "สาขาวิชาเทคโนโลยีปัญญาประดิษฐ์", value: "ARTIFICIAL_INTELLIGENCE_TECHNOLOGY" },
-  {
-    label: "สาขาวิชาเทคโนโลยีสารสนเทศทางธุรกิจ (หลักสูตรนานาชาติ)",
-    value: "BUSINESS_INFORMATION_TECHNOLOGY_INTERNATIONAL_PROGRAM",
-  },
-  { label: "สาขาวิทยาการข้อมูลและการวิเคราะห์เชิงธุรกิจ", value: "DATA_SCIENCE_AND_BUSINESS_ANALYTICS" },
-  { label: "สาขาวิชาเทคโนโลยีสารสนเทศ", value: "INFORMATION_TECHNOLOGY" },
-];
-
-const passedInMajorsMapper: { label: string; value: EnrollCourseFormType["passedInMajors"] }[] = [
-  { label: "สาขาวิชาเทคโนโลยีปัญญาประดิษฐ์", value: "ARTIFICIAL_INTELLIGENCE_TECHNOLOGY" },
-  {
-    label: "สาขาวิชาเทคโนโลยีสารสนเทศทางธุรกิจ (หลักสูตรนานาชาติ)",
-    value: "BUSINESS_INFORMATION_TECHNOLOGY_INTERNATIONAL_PROGRAM",
-  },
-  { label: "สาขาวิทยาการข้อมูลและการวิเคราะห์เชิงธุรกิจ", value: "DATA_SCIENCE_AND_BUSINESS_ANALYTICS" },
-  { label: "สาขาวิชาเทคโนโลยีสารสนเทศ", value: "INFORMATION_TECHNOLOGY" },
-];
-
-const gradeMapper: { label: string; value: EnrollCourseFormType["grade"] }[] = [
-  { label: "A", value: "A" },
-  { label: "B+", value: "B_PLUS" },
-  { label: "B", value: "B" },
-  { label: "C+", value: "C_PLUS" },
-  { label: "C", value: "C" },
-  { label: "D+", value: "D_PLUS" },
-  { label: "D", value: "D" },
-  { label: "F", value: "F" },
-];
+import { courseInMajorsMapper, degreeMapper, gradeMapper, passedInMajorsMapper } from "@/core/libs/mapper";
 
 const CoruseEnrollForm = () => {
   const { subjectId } = useParams();
-  const { register, watch } = useFormContext<EnrollCourseFormType>();
+  const { register } = useFormContext<EnrollCourseFormType>();
   const { data: courseDetail } = useGetFullCourseWithEnrollStatus(subjectId);
   const [submitConfirm, setSubmitConfirm] = useState(false);
-  const { isNeedSecretCode } = courseDetail?.data.data!;
+  const { isNeedSecretEnrollCode: isNeedSecretCode } = courseDetail?.data.data!;
 
   const inverSubmitConfirmState = () => setSubmitConfirm((prevState) => !prevState);
 
