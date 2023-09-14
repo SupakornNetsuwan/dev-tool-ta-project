@@ -103,7 +103,7 @@ const TableApprovalform: React.FC<{ enrolledStudents: ResponseGetEnrollsType }> 
                       <Td rowSpan={undefined} text={<>{student.fullname}</>} />
                       <Td rowSpan={undefined} text={<>{degreeMapper.find(item => item.value ===student.degree)?.label}</>} />
                       <Td rowSpan={undefined} text={<>{courseInMajorsMapper.find(item => item.value === student.courseInMajor)?.label}</>} />
-                      <Td rowSpan={undefined} text={<>{passedInMajorsMapper.find(item => item.value === student.courseInMajor)?.label}</>} />
+                      <Td rowSpan={undefined} text={<>{passedInMajorsMapper.find(item => item.value === student.passedInMajors)?.label}</>} />
                       <Td rowSpan={undefined} text={<>{student.passedCourse} </>} />
                       <Td rowSpan={undefined} text={<>{gradeMapper.find(item => item.value ===student.grade)?.label}</>} />
                       <Td rowSpan={undefined} text={<></>} />
