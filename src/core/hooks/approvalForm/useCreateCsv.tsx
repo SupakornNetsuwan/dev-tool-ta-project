@@ -57,13 +57,13 @@ const useCreateCsv= (enrolledStudentsFormatted: ApprovalFormFormattedType|undefi
         isFirstRow = false;
         csvContent += `${index + 1},${approval.subjectId},${approval.courseNameEng},${approval.totalStudent},${
           approval.courseProfessor
-        },${student.id},${student.fullname},${degreeMapper.find(item => item.value ===student.degree)?.label},${courseInMajorsMapper.find(item => item.value === student.courseInMajor)?.label},${passedInMajorsMapper.find(item => item.value === student.courseInMajor)?.label},${
+        },${student.id},${student.fullname},${degreeMapper.find(item => item.value ===student.degree)?.label},${courseInMajorsMapper.find(item => item.value === student.courseInMajor)?.label},${passedInMajorsMapper.find(item => item.value === student.passedInMajors)?.label},${
           student.passedCourse
         },${gradeMapper.find(item => item.value ===student.grade)?.label}\n`;
       } else {
         csvContent += `${index + 1},${approval.subjectId},${approval.courseNameEng},,,${student.id},${
           student.fullname
-        },${degreeMapper.find(item => item.value ===student.degree)?.label},${courseInMajorsMapper.find(item => item.value === student.courseInMajor)?.label},${passedInMajorsMapper.find(item => item.value === student.courseInMajor)?.label},${student.passedCourse},${
+        },${degreeMapper.find(item => item.value ===student.degree)?.label},${courseInMajorsMapper.find(item => item.value === student.courseInMajor)?.label},${passedInMajorsMapper.find(item => item.value === student.passedInMajors)?.label},${student.passedCourse},${
           gradeMapper.find(item => item.value ===student.grade)?.label
         }\n`;
       }
