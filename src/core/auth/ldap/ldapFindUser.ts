@@ -1,7 +1,7 @@
 import util from "util"
 import { createClient } from 'ldapjs';
 import { base, filter_fmt, url } from "./ldapConnector";
-import type { FindUserType, LDAPuser } from "./ldapTypes"
+import type { FindUserType, LDAPuser } from "./LdapTypes"
 
 const findUser: FindUserType = async (username, password) => {
 
