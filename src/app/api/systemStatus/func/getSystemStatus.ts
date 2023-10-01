@@ -14,7 +14,11 @@ const getSystemStatus = async (): Promise<SystemStatusResponseType> => {
         return { ...systemStatus, isOpen: true }
     } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
-            if (error.code === "P2025") return undefined
+            if (error.code === "P2025") {
+                console.log(error.message);
+                
+                return undefined
+            }
         }
     }
 }
