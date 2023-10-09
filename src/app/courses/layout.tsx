@@ -63,7 +63,7 @@ const layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => 
   if (!systemStatus)
     return (
       <div className="divide-x-2bg-white flex min-h-[60vh] items-center justify-center p-4 text-xl text-gray-500">
-        ยังไม่มีกำหนดการรับสมัคร โปรดแจ้งเจ้าหน้าที่ห้องฟ้า
+        ยังไม่มีกำหนดการรับสมัคร
       </div>
     );
 

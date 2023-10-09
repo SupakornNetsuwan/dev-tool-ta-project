@@ -19,7 +19,7 @@ const LoginPage = () => {
               <p className="inline-block rounded-full bg-red-50 px-3 py-0.5 text-sm text-red-500 ml-2">กำลังใช้ระบบทดสอบ</p>
             )}
           </h1>
-          <p className="mt-1 text-gray-500">เข้าสู่ระบบเพื่อลงสมัครผู้ช่วยสอน/จัดการ การลงทะเบียน</p>
+          <p className="mt-1 text-gray-500">เข้าสู่ระบบจัดการผู้ช่วยสอน</p>
         </div>
         <div>
           <label htmlFor="username" className="font-medium text-gray-900">
