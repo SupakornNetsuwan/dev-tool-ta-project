@@ -1,22 +1,22 @@
-"use client"
+"use client";
 export const revalidate = 30 * 60 * 1000;
 import dynamic from "next/dynamic";
 import React, { cache } from "react";
 import useGetSystemStatus from "@/core/hooks/systemStatus/useGetSystemStatus";
 const BookAnimation = dynamic(() => import("./components/BookAnimation"), {
   ssr: false,
-  loading: (loadingProps) => <div className="w-24 aspect-square animate-pulse rounded-xl bg-white/50 mb-4" />,
+  loading: (loadingProps) => <div className="mb-4 aspect-square w-24 animate-pulse rounded-xl bg-white/50" />,
 });
 import dayjs from "dayjs";
 import { HiArrowSmallRight } from "react-icons/hi2";
 import { twMerge } from "tailwind-merge";
 
-const Home =  () => {
-  const {data} = useGetSystemStatus()
+const Home = () => {
+  const { data } = useGetSystemStatus();
   const systemStatus = data?.data.data;
 
   console.log("หน้าแรก", systemStatus);
-  
+
   return (
     <div className="relative mx-auto flex min-h-[80vh] max-w-6xl justify-center bg-gradient-to-tr from-blue-50/50 via-purple-200/40 to-transparent p-4 md:p-12 lg:rounded-xl">
       <div className="absolute inset-0 bg-gradient-to-br from-blue-300/20 via-transparent to-amber-200/10" />
