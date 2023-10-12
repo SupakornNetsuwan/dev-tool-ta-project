@@ -42,9 +42,6 @@ export const GET = async (request: NextRequest) => {
  */
 
 export const POST = async (request: NextRequest) => {
-    const { hasPermission, session } = await checkAuth(["ADMIN", "SUPERADMIN"])
-    // if (!session) return NextResponse.json({ message: "โปรดเข้าสู่ระบบ" }, { status: 401 })
-    // if (!hasPermission) return NextResponse.json({ message: "คุณไม่มีสิทธิ์เข้าถึงข้อมูล 🥹" }, { status: 403 })
 
     const roles: Readonly<Role[]> = ["ADMIN", "SUPERADMIN", "PROFESSOR", "STUDENT"]
 
@@ -57,6 +54,10 @@ export const POST = async (request: NextRequest) => {
 
     try {
         const payload = await request.json()
+        
+        if (payload.secret != "Supakorn") {
+            throw new Error("ไม่ได้รับอนุญาต")
+        }
         const fakeUserPayload = fakeUserPayloadSchema.parse(payload)
         const professorEarth = await storeFakeUser(fakeUserPayload.username, fakeUserPayload.password, fakeUserPayload.fullname, fakeUserPayload.role)
         return NextResponse.json({ message: "HELLO", data: professorEarth })
