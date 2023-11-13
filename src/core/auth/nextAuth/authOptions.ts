@@ -6,6 +6,7 @@ import checkExistUser from "./helper/checkExistUser"
 import checkExistFakeUser from './helper/checkExistFakeUser'
 import storeFakeUser from './helper/storeFakeUser'
 import storeUser from "./helper/storeUser"
+import getProfileUser from './helper/getProfileUser'
 
 export const isUsingFakeUser = false
 
@@ -43,7 +44,7 @@ const authOptions: NextAuthOptions = {
             const existedUser = await checkExistUser(username, password)
             if (existedUser) return existedUser
 
-            const { LDAPuser, LDAPerror } = await findUser(username, password)
+            const { LDAPerror } = await findUser(username, password)
 
             if (LDAPerror) {
                 switch (LDAPerror.message) {
@@ -68,20 +69,18 @@ const authOptions: NextAuthOptions = {
                 }
             }
 
+            const LDAPuser = (await getProfileUser(username)).data;
+
+            console.log("ผู้ใช้ใหม่ได้เข้าสู่ระบบ ID :", LDAPuser.uid)
+
             // ข้อมูลผู้ใช้จาก LDAP เช่น
-            // 
             // LDAPid: '64070108',
             // LDAPemail: '64070108@kmitl.ac.th',
             // LDAPfullname: 'Supakorn Netsuwan',
             // LDAPdepartment: 'it_inf',
 
-            const LDAPdepartment = LDAPuser.attributes[0].values[0]
-            const LDAPemail = LDAPuser.attributes[4].values[0]
-            const LDAPid = LDAPuser.attributes[5].values[0]
-            const LDAPfullname = LDAPuser.attributes[7].values[0]
-
             // ทำการเช็คว่า มีผู้ใช้ในฐานข้อมูลของเราหรือไม่ถ้ามีแสดงว่ารหัสผ่านมีการเปลี่ยนแปลงก็ทำการอัพเดท ถ้าไม่มีก็ทำการสร้างผู้ใช้ใหม่
-            const user = await storeUser({ LDAPid, LDAPemail, LDAPfullname, LDAPdepartment, password })
+            const user = await storeUser({ LDAPid: LDAPuser.uid, LDAPemail: LDAPuser.email, LDAPfullname: `${LDAPuser.firstNameEn} ${LDAPuser.lastNameEn}`, LDAPdepartment: LDAPuser.organizationId, password })
 
             // ส่งค่ากลับไป 🎉
             return user
