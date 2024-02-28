@@ -9,7 +9,7 @@ services:
     depends_on:
       - mysql
     env_file:
-      - .env
+      - .env.production #important กำหนดให้ใช้ .env.production
     networks:
       - application
     volumes:
@@ -34,7 +34,7 @@ services:
     ports:
       - 3306:3306
     env_file:
-      - .env
+      - .env.production
     healthcheck:
       test: ["CMD-SHELL", " netstat -an | grep -q 3306"]
       timeout: 5s
