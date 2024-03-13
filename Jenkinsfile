@@ -7,11 +7,12 @@ pipeline {
     }
 
     stages {
-        // stage('Checkout') {
-        //     steps {
-        //         checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://github.com/SupakornNetsuwan/dev-tool-ta-project']]])
-        //     }
-        // }
+        stage('Checkout') {
+            steps {
+                sh "git clone 'https://github.com/SupakornNetsuwan/dev-tool-ta-project'"
+                // checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://github.com/SupakornNetsuwan/dev-tool-ta-project']]])
+            }
+        }
         stage('Check Docker') {
             steps {
                 script {
