@@ -36,14 +36,16 @@ pipeline {
             steps {
                 script {
                     // Check if the dev-tool-ta-project directory exists
-                    if (fileExists('.')) {
+                    dir('dev-tool-ta-project') {
+                        if (fileExists('.')) {
                         echo 'Repository cloned successfully'
-                    } else {
-                        error 'Failed to clone repository'
+                        } else {
+                            error 'Failed to clone repository'
+                        }
                     }
                     // Check if Docker version was found and run hello-world image
                     if (env.DOCKER_VERSION != 'No Docker') {
-                        echo "Ready"
+                        echo "Docker Ready"
                         dir('dev-tool-ta-project') {
                             // Commands executed within this block will be in the specified directory
                             sh "ls"
